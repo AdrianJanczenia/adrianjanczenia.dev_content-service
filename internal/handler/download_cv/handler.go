@@ -1,0 +1,42 @@
+package download_cv
+
+import (
+	"log"
+	"net/http"
+)
+
+type CVProcess interface {
+	ValidateTokenAndGetPath(token string) (string, error)
+}
+
+type Handler struct {
+	cvProcess CVProcess
+}
+
+func NewHandler(cvProcess CVProcess) *Handler {
+	return &Handler{cvProcess: cvProcess}
+}
+
+func (h *Handler) Handle(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	token := r.URL.Query().Get("token")
+	if token == "" {
+		http.Error(w, "Unauthorized: missing token", http.StatusUnauthorized)
+		return
+	}
+
+	filePath, err := h.cvProcess.ValidateTokenAndGetPath(token)
+	if err != nil {
+		log.Printf("ERROR: CV download failed for token %s: %v", token, err)
+		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		return
+	}
+
+	w.Header().Set("Content-Disposition", "attachment; filename=\"cv.pdf\"")
+	w.Header().Set("Content-Type", "application/pdf")
+	http.ServeFile(w, r, filePath)
+}

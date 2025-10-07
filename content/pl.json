@@ -1,0 +1,36 @@
+{
+  "meta": {
+    "title": "Adrian Janczenia - Backend Go Developer"
+  },
+  "profile": {
+    "name": "Adrian Janczenia",
+    "role": "Backend Go Developer",
+    "status": "Otwarty na nowe wyzwania",
+    "bio": "Doświadczony inżynier oprogramowania z pasją do budowania solidnych i wydajnych systemów backendowych."
+  },
+  "skills": [
+    {
+      "key": "languages",
+      "values": [
+        "Go",
+        "Python",
+        "SQL"
+      ]
+    }
+  ],
+  "experience": [
+    {
+      "role": "Backend Go Developer",
+      "company": "Tech Corp",
+      "period": "2022 - Obecnie",
+      "description": "Projektowanie i implementacja mikroserwisów w Go."
+    }
+  ],
+  "contact": {
+    "email": "adrian.janczenia@email.com",
+    "linkedin": "adrian-janczenia-dev"
+  },
+  "translations": {
+    "nav_about": "o-mnie"
+  }
+}

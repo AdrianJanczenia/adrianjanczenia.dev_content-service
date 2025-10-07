@@ -1,0 +1,14 @@
+server:
+  grpcPort: "50051"
+  httpPort: "8081"
+redis:
+  addr: "localhost:6379"
+rabbitmq:
+  url: "amqp://guest:guest@localhost:5672/"
+  cvRequestQueue: "content_service.v1.cv_requests"
+content:
+  path: "content"
+cv:
+  filePath: "/app/private/cv.pdf"
+  password: "local_password"
+  tokenTTLSeconds: 600
