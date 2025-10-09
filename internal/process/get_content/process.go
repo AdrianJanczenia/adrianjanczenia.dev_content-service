@@ -4,19 +4,17 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
-	"path/filepath"
 )
 
 type Process struct {
-	content map[string]map[string]interface{}
+	content     map[string]map[string]interface{}
+	defaultLang string
 }
 
-func NewProcess(contentPath string) (*Process, error) {
+func NewProcess(contentFiles map[string]string, defaultLang string) (*Process, error) {
 	content := make(map[string]map[string]interface{})
-	supportedLangs := []string{"pl", "en"}
 
-	for _, lang := range supportedLangs {
-		filePath := filepath.Join(contentPath, fmt.Sprintf("%s.json", lang))
+	for lang, filePath := range contentFiles {
 		file, err := os.ReadFile(filePath)
 		if err != nil {
 			return nil, fmt.Errorf("could not read content file for lang %s: %w", lang, err)
@@ -29,12 +27,19 @@ func NewProcess(contentPath string) (*Process, error) {
 		content[lang] = data
 	}
 
-	return &Process{content: content}, nil
+	return &Process{
+		content:     content,
+		defaultLang: defaultLang,
+	}, nil
 }
 
-func (p *Process) Execute(lang string) (map[string]interface{}, error) {
+func (p *Process) Process(lang string) (map[string]interface{}, error) {
 	if content, ok := p.content[lang]; ok {
 		return content, nil
 	}
-	return p.content["pl"], nil
+	if content, ok := p.content[p.defaultLang]; ok {
+		return content, nil
+	}
+
+	return nil, fmt.Errorf("no content available for language %s or default language", lang)
 }

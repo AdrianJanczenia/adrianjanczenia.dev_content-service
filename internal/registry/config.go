@@ -9,7 +9,29 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-var Cfg *Config
+type ExchangeConfig struct {
+	Name    string `yaml:"name"`
+	Type    string `yaml:"type"`
+	Durable bool   `yaml:"durable"`
+}
+
+type QueueConfig struct {
+	Name    string `yaml:"name"`
+	Durable bool   `yaml:"durable"`
+	DLQ     string `yaml:"dlq"`
+}
+
+type BindingConfig struct {
+	Exchange   string `yaml:"exchange"`
+	QueueKey   string `yaml:"queue_key"`
+	RoutingKey string `yaml:"routing_key"`
+}
+
+type RabbitMQTopologyConfig struct {
+	Exchanges []ExchangeConfig       `yaml:"exchanges"`
+	Queues    map[string]QueueConfig `yaml:"queues"`
+	Bindings  []BindingConfig        `yaml:"bindings"`
+}
 
 type Config struct {
 	Server struct {
@@ -17,14 +39,18 @@ type Config struct {
 		HTTPPort string
 	}
 	Redis struct {
-		Addr string
+		URL string
 	}
 	RabbitMQ struct {
-		URL            string
-		CVRequestQueue string
+		URL       string
+		Consumers struct {
+			DefaultCount int `yaml:"defaultCount"`
+		}
+		Topology RabbitMQTopologyConfig
 	}
 	Content struct {
-		Path string
+		DefaultLang string
+		Files       map[string]string
 	}
 	Cv struct {
 		FilePath string
@@ -33,6 +59,8 @@ type Config struct {
 	}
 }
 
+var Cfg *Config
+
 func LoadConfig() (*Config, error) {
 	type yamlConfig struct {
 		Server struct {
@@ -40,14 +68,18 @@ func LoadConfig() (*Config, error) {
 			HTTPPort string `yaml:"httpPort"`
 		} `yaml:"server"`
 		Redis struct {
-			Addr string `yaml:"addr"`
+			URL string `yaml:"url"`
 		} `yaml:"redis"`
 		RabbitMQ struct {
-			URL            string `yaml:"url"`
-			CVRequestQueue string `yaml:"cvRequestQueue"`
+			URL       string `yaml:"url"`
+			Consumers struct {
+				DefaultCount int `yaml:"defaultCount"`
+			} `yaml:"consumers"`
+			Topology RabbitMQTopologyConfig `yaml:"topology"`
 		} `yaml:"rabbitmq"`
 		Content struct {
-			Path string `yaml:"path"`
+			DefaultLang string            `yaml:"defaultLang"`
+			Files       map[string]string `yaml:"files"`
 		} `yaml:"content"`
 		Cv struct {
 			FilePath string `yaml:"filePath"`
@@ -70,24 +102,25 @@ func LoadConfig() (*Config, error) {
 	defer f.Close()
 
 	var yc yamlConfig
-	decoder := yaml.NewDecoder(f)
-	if err := decoder.Decode(&yc); err != nil {
+	if err := yaml.NewDecoder(f).Decode(&yc); err != nil {
 		return nil, err
 	}
 
 	cfg := &Config{}
 	cfg.Server.GRPCPort = yc.Server.GRPCPort
 	cfg.Server.HTTPPort = yc.Server.HTTPPort
-	cfg.Redis.Addr = yc.Redis.Addr
+	cfg.Redis.URL = yc.Redis.URL
 	cfg.RabbitMQ.URL = yc.RabbitMQ.URL
-	cfg.RabbitMQ.CVRequestQueue = yc.RabbitMQ.CVRequestQueue
-	cfg.Content.Path = yc.Content.Path
+	cfg.RabbitMQ.Consumers = yc.RabbitMQ.Consumers
+	cfg.RabbitMQ.Topology = yc.RabbitMQ.Topology
+	cfg.Content.DefaultLang = yc.Content.DefaultLang
+	cfg.Content.Files = yc.Content.Files
 	cfg.Cv.FilePath = yc.Cv.FilePath
 	cfg.Cv.Password = yc.Cv.Password
 	cfg.Cv.TokenTTL = time.Duration(yc.Cv.TokenTTL) * time.Second
 
 	overrideFromEnv("CV_PASSWORD", &cfg.Cv.Password)
-	overrideFromEnv("REDIS_ADDR", &cfg.Redis.Addr)
+	overrideFromEnv("REDIS_URL", &cfg.Redis.URL)
 	overrideFromEnv("RABBITMQ_URL", &cfg.RabbitMQ.URL)
 
 	return cfg, nil

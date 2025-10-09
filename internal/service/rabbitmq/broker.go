@@ -3,18 +3,21 @@ package rabbitmq
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"sync"
 	"time"
 
+	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/registry"
 	"github.com/rabbitmq/amqp091-go"
 )
 
-type MessageHandler func(d amqp091.Delivery) error
+type MessageHandler func(d amqp091.Delivery) (replyPayload any, err error)
 
 type ConsumerConfig struct {
-	QueueName string
-	Handler   MessageHandler
+	QueueName     string
+	Handler       MessageHandler
+	ConsumerCount int
 }
 
 type Broker struct {
@@ -27,38 +30,73 @@ func NewBroker(amqpURL string) (*Broker, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	b := &Broker{
+	return &Broker{
 		conn:      conn,
 		consumers: []ConsumerConfig{},
-	}
-
-	if err := b.declareTopology(); err != nil {
-		return nil, err
-	}
-
-	return b, nil
+	}, nil
 }
 
-func (b *Broker) RegisterConsumer(queueName string, handler MessageHandler) {
+func (b *Broker) DeclareTopology(cfg registry.RabbitMQTopologyConfig) error {
+	ch, err := b.conn.Channel()
+	if err != nil {
+		return err
+	}
+	defer ch.Close()
+
+	for _, ex := range cfg.Exchanges {
+		if err := ch.ExchangeDeclare(ex.Name, ex.Type, ex.Durable, false, false, false, nil); err != nil {
+			return fmt.Errorf("failed to declare exchange %s: %w", ex.Name, err)
+		}
+	}
+
+	for _, q := range cfg.Queues {
+		args := amqp091.Table{}
+		if q.DLQ != "" {
+			args["x-dead-letter-exchange"] = ""
+			args["x-dead-letter-routing-key"] = q.DLQ
+		}
+		if _, err := ch.QueueDeclare(q.Name, q.Durable, false, false, false, args); err != nil {
+			return fmt.Errorf("failed to declare queue %s: %w", q.Name, err)
+		}
+	}
+
+	for _, bind := range cfg.Bindings {
+		queue, ok := cfg.Queues[bind.QueueKey]
+		if !ok {
+			return fmt.Errorf("queue with key '%s' not found in config for binding", bind.QueueKey)
+		}
+		if err := ch.QueueBind(queue.Name, bind.RoutingKey, bind.Exchange, false, nil); err != nil {
+			return fmt.Errorf("failed to bind queue %s to exchange %s: %w", queue.Name, bind.Exchange, err)
+		}
+	}
+
+	log.Println("INFO: RabbitMQ topology declared successfully")
+	return nil
+}
+
+func (b *Broker) RegisterConsumer(queueName string, count int, handler MessageHandler) {
 	b.consumers = append(b.consumers, ConsumerConfig{
-		QueueName: queueName,
-		Handler:   handler,
+		QueueName:     queueName,
+		Handler:       handler,
+		ConsumerCount: count,
 	})
 }
 
 func (b *Broker) Start() error {
 	var wg sync.WaitGroup
 	for _, consumer := range b.consumers {
-		wg.Add(1)
-		go func(cfg ConsumerConfig) {
-			defer wg.Done()
-			if err := b.startConsumer(cfg.QueueName, cfg.Handler); err != nil {
-				log.Printf("ERROR: RabbitMQ consumer for queue %s stopped: %v", cfg.QueueName, err)
-			}
-		}(consumer)
+		for i := 0; i < consumer.ConsumerCount; i++ {
+			wg.Add(1)
+			go func(cfg ConsumerConfig) {
+				defer wg.Done()
+				if err := b.startConsumer(cfg.QueueName, cfg.Handler); err != nil {
+					log.Printf("ERROR: RabbitMQ consumer for queue %s stopped: %v", cfg.QueueName, err)
+				}
+			}(consumer)
+		}
 	}
 	wg.Wait()
+
 	return nil
 }
 
@@ -66,6 +104,7 @@ func (b *Broker) Shutdown() error {
 	if b.conn != nil {
 		return b.conn.Close()
 	}
+
 	return nil
 }
 
@@ -83,18 +122,27 @@ func (b *Broker) startConsumer(queueName string, handler MessageHandler) error {
 
 	log.Printf("INFO: consuming messages on queue: %s", queueName)
 	for d := range msgs {
-		err := handler(d)
+		replyPayload, err := handler(d)
 		if err != nil {
-			log.Printf("ERROR: failed to handle message: %v", err)
 			_ = d.Nack(false, false)
-		} else {
-			_ = d.Ack(false)
+			continue
 		}
+
+		if d.ReplyTo != "" {
+			err = b.reply(d, replyPayload)
+			if err != nil {
+				log.Printf("ERROR: failed to send reply: %v", err)
+				_ = d.Nack(false, false)
+				continue
+			}
+		}
+		_ = d.Ack(false)
 	}
+
 	return nil
 }
 
-func (b *Broker) Reply(d amqp091.Delivery, payload any) error {
+func (b *Broker) reply(d amqp091.Delivery, payload any) error {
 	ch, err := b.conn.Channel()
 	if err != nil {
 		return err
@@ -114,39 +162,4 @@ func (b *Broker) Reply(d amqp091.Delivery, payload any) error {
 		CorrelationId: d.CorrelationId,
 		Body:          responseBytes,
 	})
-}
-
-func (b *Broker) declareTopology() error {
-	ch, err := b.conn.Channel()
-	if err != nil {
-		return err
-	}
-	defer ch.Close()
-
-	err = ch.ExchangeDeclare("gateway_service.v1.events", "topic", true, false, false, false, nil)
-	if err != nil {
-		return err
-	}
-
-	_, err = ch.QueueDeclare("content_service.v1.cv_requests.dlq", true, false, false, false, nil)
-	if err != nil {
-		return err
-	}
-
-	args := amqp091.Table{
-		"x-dead-letter-exchange":    "",
-		"x-dead-letter-routing-key": "content_service.v1.cv_requests.dlq",
-	}
-	_, err = ch.QueueDeclare("content_service.v1.cv_requests", true, false, false, false, args)
-	if err != nil {
-		return err
-	}
-
-	err = ch.QueueBind("content_service.v1.cv_requests", "cv.request.*", "gateway_service.v1.events", false, nil)
-	if err != nil {
-		return err
-	}
-
-	log.Println("INFO: RabbitMQ topology declared successfully")
-	return nil
 }

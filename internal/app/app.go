@@ -14,6 +14,7 @@ import (
 	handlerDowloadCv "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/handler/download_cv"
 	handlerGetContent "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/handler/get_content"
 	handlerGetCvLink "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/handler/get_cv_link"
+	processDownloadCv "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/download_cv"
 	processGetContent "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/get_content"
 	processGetCvLink "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/get_cv_link"
 	taskGetCvLink "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/get_cv_link/task"
@@ -29,16 +30,18 @@ type App struct {
 }
 
 func Build(cfg *registry.Config) (*App, error) {
-	maxRetries := 15
+	maxRetries := 20
 	retryDelay := 2 * time.Second
 	var err error
 
 	var redisClient *serviceRedis.Client
 	for i := 0; i < maxRetries; i++ {
-		redisClient = serviceRedis.NewClient(cfg.Redis.Addr)
-		if err = redisClient.Ping(context.Background()); err == nil {
-			log.Println("INFO: successfully connected to Redis")
-			break
+		redisClient, err = serviceRedis.NewClient(cfg.Redis.URL)
+		if err == nil {
+			if err = redisClient.Ping(context.Background()); err == nil {
+				log.Println("INFO: successfully connected to Redis")
+				break
+			}
 		}
 		log.Printf("INFO: could not connect to Redis, retrying in %v... (%d/%d)", retryDelay, i+1, maxRetries)
 		time.Sleep(retryDelay)
@@ -60,25 +63,41 @@ func Build(cfg *registry.Config) (*App, error) {
 		return nil, err
 	}
 
-	contentProcess, err := processGetContent.NewProcess(cfg.Content.Path)
+	if err := rabbitBroker.DeclareTopology(cfg.RabbitMQ.Topology); err != nil {
+		return nil, err
+	}
+
+	// get_content
+	getContentProcess, err := processGetContent.NewProcess(cfg.Content.Files, cfg.Content.DefaultLang)
 	if err != nil {
 		return nil, err
 	}
 
+	// get_cv_link
 	validatePasswordTask := taskGetCvLink.NewValidatePasswordTask(cfg.Cv.Password)
 	createTokenTask := taskGetCvLink.NewCreateTokenTask(redisClient, cfg.Cv.TokenTTL)
-	cvProcess := processGetCvLink.NewProcess(validatePasswordTask, createTokenTask, redisClient, cfg.Cv.FilePath)
+	getCvLinkProcess := processGetCvLink.NewProcess(validatePasswordTask, createTokenTask)
 
-	grpcHandler := handlerGetContent.NewHandler(contentProcess)
-	httpHandler := handlerDowloadCv.NewHandler(cvProcess)
-	getCvLinkConsumer := handlerGetCvLink.NewConsumer(cvProcess, rabbitBroker)
-	rabbitBroker.RegisterConsumer(cfg.RabbitMQ.CVRequestQueue, getCvLinkConsumer.Handle)
+	// download_cv
+	downloadCvProcess := processDownloadCv.NewProcess(redisClient, cfg.Cv.FilePath)
+
+	// handlers
+	getContentHandler := handlerGetContent.NewHandler(getContentProcess)
+	downloadCvHandler := handlerDowloadCv.NewHandler(downloadCvProcess)
+	getCvLinkHandler := handlerGetCvLink.NewHandler(getCvLinkProcess)
+
+	consumerCount := cfg.RabbitMQ.Consumers.DefaultCount
+	if consumerCount <= 0 {
+		consumerCount = 1
+	}
+
+	rabbitBroker.RegisterConsumer(cfg.RabbitMQ.Topology.Queues["cv_requests"].Name, consumerCount, getCvLinkHandler.Handle)
 
 	grpcServer := grpc.NewServer()
-	contentv1.RegisterContentServiceServer(grpcServer, grpcHandler)
+	contentv1.RegisterContentServiceServer(grpcServer, getContentHandler)
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("/download/cv", httpHandler.Handle)
+	mux.HandleFunc("/download/cv", downloadCvHandler.Handle)
 
 	httpServer := &http.Server{
 		Addr: ":" + cfg.Server.HTTPPort,

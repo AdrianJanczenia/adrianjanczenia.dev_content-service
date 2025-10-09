@@ -6,17 +6,12 @@ import (
 	"github.com/rabbitmq/amqp091-go"
 )
 
-type CVProcess interface {
-	GenerateLink(password string) (string, error)
+type GetCVLinkProcess interface {
+	Process(password string) (string, error)
 }
 
-type RabbitMQBroker interface {
-	Reply(d amqp091.Delivery, payload any) error
-}
-
-type Consumer struct {
-	cvProcess CVProcess
-	broker    RabbitMQBroker
+type Handler struct {
+	getCVLinkProcess GetCVLinkProcess
 }
 
 type requestPayload struct {
@@ -28,20 +23,19 @@ type responsePayload struct {
 	Error string `json:"error,omitempty"`
 }
 
-func NewConsumer(cvProcess CVProcess, broker RabbitMQBroker) *Consumer {
-	return &Consumer{
-		cvProcess: cvProcess,
-		broker:    broker,
+func NewHandler(cvProcess GetCVLinkProcess) *Handler {
+	return &Handler{
+		getCVLinkProcess: cvProcess,
 	}
 }
 
-func (c *Consumer) Handle(d amqp091.Delivery) error {
+func (c *Handler) Handle(d amqp091.Delivery) (any, error) {
 	var req requestPayload
 	if err := json.Unmarshal(d.Body, &req); err != nil {
-		return err
+		return nil, err
 	}
 
-	url, err := c.cvProcess.GenerateLink(req.Password)
+	url, err := c.getCVLinkProcess.Process(req.Password)
 
 	response := responsePayload{}
 	if err != nil {
@@ -50,5 +44,5 @@ func (c *Consumer) Handle(d amqp091.Delivery) error {
 		response.URL = url
 	}
 
-	return c.broker.Reply(d, response)
+	return response, nil
 }

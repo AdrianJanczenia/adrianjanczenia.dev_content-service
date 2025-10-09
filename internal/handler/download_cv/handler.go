@@ -5,16 +5,16 @@ import (
 	"net/http"
 )
 
-type CVProcess interface {
-	ValidateTokenAndGetPath(token string) (string, error)
+type DownloadCVProcess interface {
+	Process(token string) (string, error)
 }
 
 type Handler struct {
-	cvProcess CVProcess
+	downloadCVProcess DownloadCVProcess
 }
 
-func NewHandler(cvProcess CVProcess) *Handler {
-	return &Handler{cvProcess: cvProcess}
+func NewHandler(cvProcess DownloadCVProcess) *Handler {
+	return &Handler{downloadCVProcess: cvProcess}
 }
 
 func (h *Handler) Handle(w http.ResponseWriter, r *http.Request) {
@@ -29,7 +29,7 @@ func (h *Handler) Handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	filePath, err := h.cvProcess.ValidateTokenAndGetPath(token)
+	filePath, err := h.downloadCVProcess.Process(token)
 	if err != nil {
 		log.Printf("ERROR: CV download failed for token %s: %v", token, err)
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)

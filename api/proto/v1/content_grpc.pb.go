@@ -22,7 +22,7 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ContentServiceClient interface {
-	GetContent(ctx context.Context, in *GetContentRequest, opts ...grpc.CallOption) (*GetContentResponse, error)
+	Handle(ctx context.Context, in *GetContentRequest, opts ...grpc.CallOption) (*GetContentResponse, error)
 }
 
 type contentServiceClient struct {
@@ -33,9 +33,9 @@ func NewContentServiceClient(cc grpc.ClientConnInterface) ContentServiceClient {
 	return &contentServiceClient{cc}
 }
 
-func (c *contentServiceClient) GetContent(ctx context.Context, in *GetContentRequest, opts ...grpc.CallOption) (*GetContentResponse, error) {
+func (c *contentServiceClient) Handle(ctx context.Context, in *GetContentRequest, opts ...grpc.CallOption) (*GetContentResponse, error) {
 	out := new(GetContentResponse)
-	err := c.cc.Invoke(ctx, "/content.v1.ContentService/GetContent", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/content.v1.ContentService/Handle", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +46,7 @@ func (c *contentServiceClient) GetContent(ctx context.Context, in *GetContentReq
 // All implementations must embed UnimplementedContentServiceServer
 // for forward compatibility
 type ContentServiceServer interface {
-	GetContent(context.Context, *GetContentRequest) (*GetContentResponse, error)
+	Handle(context.Context, *GetContentRequest) (*GetContentResponse, error)
 	mustEmbedUnimplementedContentServiceServer()
 }
 
@@ -54,8 +54,8 @@ type ContentServiceServer interface {
 type UnimplementedContentServiceServer struct {
 }
 
-func (UnimplementedContentServiceServer) GetContent(context.Context, *GetContentRequest) (*GetContentResponse, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method GetContent not implemented")
+func (UnimplementedContentServiceServer) Handle(context.Context, *GetContentRequest) (*GetContentResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Handle not implemented")
 }
 func (UnimplementedContentServiceServer) mustEmbedUnimplementedContentServiceServer() {}
 
@@ -70,20 +70,20 @@ func RegisterContentServiceServer(s grpc.ServiceRegistrar, srv ContentServiceSer
 	s.RegisterService(&ContentService_ServiceDesc, srv)
 }
 
-func _ContentService_GetContent_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _ContentService_Handle_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(GetContentRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ContentServiceServer).GetContent(ctx, in)
+		return srv.(ContentServiceServer).Handle(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/content.v1.ContentService/GetContent",
+		FullMethod: "/content.v1.ContentService/Handle",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ContentServiceServer).GetContent(ctx, req.(*GetContentRequest))
+		return srv.(ContentServiceServer).Handle(ctx, req.(*GetContentRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -96,8 +96,8 @@ var ContentService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*ContentServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GetContent",
-			Handler:    _ContentService_GetContent_Handler,
+			MethodName: "Handle",
+			Handler:    _ContentService_Handle_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

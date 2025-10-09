@@ -13,9 +13,13 @@ type Client struct {
 	client *redis.Client
 }
 
-func NewClient(addr string) *Client {
-	rdb := redis.NewClient(&redis.Options{Addr: addr})
-	return &Client{client: rdb}
+func NewClient(redisURL string) (*Client, error) {
+	opts, err := redis.ParseURL(redisURL)
+	if err != nil {
+		return nil, err
+	}
+	rdb := redis.NewClient(opts)
+	return &Client{client: rdb}, nil
 }
 
 func (c *Client) Ping(ctx context.Context) error {
@@ -26,7 +30,7 @@ func (c *Client) SetToken(token string, value interface{}, ttl time.Duration) er
 	return c.client.Set(context.Background(), token, value, ttl).Err()
 }
 
-func (c *Client) ValidateToken(token string) (bool, error) {
+func (c *Client) ValidateAndDeleteToken(token string) (bool, error) {
 	err := c.client.Get(context.Background(), token).Err()
 	if errors.Is(err, redis.Nil) {
 		return false, nil

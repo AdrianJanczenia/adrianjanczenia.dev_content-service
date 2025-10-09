@@ -25,9 +25,11 @@ func NewCreateTokenTask(ts TokenService, ttl time.Duration) *CreateTokenTask {
 
 func (t *CreateTokenTask) Execute() (string, error) {
 	token := uuid.New().String()
+
 	err := t.tokenService.SetToken(token, "valid", t.tokenTTL)
 	if err != nil {
 		return "", fmt.Errorf("could not save token: %w", err)
 	}
+
 	return token, nil
 }

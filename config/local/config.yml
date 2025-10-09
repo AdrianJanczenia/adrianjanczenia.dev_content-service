@@ -1,14 +1,39 @@
 server:
   grpcPort: "50051"
   httpPort: "8081"
+
 redis:
-  addr: "localhost:6379"
+  url: "redis://:localpassword@172.20.0.13:6379/0"
+
 rabbitmq:
-  url: "amqp://guest:guest@localhost:5672/"
-  cvRequestQueue: "content_service.v1.cv_requests"
+  url: "amqp://admin:admin@172.20.0.14:5672/"
+  consumers:
+    defaultCount: 5
+  topology:
+    exchanges:
+      - name: "gateway_service.v1.events"
+        type: "topic"
+        durable: true
+    queues:
+      cv_requests:
+        name: "content_service.v1.cv_requests"
+        durable: true
+        dlq: "content_service.v1.cv_requests.dlq"
+      cv_requests_dlq:
+        name: "content_service.v1.cv_requests.dlq"
+        durable: true
+    bindings:
+      - exchange: "gateway_service.v1.events"
+        queue_key: "cv_requests"
+        routing_key: "cv.request.*"
+
 content:
-  path: "content"
+  defaultLang: "pl"
+  files:
+    pl: "content/pl.json"
+    en: "content/en.json"
+
 cv:
   filePath: "/app/private/cv.pdf"
   password: "local_password"
-  tokenTTLSeconds: 600
+  tokenTTLSeconds: 60

@@ -14,5 +14,6 @@ func (t *ValidatePasswordTask) Execute(password string) error {
 	if password != t.correctPassword {
 		return errors.New("invalid password")
 	}
+
 	return nil
 }

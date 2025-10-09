@@ -7,21 +7,21 @@ import (
 	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/api/proto/v1"
 )
 
-type ContentProcess interface {
-	Execute(lang string) (map[string]interface{}, error)
+type GetContentProcess interface {
+	Process(lang string) (map[string]interface{}, error)
 }
 
 type Handler struct {
 	contentv1.UnimplementedContentServiceServer
-	process ContentProcess
+	getContentProcess GetContentProcess
 }
 
-func NewHandler(process ContentProcess) *Handler {
-	return &Handler{process: process}
+func NewHandler(process GetContentProcess) *Handler {
+	return &Handler{getContentProcess: process}
 }
 
-func (h *Handler) GetContent(ctx context.Context, req *contentv1.GetContentRequest) (*contentv1.GetContentResponse, error) {
-	content, err := h.process.Execute(req.GetLang())
+func (h *Handler) Handle(ctx context.Context, req *contentv1.GetContentRequest) (*contentv1.GetContentResponse, error) {
+	content, err := h.getContentProcess.Process(req.GetLang())
 	if err != nil {
 		return nil, err
 	}
