@@ -53,9 +53,9 @@ type Config struct {
 		Files       map[string]string
 	}
 	Cv struct {
-		FilePath string
 		Password string
 		TokenTTL time.Duration
+		Files    map[string]string `yaml:"files"`
 	}
 }
 
@@ -82,9 +82,9 @@ func LoadConfig() (*Config, error) {
 			Files       map[string]string `yaml:"files"`
 		} `yaml:"content"`
 		Cv struct {
-			FilePath string `yaml:"filePath"`
-			Password string `yaml:"password"`
-			TokenTTL int    `yaml:"tokenTTLSeconds"`
+			Password string            `yaml:"password"`
+			TokenTTL int               `yaml:"tokenTTLSeconds"`
+			Files    map[string]string `yaml:"files"`
 		} `yaml:"cv"`
 	}
 
@@ -115,9 +115,9 @@ func LoadConfig() (*Config, error) {
 	cfg.RabbitMQ.Topology = yc.RabbitMQ.Topology
 	cfg.Content.DefaultLang = yc.Content.DefaultLang
 	cfg.Content.Files = yc.Content.Files
-	cfg.Cv.FilePath = yc.Cv.FilePath
 	cfg.Cv.Password = yc.Cv.Password
 	cfg.Cv.TokenTTL = time.Duration(yc.Cv.TokenTTL) * time.Second
+	cfg.Cv.Files = yc.Cv.Files
 
 	overrideFromEnv("CV_PASSWORD", &cfg.Cv.Password)
 	overrideFromEnv("REDIS_URL", &cfg.Redis.URL)

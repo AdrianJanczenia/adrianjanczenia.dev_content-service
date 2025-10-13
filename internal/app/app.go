@@ -76,10 +76,9 @@ func Build(cfg *registry.Config) (*App, error) {
 	// get_cv_link
 	validatePasswordTask := taskGetCvLink.NewValidatePasswordTask(cfg.Cv.Password)
 	createTokenTask := taskGetCvLink.NewCreateTokenTask(redisClient, cfg.Cv.TokenTTL)
-	getCvLinkProcess := processGetCvLink.NewProcess(validatePasswordTask, createTokenTask)
+	getCvLinkProcess := processGetCvLink.NewProcess(validatePasswordTask, createTokenTask, cfg.Cv.Files)
 
-	// download_cv
-	downloadCvProcess := processDownloadCv.NewProcess(redisClient, cfg.Cv.FilePath)
+	downloadCvProcess := processDownloadCv.NewProcess(redisClient, cfg.Cv.Files)
 
 	// handlers
 	getContentHandler := handlerGetContent.NewHandler(getContentProcess)

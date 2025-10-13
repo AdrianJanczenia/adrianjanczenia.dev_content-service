@@ -30,6 +30,7 @@ func NewBroker(amqpURL string) (*Broker, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	return &Broker{
 		conn:      conn,
 		consumers: []ConsumerConfig{},

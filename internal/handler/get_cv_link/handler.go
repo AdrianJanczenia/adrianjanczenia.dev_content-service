@@ -7,7 +7,7 @@ import (
 )
 
 type GetCVLinkProcess interface {
-	Process(password string) (string, error)
+	Process(password, lang string) (string, error)
 }
 
 type Handler struct {
@@ -16,6 +16,7 @@ type Handler struct {
 
 type requestPayload struct {
 	Password string `json:"password"`
+	Lang     string `json:"lang"`
 }
 
 type responsePayload struct {
@@ -35,7 +36,7 @@ func (c *Handler) Handle(d amqp091.Delivery) (any, error) {
 		return nil, err
 	}
 
-	url, err := c.getCVLinkProcess.Process(req.Password)
+	url, err := c.getCVLinkProcess.Process(req.Password, req.Lang)
 
 	response := responsePayload{}
 	if err != nil {

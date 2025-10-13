@@ -6,7 +6,7 @@ import (
 )
 
 type DownloadCVProcess interface {
-	Process(token string) (string, error)
+	Process(token, lang string) (string, error)
 }
 
 type Handler struct {
@@ -29,7 +29,13 @@ func (h *Handler) Handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	filePath, err := h.downloadCVProcess.Process(token)
+	lang := r.URL.Query().Get("lang")
+	if lang == "" {
+		http.Error(w, "Bad Request: missing lang parameter", http.StatusBadRequest)
+		return
+	}
+
+	filePath, err := h.downloadCVProcess.Process(token, lang)
 	if err != nil {
 		log.Printf("ERROR: CV download failed for token %s: %v", token, err)
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)

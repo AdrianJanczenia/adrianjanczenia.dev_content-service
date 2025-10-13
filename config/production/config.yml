@@ -34,6 +34,8 @@ content:
     en: "content/en.json"
 
 cv:
-  filePath: ""
   password: ""
   tokenTTLSeconds: 60
+  files:
+    pl: "/app/private/pl_cv.pdf"
+    en: "/app/private/en_cv.pdf"

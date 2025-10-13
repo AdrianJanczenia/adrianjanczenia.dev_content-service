@@ -19,6 +19,7 @@ func NewClient(redisURL string) (*Client, error) {
 		return nil, err
 	}
 	rdb := redis.NewClient(opts)
+
 	return &Client{client: rdb}, nil
 }
 
