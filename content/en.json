@@ -1,36 +1,220 @@
 {
   "meta": {
-    "title": "Adrian Janczenia - Backend Go Developer"
+    "title": "Adrian P. Janczenia - Backend Developer"
   },
   "profile": {
-    "name": "Adrian Janczenia",
-    "role": "Backend Go Developer",
-    "status": "Open for new opportunities",
-    "bio": "Experienced software engineer passionate about building robust and efficient backend systems."
+    "name": "Adrian P. Janczenia",
+    "headline": "Backend Developer",
+    "about": "Software Engineer with extensive experience in backend development, underpinned by a strong foundation in Quality Assurance. I specialize in developing distributed systems and microservices using Go and PHP. I am committed to delivering high-quality solutions, prioritizing clean, maintainable code and adherence to engineering best practices. I place a high value on effective, transparent communication within the team. Privately, I am a motorcycle enthusiast who enjoys seaside walks. I actively follow emerging IT trends and share a passion for music, movies, and TV series.",
+    "tags": [
+      "Golang",
+      "PHP",
+      "Microservices",
+      "Distributed Systems",
+      "Cloud"
+    ]
   },
+  "languages": [
+    {
+      "language": "English",
+      "proficiency": "Full professional proficiency"
+    },
+    {
+      "language": "Polish",
+      "proficiency": "Native"
+    }
+  ],
   "skills": [
     {
-      "key": "languages",
+      "key": "programming_languages",
       "values": [
-        "Go",
-        "Python",
-        "SQL"
+        "Golang (Advanced)",
+        "PHP (Advanced)",
+        "C++ (Basic)",
+        "Python (Basic)",
+        "JavaScript (Basic)"
+      ]
+    },
+    {
+      "key": "web_development",
+      "values": [
+        "HTML",
+        "CSS",
+        "React"
+      ]
+    },
+    {
+      "key": "architecture",
+      "values": [
+        "Microservices",
+        "Distributed Systems",
+        "OOP",
+        "TDD"
+      ]
+    },
+    {
+      "key": "message_queuing",
+      "values": [
+        "RabbitMQ (AMQP)"
+      ]
+    },
+    {
+      "key": "databases",
+      "values": [
+        "PostgreSQL",
+        "MSSQL",
+        "Redis"
+      ]
+    },
+    {
+      "key": "search_indexing",
+      "values": [
+        "Solr",
+        "Elasticsearch"
+      ]
+    },
+    {
+      "key": "api",
+      "values": [
+        "REST API"
+      ]
+    },
+    {
+      "key": "testing",
+      "values": [
+        "Codeception",
+        "Behave",
+        "Gherkin",
+        "Selenium",
+        "Unit",
+        "Integration",
+        "E2E"
+      ]
+    },
+    {
+      "key": "devops_tools",
+      "values": [
+        "Docker",
+        "Docker Swarm",
+        "Ansible",
+        "TeamCity",
+        "Git",
+        "GitHub",
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "key": "management",
+      "values": [
+        "Jira",
+        "Confluence",
+        "Monday",
+        "Scrum",
+        "Kanban"
+      ]
+    },
+    {
+      "key": "soft_skills",
+      "values": [
+        "Analytical thinking",
+        "Problem-solving",
+        "Communication",
+        "Teamwork",
+        "Prioritization",
+        "Resilience"
       ]
     }
   ],
   "experience": [
     {
-      "role": "Backend Go Developer",
-      "company": "Tech Corp",
-      "period": "2022 - Present",
-      "description": "Designing and implementing microservices in Go."
+      "role": "Back End Developer",
+      "company": "Miinto",
+      "period": "Jan 2022 - Present",
+      "location": "Warsaw, Mazowieckie, Poland",
+      "type": "Remote",
+      "summary": "Development and maintenance of a high-traffic e-commerce platform.",
+      "responsibilities": [
+        "Developing scalable microservices in Go (Golang) and maintaining legacy PHP systems.",
+        "Participating in the migration from a monolithic architecture to distributed microservices.",
+        "Building distributed systems using RabbitMQ, PostgreSQL, Redis, and REST APIs.",
+        "Rewriting and optimizing legacy services to improve performance and maintainability.",
+        "Maintaining high code quality through unit/functional testing and regular code reviews.",
+        "Automating CI/CD pipelines (TeamCity, GitHub Actions) and managing infrastructure with Docker and Ansible.",
+        "Working in an Agile environment (Kanban) with a focus on clean code and best practices."
+      ],
+      "skills_used": [
+        "Go",
+        "Microservices",
+        "Distributed Systems",
+        "RabbitMQ",
+        "PostgreSQL",
+        "Redis",
+        "PHP"
+      ]
+    },
+    {
+      "role": "QA Engineer",
+      "company": "Miinto",
+      "period": "Jul 2018 - Jan 2022",
+      "location": "Warsaw, Mazowieckie, Poland",
+      "type": "Hybrid",
+      "summary": "Quality Assurance Engineer focused on test automation and backend validation.",
+      "responsibilities": [
+        "Developing automated test suites using Python (Behave, Selenium) and PHP (Codeception).",
+        "Validating data integrity and business logic across RabbitMQ, PostgreSQL, MSSQL, and Redis.",
+        "Performing comprehensive API testing and debugging using Postman.",
+        "Analyzing requirements and maintaining test documentation in an Agile/Scrum environment.",
+        "Executing manual testing for complex web applications and reporting defects.",
+        "ISTQB Foundation Level certified with additional Technical Test Analyst training."
+      ],
+      "skills_used": [
+        "Test Automation",
+        "Python",
+        "Selenium",
+        "API Testing",
+        "SQL",
+        "Quality Assurance",
+        "Postman"
+      ]
     }
   ],
   "contact": {
     "email": "adrian.janczenia@email.com",
-    "linkedin": "adrian-janczenia-dev"
+    "linkedin": "adrian-janczenia",
+    "github": "AdrianJanczenia"
   },
   "translations": {
-    "nav_about": "about"
+    "nav_about": "about",
+    "nav_experience": "experience",
+    "nav_skills": "skills",
+    "nav_languages": "languages",
+    "nav_contact": "contact",
+    "nav_cv": "download-cv",
+    "header_about": "about",
+    "header_experience": "experience",
+    "header_skills": "skills",
+    "header_languages": "languages",
+    "header_contact": "contact",
+    "profile_key_name": "name",
+    "profile_key_headline": "role",
+    "profile_key_about": "bio",
+    "experience_key_responsibilities": "responsibilities",
+    "experience_key_stack": "stack",
+    "contact_key_email": "email",
+    "contact_key_linkedin": "linkedin",
+    "back_to_top_label": "Back to top",
+    "error_title": "An error occurred",
+    "error_message": "We are working on fixing the problem. Please try again later.",
+    "cv_modal_title": "Authorized Access Only",
+    "cv_password_placeholder": "Enter access password...",
+    "btn_get_link": "Download CV",
+    "btn_processing": "Processing...",
+    "btn_back": "Back to Home Page",
+    "error_cv_auth": "Access denied. Invalid password.",
+    "error_cv_expired": "This CV link has expired or has already been used. Please generate a new one.",
+    "error_cv_server": "A server error occurred while downloading the file.",
+    "error_cv_not_found": "CV file was not found."
   }
 }

@@ -7,7 +7,7 @@ message GetContentRequest {
 }
 
 message GetContentResponse {
-  string json_content = 1;
+  bytes json_content = 1;
 }
 
 service ContentService {

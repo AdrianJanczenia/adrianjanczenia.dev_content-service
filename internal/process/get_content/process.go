@@ -1,18 +1,17 @@
 package get_content
 
 import (
-	"encoding/json"
 	"fmt"
 	"os"
 )
 
 type Process struct {
-	content     map[string]map[string]interface{}
+	content     map[string][]byte
 	defaultLang string
 }
 
 func NewProcess(contentFiles map[string]string, defaultLang string) (*Process, error) {
-	content := make(map[string]map[string]interface{})
+	content := make(map[string][]byte)
 
 	for lang, filePath := range contentFiles {
 		file, err := os.ReadFile(filePath)
@@ -20,11 +19,7 @@ func NewProcess(contentFiles map[string]string, defaultLang string) (*Process, e
 			return nil, fmt.Errorf("could not read content file for lang %s: %w", lang, err)
 		}
 
-		var data map[string]interface{}
-		if err := json.Unmarshal(file, &data); err != nil {
-			return nil, fmt.Errorf("could not unmarshal content for lang %s: %w", lang, err)
-		}
-		content[lang] = data
+		content[lang] = file
 	}
 
 	return &Process{
@@ -33,7 +28,7 @@ func NewProcess(contentFiles map[string]string, defaultLang string) (*Process, e
 	}, nil
 }
 
-func (p *Process) Process(lang string) (map[string]interface{}, error) {
+func (p *Process) Process(lang string) ([]byte, error) {
 	if content, ok := p.content[lang]; ok {
 		return content, nil
 	}

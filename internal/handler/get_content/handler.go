@@ -2,13 +2,12 @@ package get_content
 
 import (
 	"context"
-	"encoding/json"
 
 	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/api/proto/v1"
 )
 
 type GetContentProcess interface {
-	Process(lang string) (map[string]interface{}, error)
+	Process(lang string) ([]byte, error)
 }
 
 type Handler struct {
@@ -26,10 +25,5 @@ func (h *Handler) Handle(ctx context.Context, req *contentv1.GetContentRequest) 
 		return nil, err
 	}
 
-	data, err := json.Marshal(content)
-	if err != nil {
-		return nil, err
-	}
-
-	return &contentv1.GetContentResponse{JsonContent: string(data)}, nil
+	return &contentv1.GetContentResponse{JsonContent: content}, nil
 }

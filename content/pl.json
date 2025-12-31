@@ -1,36 +1,220 @@
 {
   "meta": {
-    "title": "Adrian Janczenia - Backend Go Developer"
+    "title": "Adrian P. Janczenia - Backend Developer"
   },
   "profile": {
-    "name": "Adrian Janczenia",
-    "role": "Backend Go Developer",
-    "status": "Otwarty na nowe wyzwania",
-    "bio": "Doświadczony inżynier oprogramowania z pasją do budowania solidnych i wydajnych systemów backendowych."
+    "name": "Adrian P. Janczenia",
+    "headline": "Backend Developer",
+    "about": "Inżynier oprogramowania z bogatym doświadczeniem w rozwoju backendu, wspartym solidnymi podstawami w zapewnianiu jakości (QA). Specjalizuję się w tworzeniu systemów rozproszonych i mikrousług przy użyciu języków Go i PHP. Angażuję się w dostarczanie wysokiej jakości rozwiązań, priorytetyzując czysty, łatwy w utrzymaniu kod oraz przestrzeganie najlepszych praktyk inżynierskich. Kładę duży nacisk na skuteczną i przejrzystą komunikację w zespole. Prywatnie jestem entuzjastą motocykli, który lubi spacery nad morzem. Aktywnie śledzę nowe trendy w IT i dzielę pasję do muzyki, filmów oraz seriali.",
+    "tags": [
+      "Golang",
+      "PHP",
+      "Mikrousługi",
+      "Systemy Rozproszone",
+      "Chmura"
+    ]
   },
+  "languages": [
+    {
+      "language": "Angielski",
+      "proficiency": "Pełna biegłość zawodowa"
+    },
+    {
+      "language": "Polski",
+      "proficiency": "Ojczysty"
+    }
+  ],
   "skills": [
     {
-      "key": "languages",
+      "key": "programming_languages",
       "values": [
-        "Go",
-        "Python",
-        "SQL"
+        "Golang (Zaawansowany)",
+        "PHP (Zaawansowany)",
+        "C++ (Podstawowy)",
+        "Python (Podstawowy)",
+        "JavaScript (Podstawowy)"
+      ]
+    },
+    {
+      "key": "web_development",
+      "values": [
+        "HTML",
+        "CSS",
+        "React"
+      ]
+    },
+    {
+      "key": "architecture",
+      "values": [
+        "Mikrousługi",
+        "Systemy Rozproszone",
+        "OOP",
+        "TDD"
+      ]
+    },
+    {
+      "key": "message_queuing",
+      "values": [
+        "RabbitMQ (AMQP)"
+      ]
+    },
+    {
+      "key": "databases",
+      "values": [
+        "PostgreSQL",
+        "MSSQL",
+        "Redis"
+      ]
+    },
+    {
+      "key": "search_indexing",
+      "values": [
+        "Solr",
+        "Elasticsearch"
+      ]
+    },
+    {
+      "key": "api",
+      "values": [
+        "REST API"
+      ]
+    },
+    {
+      "key": "testing",
+      "values": [
+        "Codeception",
+        "Behave",
+        "Gherkin",
+        "Selenium",
+        "Unit",
+        "Integration",
+        "E2E"
+      ]
+    },
+    {
+      "key": "devops_tools",
+      "values": [
+        "Docker",
+        "Docker Swarm",
+        "Ansible",
+        "TeamCity",
+        "Git",
+        "GitHub",
+        "Linux",
+        "Windows",
+        "macOS"
+      ]
+    },
+    {
+      "key": "management",
+      "values": [
+        "Jira",
+        "Confluence",
+        "Monday",
+        "Scrum",
+        "Kanban"
+      ]
+    },
+    {
+      "key": "soft_skills",
+      "values": [
+        "Analityczne myślenie",
+        "Rozwiązywanie problemów",
+        "Komunikacja",
+        "Praca zespołowa",
+        "Priorytetyzacja",
+        "Odporność"
       ]
     }
   ],
   "experience": [
     {
-      "role": "Backend Go Developer",
-      "company": "Tech Corp",
-      "period": "2022 - Obecnie",
-      "description": "Projektowanie i implementacja mikroserwisów w Go."
+      "role": "Back End Developer",
+      "company": "Miinto",
+      "period": "Sty 2022 - Obecnie",
+      "location": "Warszawa, Mazowieckie, Polska",
+      "type": "Zdalnie",
+      "summary": "Rozwój i utrzymanie platformy e-commerce o dużym natężeniu ruchu.",
+      "responsibilities": [
+        "Tworzenie skalowalnych mikrousług w Go (Golang) oraz utrzymywanie systemów legacy w PHP.",
+        "Udział w migracji z architektury monolitycznej do rozproszonych mikrousług.",
+        "Budowa systemów rozproszonych z wykorzystaniem RabbitMQ, PostgreSQL, Redis i REST API.",
+        "Przepisanie i optymalizacja usług legacy w celu poprawy wydajności i łatwości utrzymania.",
+        "Utrzymanie wysokiej jakości kodu poprzez testy jednostkowe/funkcjonalne oraz regularne code review.",
+        "Automatyzacja potoków CI/CD (TeamCity, GitHub Actions) i zarządzanie infrastrukturą za pomocą Docker i Ansible.",
+        "Praca w środowisku Agile (Kanban) z naciskiem na czysty kod i najlepsze praktyki."
+      ],
+      "skills_used": [
+        "Go",
+        "Mikrousługi",
+        "Systemy Rozproszone",
+        "RabbitMQ",
+        "PostgreSQL",
+        "Redis",
+        "PHP"
+      ]
+    },
+    {
+      "role": "QA Engineer",
+      "company": "Miinto",
+      "period": "Lip 2018 - Sty 2022",
+      "location": "Warszawa, Mazowieckie, Polska",
+      "type": "Hybrydowo",
+      "summary": "Inżynier QA skoncentrowany na automatyzacji testów i walidacji backendu.",
+      "responsibilities": [
+        "Tworzenie zestawów testów automatycznych przy użyciu Python (Behave, Selenium) i PHP (Codeception).",
+        "Walidacja integralności danych i logiki biznesowej w RabbitMQ, PostgreSQL, MSSQL i Redis.",
+        "Przeprowadzanie kompleksowych testów API i debugowanie przy użyciu Postman.",
+        "Analiza wymagań i utrzymywanie dokumentacji testowej w środowisku Agile/Scrum.",
+        "Wykonywanie testów manualnych dla złożonych aplikacji internetowych i raportowanie błędów.",
+        "Certyfikat ISTQB Foundation Level wraz z dodatkowym szkoleniem Technical Test Analyst."
+      ],
+      "skills_used": [
+        "Automatyzacja testów",
+        "Python",
+        "Selenium",
+        "Testowanie API",
+        "SQL",
+        "Quality Assurance",
+        "Postman"
+      ]
     }
   ],
   "contact": {
     "email": "adrian.janczenia@email.com",
-    "linkedin": "adrian-janczenia-dev"
+    "linkedin": "adrian-janczenia",
+    "github": "AdrianJanczenia"
   },
   "translations": {
-    "nav_about": "o-mnie"
+    "nav_about": "o-mnie",
+    "nav_experience": "doświadczenie",
+    "nav_skills": "umiejętności",
+    "nav_languages": "języki",
+    "nav_contact": "kontakt",
+    "nav_cv": "pobierz-cv",
+    "header_about": "o-mnie",
+    "header_experience": "doświadczenie",
+    "header_skills": "umiejętności",
+    "header_languages": "języki",
+    "header_contact": "kontakt",
+    "profile_key_name": "imię",
+    "profile_key_headline": "rola",
+    "profile_key_about": "biografia",
+    "experience_key_responsibilities": "zakres obowiązków",
+    "experience_key_stack": "stos technologiczny",
+    "contact_key_email": "email",
+    "contact_key_linkedin": "linkedin",
+    "back_to_top_label": "Wróć na górę",
+    "error_title": "Wystąpił błąd",
+    "error_message": "Pracujemy nad rozwiązaniem problemu. Spróbuj ponownie później.",
+    "cv_modal_title": "Dostęp Autoryzowany",
+    "cv_password_placeholder": "Wprowadź hasło dostępu...",
+    "btn_get_link": "Pobierz CV",
+    "btn_processing": "Przetwarzanie...",
+    "btn_back": "Wróć do strony głównej",
+    "error_cv_auth": "Odmowa dostępu. Nieprawidłowe hasło.",
+    "error_cv_expired": "Ten link do CV wygasł lub został już wykorzystany. Wygeneruj nowy.",
+    "error_cv_server": "Wystąpił błąd serwera podczas pobierania pliku.",
+    "error_cv_not_found": "Plik CV nie został znaleziony."
   }
 }
