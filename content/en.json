@@ -5,7 +5,7 @@
   "profile": {
     "name": "Adrian P. Janczenia",
     "headline": "Backend Developer",
-    "about": "Software Engineer with extensive experience in backend development, underpinned by a strong foundation in Quality Assurance. I specialize in developing distributed systems and microservices using Go and PHP. I am committed to delivering high-quality solutions, prioritizing clean, maintainable code and adherence to engineering best practices. I place a high value on effective, transparent communication within the team. Privately, I am a motorcycle enthusiast who enjoys seaside walks. I actively follow emerging IT trends and share a passion for music, movies, and TV series.",
+    "about": "Software Engineer with extensive experience in backend development, underpinned by a strong foundation in Quality Assurance. I specialize in developing distributed systems and microservices using Go and PHP. I am committed to delivering high-quality solutions, prioritizing clean, maintainable code and adherence to engineering best practices. I place a high value on effective, transparent communication within the team. \n\nPrivately, I am a motorcycle enthusiast who enjoys seaside walks. I actively follow emerging IT trends and share a passion for music, movies, and TV series.",
     "tags": [
       "Golang",
       "PHP",
@@ -180,6 +180,88 @@
       ]
     }
   ],
+  "privacy_policy": {
+    "title": "PRIVACY POLICY",
+    "sections": [
+      {
+        "header": "I. Data Controller",
+        "items": [
+          {
+            "text": "The Administrator of the website is: Adrian Janczenia, e-mail contact: janczenia.adrian@gmail.com."
+          }
+        ]
+      },
+      {
+        "header": "II. Scope and Purpose of Data Processing",
+        "items": [
+          {
+            "text": "The website is strictly informational (online portfolio). The service does not use contact forms, user registration systems, or subscription mechanisms (newsletters)."
+          },
+          {
+            "text": "The Administrator does not actively collect personal data of Users."
+          }
+        ]
+      },
+      {
+        "header": "III. Server Logs (Technical Data)",
+        "items": [
+          {
+            "text": "Using the website involves sending requests to the server where the website is hosted."
+          },
+          {
+            "text": "Each query sent to the server is recorded in system logs. The logs include, among others: the User's IP address, server date and time, information about the web browser, and operating system."
+          },
+          {
+            "text": "Data stored in server logs are not associated with specific persons using the website and are not used by the Administrator for the purpose of User identification."
+          },
+          {
+            "text": "The legal basis for processing data in server logs is Art. 6(1)(f) of the GDPR (Legitimate Interest of the Controller), which consists of ensuring the security of the service, diagnosing potential technical errors, and server administration."
+          }
+        ]
+      },
+      {
+        "header": "IV. Cookies",
+        "items": [
+          {
+            "text": "The website does not use cookies for marketing, tracking, analytical, or profiling purposes."
+          },
+          {
+            "text": "The website may use only technical cookies that are strictly necessary for the proper display of the website or ensuring data transmission security."
+          },
+          {
+            "text": "In accordance with applicable telecommunications laws (implementing the ePrivacy Directive), the use of cookies strictly necessary for the technical handling of transmission or delivery of the service does not require User consent."
+          }
+        ]
+      },
+      {
+        "header": "V. Links to External Sites",
+        "items": [
+          {
+            "text": "The website contains links leading to external social media portals (e.g., LinkedIn, Facebook, GitHub)."
+          },
+          {
+            "text": "These are static text or graphic links. The Administrator does not use active social media plugins (such as \"Like\" buttons) that would automatically transfer User data to the administrators of these portals."
+          },
+          {
+            "text": "After clicking a link and leaving the website, responsibility for personal data processing is assumed by the provider of the external service. The Administrator recommends reviewing the privacy policies of those entities."
+          }
+        ]
+      },
+      {
+        "header": "VI. User Rights",
+        "items": [
+          {
+            "label": "1.",
+            "text": "Under the GDPR, the User has the right to: a) access their data and receive a copy of it, b) rectify (correct) their data, c) erase data (\"right to be forgotten\"), d) restrict data processing, e) object to data processing, f) lodge a complaint with a supervisory authority."
+          },
+          {
+            "label": "2.",
+            "text": "Disclaimer: Due to the fact that the Administrator processes data only in server logs and is unable to identify a natural person on this basis, the exercise of the rights indicated in point 1(a-e) may be limited pursuant to Art. 11(2) of the GDPR (processing which does not require identification), unless the User provides additional information enabling their identification."
+          }
+        ]
+      }
+    ]
+  },
   "contact": {
     "email": "adrian.janczenia@email.com",
     "linkedin": "adrian-janczenia",
@@ -192,11 +274,16 @@
     "nav_languages": "languages",
     "nav_contact": "contact",
     "nav_cv": "download-cv",
+    "nav_privacy_policy": "privacy policy",
     "header_about": "about",
     "header_experience": "experience",
     "header_skills": "skills",
     "header_languages": "languages",
     "header_contact": "contact",
+    "header_home": "home-page",
+    "header_privacy": "PRIVACY-POLICY",
+    "path_privacy_pl": "polityka-prywatnosci",
+    "path_privacy_en": "privacy-policy",
     "profile_key_name": "name",
     "profile_key_headline": "role",
     "profile_key_about": "bio",

@@ -5,7 +5,7 @@
   "profile": {
     "name": "Adrian P. Janczenia",
     "headline": "Backend Developer",
-    "about": "Inżynier oprogramowania z bogatym doświadczeniem w rozwoju backendu, wspartym solidnymi podstawami w zapewnianiu jakości (QA). Specjalizuję się w tworzeniu systemów rozproszonych i mikrousług przy użyciu języków Go i PHP. Angażuję się w dostarczanie wysokiej jakości rozwiązań, priorytetyzując czysty, łatwy w utrzymaniu kod oraz przestrzeganie najlepszych praktyk inżynierskich. Kładę duży nacisk na skuteczną i przejrzystą komunikację w zespole. Prywatnie jestem entuzjastą motocykli, który lubi spacery nad morzem. Aktywnie śledzę nowe trendy w IT i dzielę pasję do muzyki, filmów oraz seriali.",
+    "about": "Inżynier oprogramowania z bogatym doświadczeniem w rozwoju backendu, wspartym solidnymi podstawami w zapewnianiu jakości (QA). Specjalizuję się w tworzeniu systemów rozproszonych i mikrousług przy użyciu języków Go i PHP. Angażuję się w dostarczanie wysokiej jakości rozwiązań, priorytetyzując czysty, łatwy w utrzymaniu kod oraz przestrzeganie najlepszych praktyk inżynierskich. Kładę duży nacisk na skuteczną i przejrzystą komunikację w zespole. \n\nPrywatnie jestem entuzjastą motocykli, który lubi spacery nad morzem. Aktywnie śledzę nowe trendy w IT i dzielę pasję do muzyki, filmów oraz seriali.",
     "tags": [
       "Golang",
       "PHP",
@@ -180,8 +180,90 @@
       ]
     }
   ],
+  "privacy_policy": {
+    "title": "POLITYKA PRYWATNOŚCI",
+    "sections": [
+      {
+        "header": "I. Administrator Danych",
+        "items": [
+          {
+            "text": "Administratorem strony internetowej jest: Adrian Janczenia, kontakt e-mail: janczenia.adrian@gmail.com."
+          }
+        ]
+      },
+      {
+        "header": "II. Zakres i cel przetwarzania danych",
+        "items": [
+          {
+            "text": "Strona internetowa ma charakter wyłącznie informacyjny (wizytówka online). W ramach serwisu nie są stosowane formularze kontaktowe, systemy rejestracji użytkowników ani mechanizmy subskrypcji (newsletter)."
+          },
+          {
+            "text": "Administrator nie gromadzi danych osobowych Użytkowników w sposób czynny."
+          }
+        ]
+      },
+      {
+        "header": "III. Logi Serwera (Dane Techniczne)",
+        "items": [
+          {
+            "text": "Korzystanie ze strony wiąże się z przesyłaniem zapytań do serwera, na którym przechowywana jest strona."
+          },
+          {
+            "text": "Każde zapytanie skierowane do serwera zapisywane jest w logach systemowych. Logi obejmują m.in.: adres IP Użytkownika, datę i czas serwera, informacje o przeglądarce internetowej i systemie operacyjnym."
+          },
+          {
+            "text": "Dane zapisane w logach serwera nie są kojarzone z konkretnymi osobami korzystającymi ze strony i nie są wykorzystywane przez Administratora w celu identyfikacji Użytkownika."
+          },
+          {
+            "text": "Podstawą prawną przetwarzania danych w logach serwera jest art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes Administratora), polegający na zapewnieniu bezpieczeństwa serwisu, diagnozowaniu ewentualnych błędów technicznych oraz administracji serwerem."
+          }
+        ]
+      },
+      {
+        "header": "IV. Pliki Cookies",
+        "items": [
+          {
+            "text": "W ramach strony internetowej nie są wykorzystywane pliki cookies (tzw. ciasteczka) o charakterze marketingowym, śledzącym, analitycznym ani profilującym."
+          },
+          {
+            "text": "Strona może wykorzystywać wyłącznie pliki cookies o charakterze technicznym, które są niezbędne do prawidłowego wyświetlania strony lub zapewnienia bezpieczeństwa transmisji danych."
+          },
+          {
+            "text": "Zgodnie z art. 173 ust. 3 ustawy Prawo telekomunikacyjne, stosowanie plików cookies niezbędnych do technicznej obsługi transmisji lub dostarczenia usługi nie wymaga uzyskania zgody Użytkownika."
+          }
+        ]
+      },
+      {
+        "header": "V. Odnośniki do serwisów zewnętrznych",
+        "items": [
+          {
+            "text": "Na stronie internetowej znajdują się odnośniki (linki) prowadzące do zewnętrznych portali społecznościowych (np. LinkedIn, Facebook, GitHub)."
+          },
+          {
+            "text": "Są to statyczne linki tekstowe lub graficzne. Administrator nie stosuje aktywnych wtyczek społecznościowych (typu \"Lubię to\"), które automatycznie przekazywałyby dane Użytkownika do administratorów tych portali."
+          },
+          {
+            "text": "Po kliknięciu w link i opuszczeniu strony, odpowiedzialność za przetwarzanie danych osobowych przejmuje dostawca zewnętrznego serwisu. Administrator zaleca zapoznanie się z politykami prywatności tych podmiotów."
+          }
+        ]
+      },
+      {
+        "header": "VI. Prawa Użytkownika",
+        "items": [
+          {
+            "label": "1.",
+            "text": "Zgodnie z RODO, Użytkownikowi przysługuje prawo do: a) dostępu do swoich danych oraz otrzymania ich kopii, b) sprostowania (poprawiania) swoich danych, c) usunięcia danych, d) ograniczenia przetwarzania danych, e) wniesienia sprzeciwu wobec przetwarzania danych, f) wniesienia skargi do organu nadzorczego (Prezesa Urzędu Ochrony Danych Osobowych)."
+          },
+          {
+            "label": "2.",
+            "text": "Zastrzeżenie: Z uwagi na fakt, że Administrator przetwarza jedynie dane w logach serwera i nie jest w stanie na ich podstawie zidentyfikować osoby fizycznej, realizacja praw wskazanych w pkt 1 lit. a-e może być ograniczona na podstawie art. 11 ust. 2 RODO (przetwarzanie niewymagające identyfikacji), chyba że Użytkownik dostarczy dodatkowych informacji pozwalających na jego identyfikację."
+          }
+        ]
+      }
+    ]
+  },
   "contact": {
-    "email": "adrian.janczenia@email.com",
+    "email": "janczenia.adrian@gmail.com",
     "linkedin": "adrian-janczenia",
     "github": "AdrianJanczenia"
   },
@@ -192,11 +274,16 @@
     "nav_languages": "języki",
     "nav_contact": "kontakt",
     "nav_cv": "pobierz-cv",
+    "nav_privacy_policy": "polityka prywatności",
     "header_about": "o-mnie",
     "header_experience": "doświadczenie",
     "header_skills": "umiejętności",
     "header_languages": "języki",
     "header_contact": "kontakt",
+    "header_home": "strona-główna",
+    "header_privacy": "POLITYKA-PRYWATNOŚCI",
+    "path_privacy_pl": "polityka-prywatnosci",
+    "path_privacy_en": "privacy-policy",
     "profile_key_name": "imię",
     "profile_key_headline": "rola",
     "profile_key_about": "biografia",
