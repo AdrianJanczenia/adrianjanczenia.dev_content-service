@@ -1,4 +1,4 @@
-package get_cv_link
+package get_cv_token
 
 import (
 	"fmt"
@@ -40,5 +40,5 @@ func (p *Process) Process(password, lang string) (string, error) {
 		return "", err
 	}
 
-	return fmt.Sprintf("/download/cv?token=%s&lang=%s", token, lang), nil
+	return token, nil
 }

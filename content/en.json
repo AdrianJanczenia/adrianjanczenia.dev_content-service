@@ -11,7 +11,7 @@
       "PHP",
       "Microservices",
       "Distributed Systems",
-      "Cloud"
+      "REST API"
     ]
   },
   "languages": [
@@ -47,13 +47,18 @@
       "key": "architecture",
       "values": [
         "Microservices",
-        "Distributed Systems",
+        "Distributed Systems"
+      ]
+    },
+    {
+      "key": "programming_paradigms",
+      "values": [
         "OOP",
         "TDD"
       ]
     },
     {
-      "key": "message_queuing",
+      "key": "message_queuing_systems",
       "values": [
         "RabbitMQ (AMQP)"
       ]
@@ -67,14 +72,14 @@
       ]
     },
     {
-      "key": "search_indexing",
+      "key": "search_and_indexing_technologies",
       "values": [
         "Solr",
         "Elasticsearch"
       ]
     },
     {
-      "key": "api",
+      "key": "working_with_api",
       "values": [
         "REST API"
       ]
@@ -86,18 +91,22 @@
         "Behave",
         "Gherkin",
         "Selenium",
-        "Unit",
-        "Integration",
-        "E2E"
+        "Unit / Integration / E2E"
       ]
     },
     {
-      "key": "devops_tools",
+      "key": "environment_automation",
       "values": [
         "Docker",
         "Docker Swarm",
         "Ansible",
         "TeamCity",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "key": "dev_tools",
+      "values": [
         "Git",
         "GitHub",
         "Linux",
@@ -106,11 +115,16 @@
       ]
     },
     {
-      "key": "management",
+      "key": "project_management_tools",
       "values": [
         "Jira",
         "Confluence",
-        "Monday",
+        "Monday"
+      ]
+    },
+    {
+      "key": "working_with_agile",
+      "values": [
         "Scrum",
         "Kanban"
       ]
@@ -120,10 +134,9 @@
       "values": [
         "Analytical thinking",
         "Problem-solving",
-        "Communication",
-        "Teamwork",
-        "Prioritization",
-        "Resilience"
+        "Good communication and teamwork",
+        "Efficient priority management",
+        "Stress resistance"
       ]
     }
   ],
@@ -131,52 +144,54 @@
     {
       "role": "Back End Developer",
       "company": "Miinto",
-      "period": "Jan 2022 - Present",
+      "period": "2022 - Present",
       "location": "Warsaw, Mazowieckie, Poland",
       "type": "Remote",
-      "summary": "Development and maintenance of a high-traffic e-commerce platform.",
+      "summary": "Development and maintenance of a high-traffic e-commerce platform",
       "responsibilities": [
-        "Developing scalable microservices in Go (Golang) and maintaining legacy PHP systems.",
-        "Participating in the migration from a monolithic architecture to distributed microservices.",
-        "Building distributed systems using RabbitMQ, PostgreSQL, Redis, and REST APIs.",
-        "Rewriting and optimizing legacy services to improve performance and maintainability.",
-        "Maintaining high code quality through unit/functional testing and regular code reviews.",
-        "Automating CI/CD pipelines (TeamCity, GitHub Actions) and managing infrastructure with Docker and Ansible.",
-        "Working in an Agile environment (Kanban) with a focus on clean code and best practices."
+        "Developing scalable microservices in Go (Golang) and maintaining legacy PHP systems",
+        "Participating in the migration from a monolithic architecture to distributed microservices",
+        "Building distributed systems using RabbitMQ, PostgreSQL, Redis, and REST APIs",
+        "Rewriting and optimizing legacy services to improve performance and maintainability",
+        "Maintaining high code quality through unit/functional testing and regular code reviews",
+        "Automating CI/CD pipelines (TeamCity, GitHub Actions) and managing infrastructure with Docker and Ansible",
+        "Working in an Agile environment (Kanban) with a focus on clean code and best practices"
       ],
       "skills_used": [
         "Go",
+        "PHP",
         "Microservices",
         "Distributed Systems",
         "RabbitMQ",
         "PostgreSQL",
         "Redis",
-        "PHP"
+        "REST API"
       ]
     },
     {
       "role": "QA Engineer",
       "company": "Miinto",
-      "period": "Jul 2018 - Jan 2022",
+      "period": "2018 - 2022",
       "location": "Warsaw, Mazowieckie, Poland",
       "type": "Hybrid",
-      "summary": "Quality Assurance Engineer focused on test automation and backend validation.",
+      "summary": "Quality Assurance Engineer focused on test automation and backend validation",
       "responsibilities": [
-        "Developing automated test suites using Python (Behave, Selenium) and PHP (Codeception).",
-        "Validating data integrity and business logic across RabbitMQ, PostgreSQL, MSSQL, and Redis.",
-        "Performing comprehensive API testing and debugging using Postman.",
-        "Analyzing requirements and maintaining test documentation in an Agile/Scrum environment.",
-        "Executing manual testing for complex web applications and reporting defects.",
-        "ISTQB Foundation Level certified with additional Technical Test Analyst training."
+        "Developing automated test suites using Python (Behave, Selenium) and PHP (Codeception)",
+        "Validating data integrity and business logic across RabbitMQ, PostgreSQL, MSSQL, and Redis",
+        "Performing comprehensive API testing and debugging using Postman",
+        "Analyzing requirements and maintaining test documentation in an Agile/Scrum environment",
+        "Executing manual testing for complex web applications and reporting defects"
       ],
       "skills_used": [
         "Test Automation",
+        "PHP",
         "Python",
         "Selenium",
         "API Testing",
         "SQL",
         "Quality Assurance",
-        "Postman"
+        "Postman",
+        "ISTQB certified"
       ]
     }
   ],
@@ -187,7 +202,7 @@
         "header": "I. Data Controller",
         "items": [
           {
-            "text": "The Administrator of the website is: Adrian Janczenia, e-mail contact: janczenia.adrian@gmail.com."
+            "text": "The Administrator of the website is: Adrian Janczenia,\ne-mail contact: janczenia.adrian@gmail.com."
           }
         ]
       },
@@ -195,9 +210,11 @@
         "header": "II. Scope and Purpose of Data Processing",
         "items": [
           {
+            "label": "1.",
             "text": "The website is strictly informational (online portfolio). The service does not use contact forms, user registration systems, or subscription mechanisms (newsletters)."
           },
           {
+            "label": "2.",
             "text": "The Administrator does not actively collect personal data of Users."
           }
         ]
@@ -206,15 +223,19 @@
         "header": "III. Server Logs (Technical Data)",
         "items": [
           {
+            "label": "1.",
             "text": "Using the website involves sending requests to the server where the website is hosted."
           },
           {
+            "label": "2.",
             "text": "Each query sent to the server is recorded in system logs. The logs include, among others: the User's IP address, server date and time, information about the web browser, and operating system."
           },
           {
+            "label": "3.",
             "text": "Data stored in server logs are not associated with specific persons using the website and are not used by the Administrator for the purpose of User identification."
           },
           {
+            "label": "4.",
             "text": "The legal basis for processing data in server logs is Art. 6(1)(f) of the GDPR (Legitimate Interest of the Controller), which consists of ensuring the security of the service, diagnosing potential technical errors, and server administration."
           }
         ]
@@ -223,12 +244,15 @@
         "header": "IV. Cookies",
         "items": [
           {
+            "label": "1.",
             "text": "The website does not use cookies for marketing, tracking, analytical, or profiling purposes."
           },
           {
+            "label": "2.",
             "text": "The website may use only technical cookies that are strictly necessary for the proper display of the website or ensuring data transmission security."
           },
           {
+            "label": "3.",
             "text": "In accordance with applicable telecommunications laws (implementing the ePrivacy Directive), the use of cookies strictly necessary for the technical handling of transmission or delivery of the service does not require User consent."
           }
         ]
@@ -237,13 +261,7 @@
         "header": "V. Links to External Sites",
         "items": [
           {
-            "text": "The website contains links leading to external social media portals (e.g., LinkedIn, Facebook, GitHub)."
-          },
-          {
-            "text": "These are static text or graphic links. The Administrator does not use active social media plugins (such as \"Like\" buttons) that would automatically transfer User data to the administrators of these portals."
-          },
-          {
-            "text": "After clicking a link and leaving the website, responsibility for personal data processing is assumed by the provider of the external service. The Administrator recommends reviewing the privacy policies of those entities."
+            "text": "The website contains links leading to external social media portals (e.g., LinkedIn, Facebook, GitHub). These are static text or graphic links. The Administrator does not use active social media plugins (such as \"Like\" buttons) that would automatically transfer User data to the administrators of these portals. After clicking a link and leaving the website, responsibility for personal data processing is assumed by the provider of the external service. The Administrator recommends reviewing the privacy policies of those entities."
           }
         ]
       },
@@ -251,19 +269,14 @@
         "header": "VI. User Rights",
         "items": [
           {
-            "label": "1.",
-            "text": "Under the GDPR, the User has the right to: a) access their data and receive a copy of it, b) rectify (correct) their data, c) erase data (\"right to be forgotten\"), d) restrict data processing, e) object to data processing, f) lodge a complaint with a supervisory authority."
-          },
-          {
-            "label": "2.",
-            "text": "Disclaimer: Due to the fact that the Administrator processes data only in server logs and is unable to identify a natural person on this basis, the exercise of the rights indicated in point 1(a-e) may be limited pursuant to Art. 11(2) of the GDPR (processing which does not require identification), unless the User provides additional information enabling their identification."
+            "text": "Under the GDPR, the User has the right to: a) access their data and receive a copy of it, b) rectify (correct) their data, c) erase data (\"right to be forgotten\"), d) restrict data processing, e) object to data processing, f) lodge a complaint with a supervisory authority.\n\nDisclaimer: Due to the fact that the Administrator processes data only in server logs and is unable to identify a natural person on this basis, the exercise of the rights indicated in point 1(a-e) may be limited pursuant to Art. 11(2) of the GDPR (processing which does not require identification), unless the User provides additional information enabling their identification."
           }
         ]
       }
     ]
   },
   "contact": {
-    "email": "adrian.janczenia@email.com",
+    "email": "janczenia.adrian@gmail.com",
     "linkedin": "adrian-janczenia",
     "github": "AdrianJanczenia"
   },
@@ -281,7 +294,7 @@
     "header_languages": "languages",
     "header_contact": "contact",
     "header_home": "home-page",
-    "header_privacy": "PRIVACY-POLICY",
+    "header_privacy": "privacy-policy",
     "path_privacy_pl": "polityka-prywatnosci",
     "path_privacy_en": "privacy-policy",
     "profile_key_name": "name",
@@ -289,19 +302,25 @@
     "profile_key_about": "bio",
     "experience_key_responsibilities": "responsibilities",
     "experience_key_stack": "stack",
+    "experience_key_location": "location",
     "contact_key_email": "email",
-    "contact_key_linkedin": "linkedin",
+    "contact_key_linkedin": "linkedIn",
     "back_to_top_label": "Back to top",
     "error_title": "An error occurred",
-    "error_message": "We are working on fixing the problem. Please try again later.",
-    "cv_modal_title": "Authorized Access Only",
+    "error_message": "I'm working on fixing the problem. Please try again later.",
+    "cv_modal_title": "Authorized access only",
     "cv_password_placeholder": "Enter access password...",
     "btn_get_link": "Download CV",
     "btn_processing": "Processing...",
     "btn_back": "Back to Home Page",
     "error_cv_auth": "Access denied. Invalid password.",
-    "error_cv_expired": "This CV link has expired or has already been used. Please generate a new one.",
-    "error_cv_server": "A server error occurred while downloading the file.",
-    "error_cv_not_found": "CV file was not found."
+    "error_cv_expired": "This CV link has expired or has already been used",
+    "error_cv_server": "A server error occurred while downloading the file",
+    "error_cv_not_found": "CV file was not found",
+    "error_cv_header_error": "ERROR",
+    "error_cv_header_msg": "CV_LINK_EXPIRED",
+    "error_cv_status_key": "status",
+    "error_cv_status_value": "FAILED",
+    "error_cv_message_key": "message"
   }
 }

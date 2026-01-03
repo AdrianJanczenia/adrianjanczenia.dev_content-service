@@ -13,11 +13,11 @@ import (
 	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/api/proto/v1"
 	handlerDowloadCv "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/handler/download_cv"
 	handlerGetContent "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/handler/get_content"
-	handlerGetCvLink "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/handler/get_cv_link"
+	handlerGetCvToken "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/handler/get_cv_token"
 	processDownloadCv "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/download_cv"
 	processGetContent "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/get_content"
-	processGetCvLink "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/get_cv_link"
-	taskGetCvLink "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/get_cv_link/task"
+	processGetCvToken "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/get_cv_token"
+	taskGetCvToken "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/get_cv_token/task"
 	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/registry"
 	serviceRabbitmq "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/service/rabbitmq"
 	serviceRedis "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/service/redis"
@@ -74,23 +74,23 @@ func Build(cfg *registry.Config) (*App, error) {
 	}
 
 	// get_cv_link
-	validatePasswordTask := taskGetCvLink.NewValidatePasswordTask(cfg.Cv.Password)
-	createTokenTask := taskGetCvLink.NewCreateTokenTask(redisClient, cfg.Cv.TokenTTL)
-	getCvLinkProcess := processGetCvLink.NewProcess(validatePasswordTask, createTokenTask, cfg.Cv.Files)
+	validatePasswordTask := taskGetCvToken.NewValidatePasswordTask(cfg.Cv.Password)
+	createTokenTask := taskGetCvToken.NewCreateTokenTask(redisClient, cfg.Cv.TokenTTL)
+	getCvTokenProcess := processGetCvToken.NewProcess(validatePasswordTask, createTokenTask, cfg.Cv.Files)
 
 	downloadCvProcess := processDownloadCv.NewProcess(redisClient, cfg.Cv.Files)
 
 	// handlers
 	getContentHandler := handlerGetContent.NewHandler(getContentProcess)
 	downloadCvHandler := handlerDowloadCv.NewHandler(downloadCvProcess)
-	getCvLinkHandler := handlerGetCvLink.NewHandler(getCvLinkProcess)
+	getCvTokenHandler := handlerGetCvToken.NewHandler(getCvTokenProcess)
 
 	consumerCount := cfg.RabbitMQ.Consumers.DefaultCount
 	if consumerCount <= 0 {
 		consumerCount = 1
 	}
 
-	rabbitBroker.RegisterConsumer(cfg.RabbitMQ.Topology.Queues["cv_requests"].Name, consumerCount, getCvLinkHandler.Handle)
+	rabbitBroker.RegisterConsumer(cfg.RabbitMQ.Topology.Queues["cv_requests"].Name, consumerCount, getCvTokenHandler.Handle)
 
 	grpcServer := grpc.NewServer()
 	contentv1.RegisterContentServiceServer(grpcServer, getContentHandler)

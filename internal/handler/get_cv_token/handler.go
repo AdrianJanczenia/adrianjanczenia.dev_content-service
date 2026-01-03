@@ -1,4 +1,4 @@
-package get_cv_link
+package get_cv_token
 
 import (
 	"encoding/json"
@@ -6,12 +6,12 @@ import (
 	"github.com/rabbitmq/amqp091-go"
 )
 
-type GetCVLinkProcess interface {
+type GetCVTokenProcess interface {
 	Process(password, lang string) (string, error)
 }
 
 type Handler struct {
-	getCVLinkProcess GetCVLinkProcess
+	getCVTokenProcess GetCVTokenProcess
 }
 
 type requestPayload struct {
@@ -20,13 +20,13 @@ type requestPayload struct {
 }
 
 type responsePayload struct {
-	URL   string `json:"url,omitempty"`
+	Token string `json:"token,omitempty"`
 	Error string `json:"error,omitempty"`
 }
 
-func NewHandler(cvProcess GetCVLinkProcess) *Handler {
+func NewHandler(cvProcess GetCVTokenProcess) *Handler {
 	return &Handler{
-		getCVLinkProcess: cvProcess,
+		getCVTokenProcess: cvProcess,
 	}
 }
 
@@ -36,13 +36,13 @@ func (c *Handler) Handle(d amqp091.Delivery) (any, error) {
 		return nil, err
 	}
 
-	url, err := c.getCVLinkProcess.Process(req.Password, req.Lang)
+	token, err := c.getCVTokenProcess.Process(req.Password, req.Lang)
 
 	response := responsePayload{}
 	if err != nil {
 		response.Error = err.Error()
 	} else {
-		response.URL = url
+		response.Token = token
 	}
 
 	return response, nil
