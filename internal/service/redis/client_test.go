@@ -6,7 +6,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/go-redis/redis/v8"
 	"github.com/go-redis/redismock/v8"
 )
 
@@ -63,7 +62,6 @@ func TestClient_ValidateAndDeleteToken(t *testing.T) {
 	token := "test-token"
 
 	t.Run("success", func(t *testing.T) {
-		mock.ExpectGet(token).SetVal("valid")
 		mock.ExpectDel(token).SetVal(1)
 
 		valid, err := client.ValidateAndDeleteToken(ctx, token)
@@ -76,23 +74,11 @@ func TestClient_ValidateAndDeleteToken(t *testing.T) {
 	})
 
 	t.Run("token not found", func(t *testing.T) {
-		mock.ExpectGet(token).SetErr(redis.Nil)
+		mock.ExpectDel(token).SetVal(0)
 
 		valid, err := client.ValidateAndDeleteToken(ctx, token)
 		if err != nil {
 			t.Errorf("unexpected error: %v", err)
-		}
-		if valid {
-			t.Error("expected valid to be false")
-		}
-	})
-
-	t.Run("get error", func(t *testing.T) {
-		mock.ExpectGet(token).SetErr(errors.New("db error"))
-
-		valid, err := client.ValidateAndDeleteToken(ctx, token)
-		if err == nil {
-			t.Error("expected error, got nil")
 		}
 		if valid {
 			t.Error("expected valid to be false")
@@ -100,15 +86,14 @@ func TestClient_ValidateAndDeleteToken(t *testing.T) {
 	})
 
 	t.Run("delete error", func(t *testing.T) {
-		mock.ExpectGet(token).SetVal("valid")
 		mock.ExpectDel(token).SetErr(errors.New("delete error"))
 
 		valid, err := client.ValidateAndDeleteToken(ctx, token)
-		if err != nil {
-			t.Errorf("unexpected error: %v", err)
+		if err == nil {
+			t.Error("expected error, got nil")
 		}
 		if valid {
-			t.Error("expected valid to be false because delete failed")
+			t.Error("expected valid to be false")
 		}
 	})
 }

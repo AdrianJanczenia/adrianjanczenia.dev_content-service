@@ -2,8 +2,6 @@ package redis
 
 import (
 	"context"
-	"errors"
-	"log"
 	"time"
 
 	"github.com/go-redis/redis/v8"
@@ -40,23 +38,12 @@ func (c *Client) SetToken(ctx context.Context, token string, value interface{}, 
 }
 
 func (c *Client) ValidateAndDeleteToken(ctx context.Context, token string) (bool, error) {
-	err := c.client.Get(ctx, token).Err()
-	if errors.Is(err, redis.Nil) {
-		return false, nil
-	}
+	deletedCount, err := c.client.Del(ctx, token).Result()
 	if err != nil {
 		return false, err
 	}
 
-	deletedCount, err := c.client.Del(ctx, token).Result()
-	if err != nil {
-		log.Printf("WARN: failed to delete token %s after validation: %v", token, err)
-	}
-	if deletedCount == 0 {
-		return false, nil
-	}
-
-	return true, nil
+	return deletedCount > 0, nil
 }
 
 func (c *Client) Close() error {
