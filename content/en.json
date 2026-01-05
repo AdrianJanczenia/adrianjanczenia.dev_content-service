@@ -314,7 +314,7 @@
     "btn_processing": "Processing...",
     "btn_back": "Back to Home Page",
     "error_cv_auth": "Access denied. Invalid password.",
-    "error_cv_expired": "This CV link has expired or has already been used",
+    "error_cv_expired": "CV link has expired or is invalid",
     "error_cv_server": "A server error occurred while downloading the file",
     "error_cv_not_found": "CV file was not found",
     "error_cv_header_error": "ERROR",

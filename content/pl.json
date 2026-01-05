@@ -313,7 +313,7 @@
     "btn_processing": "Przetwarzanie...",
     "btn_back": "Wróć na Stronę Główną",
     "error_cv_auth": "Odmowa dostępu. Nieprawidłowe hasło.",
-    "error_cv_expired": "Ten link do CV wygasł lub został już wykorzystany",
+    "error_cv_expired": "Link do CV wygasł lub jest nieprawidłowy",
     "error_cv_server": "Wystąpił błąd serwera podczas pobierania pliku",
     "error_cv_not_found": "Plik CV nie został znaleziony",
     "error_cv_header_error": "BŁĄD",

@@ -67,13 +67,11 @@ func Build(cfg *registry.Config) (*App, error) {
 		return nil, err
 	}
 
-	// get_content
 	getContentProcess, err := processGetContent.NewProcess(cfg.Content.Files, cfg.Content.DefaultLang)
 	if err != nil {
 		return nil, err
 	}
 
-	// get_cv_link
 	validatePasswordTask := taskGetCvToken.NewValidatePasswordTask(cfg.Cv.Password)
 	createTokenTask := taskGetCvToken.NewCreateTokenTask(redisClient, cfg.Cv.TokenTTL)
 	getCvTokenProcess := processGetCvToken.NewProcess(validatePasswordTask, createTokenTask, cfg.Cv.Files)

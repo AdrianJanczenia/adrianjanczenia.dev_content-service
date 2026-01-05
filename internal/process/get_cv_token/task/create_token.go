@@ -1,9 +1,9 @@
 package task
 
 import (
-	"fmt"
 	"time"
 
+	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 	"github.com/google/uuid"
 )
 
@@ -28,7 +28,7 @@ func (t *CreateTokenTask) Execute() (string, error) {
 
 	err := t.tokenService.SetToken(token, "valid", t.tokenTTL)
 	if err != nil {
-		return "", fmt.Errorf("could not save token: %w", err)
+		return "", errors.ErrInternalServerError
 	}
 
 	return token, nil

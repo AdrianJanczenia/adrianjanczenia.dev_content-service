@@ -34,7 +34,7 @@ content:
     en: "content/en.json"
 
 cv:
-  password: "local_password"
+  password: "pass"
   tokenTTLSeconds: 60
   files:
     pl: "/app/private/pl_cv.pdf"

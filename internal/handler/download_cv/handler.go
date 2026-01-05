@@ -26,7 +26,7 @@ func (h *Handler) Handle(w http.ResponseWriter, r *http.Request) {
 
 	token := r.URL.Query().Get("token")
 	if token == "" {
-		errors.WriteJSON(w, errors.ErrCVExpired)
+		errors.WriteJSON(w, errors.ErrInvalidInput)
 		return
 	}
 
@@ -42,7 +42,7 @@ func (h *Handler) Handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("Content-Disposition", "attachment; filename=\"cv.pdf\"")
+	w.Header().Set("Content-Disposition", "attachment; filename=\"cv_adrian_janczenia.pdf\"")
 	w.Header().Set("Content-Type", "application/pdf")
 	http.ServeFile(w, r, filePath)
 }
