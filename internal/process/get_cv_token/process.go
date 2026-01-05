@@ -1,7 +1,7 @@
 package get_cv_token
 
 import (
-	"fmt"
+	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 )
 
 type ValidatePasswordTask interface {
@@ -28,7 +28,7 @@ func NewProcess(vpt ValidatePasswordTask, ctt CreateTokenTask, cvPaths map[strin
 
 func (p *Process) Process(password, lang string) (string, error) {
 	if _, ok := p.cvFilePaths[lang]; !ok {
-		return "", fmt.Errorf("unsupported language for cv: %s", lang)
+		return "", errors.ErrUnsupportedLanguage
 	}
 
 	if err := p.validatePasswordTask.Execute(password); err != nil {

@@ -1,6 +1,6 @@
 package download_cv
 
-import "fmt"
+import "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 
 type TokenValidator interface {
 	ValidateAndDeleteToken(token string) (bool, error)
@@ -21,15 +21,15 @@ func NewProcess(tv TokenValidator, cvPaths map[string]string) *Process {
 func (p *Process) Process(token, lang string) (string, error) {
 	valid, err := p.tokenValidator.ValidateAndDeleteToken(token)
 	if err != nil {
-		return "", fmt.Errorf("could not validate token: %w", err)
+		return "", errors.ErrInternalServerError
 	}
 	if !valid {
-		return "", fmt.Errorf("invalid or expired token")
+		return "", errors.ErrCVExpired
 	}
 
 	filePath, ok := p.cvFilePaths[lang]
 	if !ok {
-		return "", fmt.Errorf("no cv available for language %s", lang)
+		return "", errors.ErrUnsupportedLanguage
 	}
 
 	return filePath, nil

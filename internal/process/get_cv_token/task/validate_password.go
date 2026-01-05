@@ -1,6 +1,6 @@
 package task
 
-import "errors"
+import "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 
 type ValidatePasswordTask struct {
 	correctPassword string
@@ -12,7 +12,7 @@ func NewValidatePasswordTask(correctPassword string) *ValidatePasswordTask {
 
 func (t *ValidatePasswordTask) Execute(password string) error {
 	if password != t.correctPassword {
-		return errors.New("invalid password")
+		return errors.ErrInvalidPassword
 	}
 
 	return nil

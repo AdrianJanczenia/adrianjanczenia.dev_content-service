@@ -261,7 +261,7 @@
         "header": "V. Links to External Sites",
         "items": [
           {
-            "text": "The website contains links leading to external social media portals (e.g., LinkedIn, Facebook, GitHub). These are static text or graphic links. The Administrator does not use active social media plugins (such as \"Like\" buttons) that would automatically transfer User data to the administrators of these portals. After clicking a link and leaving the website, responsibility for personal data processing is assumed by the provider of the external service. The Administrator recommends reviewing the privacy policies of those entities."
+            "text": "The website contains links leading to external social media portals (e.g., LinkedIn, Facebook, GitHub). These are static text or graphic links. The Administrator does not use active social media plugins (such as \"Like\" buttons) that would automatically transfer User data to the administrators of these portals. After clicking a link and leaving the website, responsibility for personal data processing is assumed by the provider of the external service."
           }
         ]
       },
@@ -269,7 +269,7 @@
         "header": "VI. User Rights",
         "items": [
           {
-            "text": "Under the GDPR, the User has the right to: a) access their data and receive a copy of it, b) rectify (correct) their data, c) erase data (\"right to be forgotten\"), d) restrict data processing, e) object to data processing, f) lodge a complaint with a supervisory authority.\n\nDisclaimer: Due to the fact that the Administrator processes data only in server logs and is unable to identify a natural person on this basis, the exercise of the rights indicated in point 1(a-e) may be limited pursuant to Art. 11(2) of the GDPR (processing which does not require identification), unless the User provides additional information enabling their identification."
+            "text": "Under the GDPR, the User has the right to: a) access their data and receive a copy of it, b) rectify (correct) their data, c) erase data (\"right to be forgotten\"), d) restrict data processing, e) object to data processing, f) lodge a complaint with a supervisory authority.\n\nDisclaimer: Due to the fact that the Administrator processes data only in server logs and is unable to identify a natural person on this basis, the exercise of the rights indicated in point 1(a-e) may be limited pursuant to Art. 11(2) of the GDPR (processing which does not require identification)."
           }
         ]
       }
@@ -318,7 +318,7 @@
     "error_cv_server": "A server error occurred while downloading the file",
     "error_cv_not_found": "CV file was not found",
     "error_cv_header_error": "ERROR",
-    "error_cv_header_msg": "CV_LINK_EXPIRED",
+    "error_cv_header_msg": "CV",
     "error_cv_status_key": "status",
     "error_cv_status_value": "FAILED",
     "error_cv_message_key": "message"

@@ -2,8 +2,12 @@ package get_content
 
 import (
 	"context"
+	"errors"
 
 	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/api/proto/v1"
+	appErrors "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type GetContentProcess interface {
@@ -22,7 +26,13 @@ func NewHandler(process GetContentProcess) *Handler {
 func (h *Handler) Handle(ctx context.Context, req *contentv1.GetContentRequest) (*contentv1.GetContentResponse, error) {
 	content, err := h.getContentProcess.Process(req.GetLang())
 	if err != nil {
-		return nil, err
+		var appErr *appErrors.AppError
+		if errors.As(err, &appErr) {
+			if errors.Is(appErr, appErrors.ErrContentNotFound) {
+				return nil, status.Error(codes.NotFound, appErr.Slug)
+			}
+		}
+		return nil, status.Error(codes.Internal, appErrors.ErrInternalServerError.Slug)
 	}
 
 	return &contentv1.GetContentResponse{JsonContent: content}, nil

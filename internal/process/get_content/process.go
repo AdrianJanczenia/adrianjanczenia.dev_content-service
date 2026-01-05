@@ -3,6 +3,8 @@ package get_content
 import (
 	"fmt"
 	"os"
+
+	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 )
 
 type Process struct {
@@ -36,5 +38,5 @@ func (p *Process) Process(lang string) ([]byte, error) {
 		return content, nil
 	}
 
-	return nil, fmt.Errorf("no content available for language %s or default language", lang)
+	return nil, errors.ErrContentNotFound
 }

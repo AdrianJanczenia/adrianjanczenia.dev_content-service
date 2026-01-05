@@ -2,7 +2,9 @@ package get_cv_token
 
 import (
 	"encoding/json"
+	"errors"
 
+	appErrors "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 	"github.com/rabbitmq/amqp091-go"
 )
 
@@ -33,14 +35,19 @@ func NewHandler(cvProcess GetCVTokenProcess) *Handler {
 func (c *Handler) Handle(d amqp091.Delivery) (any, error) {
 	var req requestPayload
 	if err := json.Unmarshal(d.Body, &req); err != nil {
-		return nil, err
+		return nil, appErrors.ErrInvalidInput
 	}
 
 	token, err := c.getCVTokenProcess.Process(req.Password, req.Lang)
 
 	response := responsePayload{}
 	if err != nil {
-		response.Error = err.Error()
+		var appErr *appErrors.AppError
+		if errors.As(err, &appErr) {
+			response.Error = appErr.Slug
+		} else {
+			response.Error = appErrors.ErrInternalServerError.Slug
+		}
 	} else {
 		response.Token = token
 	}

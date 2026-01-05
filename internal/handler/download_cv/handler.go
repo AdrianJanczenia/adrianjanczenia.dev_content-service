@@ -1,8 +1,9 @@
 package download_cv
 
 import (
-	"log"
 	"net/http"
+
+	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 )
 
 type DownloadCVProcess interface {
@@ -19,26 +20,25 @@ func NewHandler(cvProcess DownloadCVProcess) *Handler {
 
 func (h *Handler) Handle(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		http.Error(w, "Method Not Allowed", http.StatusMethodNotAllowed)
+		errors.WriteJSON(w, errors.ErrMethodNotAllowed)
 		return
 	}
 
 	token := r.URL.Query().Get("token")
 	if token == "" {
-		http.Error(w, "Unauthorized: missing token", http.StatusUnauthorized)
+		errors.WriteJSON(w, errors.ErrCVExpired)
 		return
 	}
 
 	lang := r.URL.Query().Get("lang")
 	if lang == "" {
-		http.Error(w, "Bad Request: missing lang parameter", http.StatusBadRequest)
+		errors.WriteJSON(w, errors.ErrInvalidInput)
 		return
 	}
 
 	filePath, err := h.downloadCVProcess.Process(token, lang)
 	if err != nil {
-		log.Printf("ERROR: CV download failed for token %s: %v", token, err)
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		errors.WriteJSON(w, err)
 		return
 	}
 
