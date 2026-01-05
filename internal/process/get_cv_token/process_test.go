@@ -1,6 +1,7 @@
 package get_cv_token
 
 import (
+	"context"
 	"errors"
 	"testing"
 
@@ -16,11 +17,11 @@ func (m *mockValidatePasswordTask) Execute(password string) error {
 }
 
 type mockCreateTokenTask struct {
-	executeFunc func() (string, error)
+	executeFunc func(ctx context.Context) (string, error)
 }
 
-func (m *mockCreateTokenTask) Execute() (string, error) {
-	return m.executeFunc()
+func (m *mockCreateTokenTask) Execute(ctx context.Context) (string, error) {
+	return m.executeFunc(ctx)
 }
 
 func TestProcess_GetCVToken(t *testing.T) {
@@ -31,7 +32,7 @@ func TestProcess_GetCVToken(t *testing.T) {
 		password        string
 		lang            string
 		validateFunc    func(string) error
-		createTokenFunc func() (string, error)
+		createTokenFunc func(context.Context) (string, error)
 		wantErr         error
 		wantToken       string
 	}{
@@ -40,7 +41,7 @@ func TestProcess_GetCVToken(t *testing.T) {
 			password:        "pass",
 			lang:            "pl",
 			validateFunc:    func(p string) error { return nil },
-			createTokenFunc: func() (string, error) { return "valid-token", nil },
+			createTokenFunc: func(context.Context) (string, error) { return "valid-token", nil },
 			wantErr:         nil,
 			wantToken:       "valid-token",
 		},
@@ -49,7 +50,7 @@ func TestProcess_GetCVToken(t *testing.T) {
 			password:        "pass",
 			lang:            "de",
 			validateFunc:    func(p string) error { return nil },
-			createTokenFunc: func() (string, error) { return "", nil },
+			createTokenFunc: func(context.Context) (string, error) { return "", nil },
 			wantErr:         appErrors.ErrUnsupportedLanguage,
 			wantToken:       "",
 		},
@@ -58,7 +59,7 @@ func TestProcess_GetCVToken(t *testing.T) {
 			password:        "wrong",
 			lang:            "en",
 			validateFunc:    func(p string) error { return appErrors.ErrInvalidPassword },
-			createTokenFunc: func() (string, error) { return "", nil },
+			createTokenFunc: func(context.Context) (string, error) { return "", nil },
 			wantErr:         appErrors.ErrInvalidPassword,
 			wantToken:       "",
 		},
@@ -67,7 +68,7 @@ func TestProcess_GetCVToken(t *testing.T) {
 			password:        "pass",
 			lang:            "pl",
 			validateFunc:    func(p string) error { return nil },
-			createTokenFunc: func() (string, error) { return "", errors.New("fail") },
+			createTokenFunc: func(context.Context) (string, error) { return "", errors.New("fail") },
 			wantErr:         errors.New("fail"),
 			wantToken:       "",
 		},
@@ -81,7 +82,7 @@ func TestProcess_GetCVToken(t *testing.T) {
 				cvPaths,
 			)
 
-			token, err := p.Process(tt.password, tt.lang)
+			token, err := p.Process(context.Background(), tt.password, tt.lang)
 
 			if err != nil && tt.wantErr != nil && err.Error() != tt.wantErr.Error() {
 				t.Errorf("Process() error = %v, wantErr %v", err, tt.wantErr)

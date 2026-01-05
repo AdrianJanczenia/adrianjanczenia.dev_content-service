@@ -1,6 +1,7 @@
 package get_content
 
 import (
+	"context"
 	"fmt"
 	"os"
 
@@ -30,7 +31,7 @@ func NewProcess(contentFiles map[string]string, defaultLang string) (*Process, e
 	}, nil
 }
 
-func (p *Process) Process(lang string) ([]byte, error) {
+func (p *Process) Process(ctx context.Context, lang string) ([]byte, error) {
 	if content, ok := p.content[lang]; ok {
 		return content, nil
 	}

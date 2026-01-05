@@ -1,6 +1,7 @@
 package download_cv
 
 import (
+	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -9,11 +10,11 @@ import (
 )
 
 type mockDownloadCVProcess struct {
-	processFunc func(token, lang string) (string, error)
+	processFunc func(ctx context.Context, token, lang string) (string, error)
 }
 
-func (m *mockDownloadCVProcess) Process(token, lang string) (string, error) {
-	return m.processFunc(token, lang)
+func (m *mockDownloadCVProcess) Process(ctx context.Context, token, lang string) (string, error) {
+	return m.processFunc(ctx, token, lang)
 }
 
 func TestHandler_DownloadCV(t *testing.T) {
@@ -21,7 +22,7 @@ func TestHandler_DownloadCV(t *testing.T) {
 		name        string
 		method      string
 		url         string
-		processFunc func(string, string) (string, error)
+		processFunc func(context.Context, string, string) (string, error)
 		wantStatus  int
 	}{
 		{
@@ -46,7 +47,7 @@ func TestHandler_DownloadCV(t *testing.T) {
 			name:   "process error",
 			method: http.MethodGet,
 			url:    "/download/cv?token=abc&lang=pl",
-			processFunc: func(t, l string) (string, error) {
+			processFunc: func(ctx context.Context, t, l string) (string, error) {
 				return "", errors.ErrCVExpired
 			},
 			wantStatus: http.StatusGone,

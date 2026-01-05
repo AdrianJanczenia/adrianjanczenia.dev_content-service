@@ -12,25 +12,25 @@ import (
 )
 
 type mockGetContentProcess struct {
-	processFunc func(lang string) ([]byte, error)
+	processFunc func(ctx context.Context, lang string) ([]byte, error)
 }
 
-func (m *mockGetContentProcess) Process(lang string) ([]byte, error) {
-	return m.processFunc(lang)
+func (m *mockGetContentProcess) Process(ctx context.Context, lang string) ([]byte, error) {
+	return m.processFunc(ctx, lang)
 }
 
 func TestHandler_GetContent(t *testing.T) {
 	tests := []struct {
 		name        string
 		req         *contentv1.GetContentRequest
-		processFunc func(string) ([]byte, error)
+		processFunc func(context.Context, string) ([]byte, error)
 		wantCode    codes.Code
 		wantRes     []byte
 	}{
 		{
 			name: "successful response",
 			req:  &contentv1.GetContentRequest{Lang: "pl"},
-			processFunc: func(l string) ([]byte, error) {
+			processFunc: func(ctx context.Context, l string) ([]byte, error) {
 				return []byte(`{"ok": true}`), nil
 			},
 			wantCode: codes.OK,
@@ -39,7 +39,7 @@ func TestHandler_GetContent(t *testing.T) {
 		{
 			name: "content not found",
 			req:  &contentv1.GetContentRequest{Lang: "fr"},
-			processFunc: func(l string) ([]byte, error) {
+			processFunc: func(ctx context.Context, l string) ([]byte, error) {
 				return nil, appErrors.ErrContentNotFound
 			},
 			wantCode: codes.NotFound,
@@ -48,7 +48,7 @@ func TestHandler_GetContent(t *testing.T) {
 		{
 			name: "internal error",
 			req:  &contentv1.GetContentRequest{Lang: "en"},
-			processFunc: func(l string) ([]byte, error) {
+			processFunc: func(ctx context.Context, l string) ([]byte, error) {
 				return nil, errors.New("fs error")
 			},
 			wantCode: codes.Internal,

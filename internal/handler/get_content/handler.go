@@ -11,7 +11,7 @@ import (
 )
 
 type GetContentProcess interface {
-	Process(lang string) ([]byte, error)
+	Process(ctx context.Context, lang string) ([]byte, error)
 }
 
 type Handler struct {
@@ -24,7 +24,7 @@ func NewHandler(process GetContentProcess) *Handler {
 }
 
 func (h *Handler) Handle(ctx context.Context, req *contentv1.GetContentRequest) (*contentv1.GetContentResponse, error) {
-	content, err := h.getContentProcess.Process(req.GetLang())
+	content, err := h.getContentProcess.Process(ctx, req.GetLang())
 	if err != nil {
 		var appErr *appErrors.AppError
 		if errors.As(err, &appErr) {

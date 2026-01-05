@@ -1,6 +1,7 @@
 package task
 
 import (
+	"context"
 	"errors"
 	"testing"
 	"time"
@@ -9,29 +10,29 @@ import (
 )
 
 type mockTokenService struct {
-	setTokenFunc func(token string, value interface{}, ttl time.Duration) error
+	setTokenFunc func(ctx context.Context, token string, value interface{}, ttl time.Duration) error
 }
 
-func (m *mockTokenService) SetToken(token string, value interface{}, ttl time.Duration) error {
-	return m.setTokenFunc(token, value, ttl)
+func (m *mockTokenService) SetToken(ctx context.Context, token string, value interface{}, ttl time.Duration) error {
+	return m.setTokenFunc(ctx, token, value, ttl)
 }
 
 func TestCreateTokenTask_Execute(t *testing.T) {
 	tests := []struct {
 		name         string
-		setTokenFunc func(token string, value interface{}, ttl time.Duration) error
+		setTokenFunc func(ctx context.Context, token string, value interface{}, ttl time.Duration) error
 		wantErr      error
 	}{
 		{
 			name: "successful token creation",
-			setTokenFunc: func(token string, value interface{}, ttl time.Duration) error {
+			setTokenFunc: func(ctx context.Context, token string, value interface{}, ttl time.Duration) error {
 				return nil
 			},
 			wantErr: nil,
 		},
 		{
 			name: "token service error",
-			setTokenFunc: func(token string, value interface{}, ttl time.Duration) error {
+			setTokenFunc: func(ctx context.Context, token string, value interface{}, ttl time.Duration) error {
 				return errors.New("redis down")
 			},
 			wantErr: appErrors.ErrInternalServerError,
@@ -43,7 +44,7 @@ func TestCreateTokenTask_Execute(t *testing.T) {
 			mock := &mockTokenService{setTokenFunc: tt.setTokenFunc}
 			task := NewCreateTokenTask(mock, time.Minute)
 
-			token, err := task.Execute()
+			token, err := task.Execute(context.Background())
 
 			if err != tt.wantErr {
 				t.Errorf("Execute() error = %v, wantErr %v", err, tt.wantErr)

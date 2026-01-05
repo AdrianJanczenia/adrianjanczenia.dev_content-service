@@ -1,6 +1,7 @@
 package task
 
 import (
+	"context"
 	"time"
 
 	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
@@ -8,7 +9,7 @@ import (
 )
 
 type TokenService interface {
-	SetToken(token string, value interface{}, ttl time.Duration) error
+	SetToken(ctx context.Context, token string, value interface{}, ttl time.Duration) error
 }
 
 type CreateTokenTask struct {
@@ -23,10 +24,10 @@ func NewCreateTokenTask(ts TokenService, ttl time.Duration) *CreateTokenTask {
 	}
 }
 
-func (t *CreateTokenTask) Execute() (string, error) {
+func (t *CreateTokenTask) Execute(ctx context.Context) (string, error) {
 	token := uuid.New().String()
 
-	err := t.tokenService.SetToken(token, "valid", t.tokenTTL)
+	err := t.tokenService.SetToken(ctx, token, "valid", t.tokenTTL)
 	if err != nil {
 		return "", errors.ErrInternalServerError
 	}

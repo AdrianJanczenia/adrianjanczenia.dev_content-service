@@ -38,6 +38,12 @@ type Config struct {
 		GRPCPort string
 		HTTPPort string
 	}
+	Infrastructure struct {
+		Retry struct {
+			MaxAttempts  int           `yaml:"maxAttempts"`
+			DelaySeconds time.Duration `yaml:"delaySeconds"`
+		} `yaml:"retry"`
+	}
 	Redis struct {
 		URL string
 	}
@@ -67,6 +73,12 @@ func LoadConfig() (*Config, error) {
 			GRPCPort string `yaml:"grpcPort"`
 			HTTPPort string `yaml:"httpPort"`
 		} `yaml:"server"`
+		Infrastructure struct {
+			Retry struct {
+				MaxAttempts  int `yaml:"maxAttempts"`
+				DelaySeconds int `yaml:"delaySeconds"`
+			} `yaml:"retry"`
+		} `yaml:"infrastructure"`
 		Redis struct {
 			URL string `yaml:"url"`
 		} `yaml:"redis"`
@@ -109,6 +121,8 @@ func LoadConfig() (*Config, error) {
 	cfg := &Config{}
 	cfg.Server.GRPCPort = yc.Server.GRPCPort
 	cfg.Server.HTTPPort = yc.Server.HTTPPort
+	cfg.Infrastructure.Retry.MaxAttempts = yc.Infrastructure.Retry.MaxAttempts
+	cfg.Infrastructure.Retry.DelaySeconds = time.Duration(yc.Infrastructure.Retry.DelaySeconds) * time.Second
 	cfg.Redis.URL = yc.Redis.URL
 	cfg.RabbitMQ.URL = yc.RabbitMQ.URL
 	cfg.RabbitMQ.Consumers = yc.RabbitMQ.Consumers

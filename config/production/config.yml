@@ -2,6 +2,11 @@ server:
   grpcPort: "50051"
   httpPort: "8081"
 
+infrastructure:
+  retry:
+    maxAttempts: 20
+    delaySeconds: 5
+
 redis:
   url: ""
 

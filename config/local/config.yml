@@ -2,6 +2,11 @@ server:
   grpcPort: "50051"
   httpPort: "8081"
 
+infrastructure:
+  retry:
+    maxAttempts: 10
+    delaySeconds: 2
+
 redis:
   url: "redis://:localpassword@172.20.0.13:6379/0"
 

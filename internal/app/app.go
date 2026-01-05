@@ -24,14 +24,15 @@ import (
 )
 
 type App struct {
-	grpcServer   *grpc.Server
-	httpServer   *http.Server
-	rabbitBroker *serviceRabbitmq.Broker
+	grpcServer      *grpc.Server
+	httpServer      *http.Server
+	rabbitBroker    *serviceRabbitmq.Broker
+	cancelConsumers context.CancelFunc
 }
 
 func Build(cfg *registry.Config) (*App, error) {
-	maxRetries := 20
-	retryDelay := 2 * time.Second
+	maxRetries := cfg.Infrastructure.Retry.MaxAttempts
+	retryDelay := cfg.Infrastructure.Retry.DelaySeconds
 	var err error
 
 	var redisClient *serviceRedis.Client
@@ -78,7 +79,6 @@ func Build(cfg *registry.Config) (*App, error) {
 
 	downloadCvProcess := processDownloadCv.NewProcess(redisClient, cfg.Cv.Files)
 
-	// handlers
 	getContentHandler := handlerGetContent.NewHandler(getContentProcess)
 	downloadCvHandler := handlerDowloadCv.NewHandler(downloadCvProcess)
 	getCvTokenHandler := handlerGetCvToken.NewHandler(getCvTokenProcess)
@@ -127,11 +127,16 @@ func (a *App) RunHTTP() error {
 
 func (a *App) RunRabbitMQConsumers() error {
 	log.Println("INFO: starting RabbitMQ consumers")
-	return a.rabbitBroker.Start()
+	ctx, cancel := context.WithCancel(context.Background())
+	a.cancelConsumers = cancel
+	return a.rabbitBroker.Start(ctx)
 }
 
 func (a *App) Shutdown(ctx context.Context) {
 	log.Println("INFO: shutting down servers...")
+	if a.cancelConsumers != nil {
+		a.cancelConsumers()
+	}
 	a.grpcServer.GracefulStop()
 	_ = a.httpServer.Shutdown(ctx)
 	_ = a.rabbitBroker.Shutdown()

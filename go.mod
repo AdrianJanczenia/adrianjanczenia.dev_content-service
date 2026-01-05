@@ -4,6 +4,7 @@ go 1.25.1
 
 require (
 	github.com/go-redis/redis/v8 v8.11.5
+	github.com/go-redis/redismock/v8 v8.11.5
 	github.com/google/uuid v1.6.0
 	github.com/rabbitmq/amqp091-go v1.10.0
 	google.golang.org/grpc v1.64.0

@@ -1,6 +1,7 @@
 package download_cv
 
 import (
+	"context"
 	"errors"
 	"testing"
 
@@ -8,11 +9,11 @@ import (
 )
 
 type mockTokenValidator struct {
-	validateFunc func(token string) (bool, error)
+	validateFunc func(ctx context.Context, token string) (bool, error)
 }
 
-func (m *mockTokenValidator) ValidateAndDeleteToken(token string) (bool, error) {
-	return m.validateFunc(token)
+func (m *mockTokenValidator) ValidateAndDeleteToken(ctx context.Context, token string) (bool, error) {
+	return m.validateFunc(ctx, token)
 }
 
 func TestProcess_DownloadCV(t *testing.T) {
@@ -22,7 +23,7 @@ func TestProcess_DownloadCV(t *testing.T) {
 		name         string
 		token        string
 		lang         string
-		validateFunc func(string) (bool, error)
+		validateFunc func(context.Context, string) (bool, error)
 		wantPath     string
 		wantErr      error
 	}{
@@ -30,7 +31,7 @@ func TestProcess_DownloadCV(t *testing.T) {
 			name:  "successful download",
 			token: "valid",
 			lang:  "pl",
-			validateFunc: func(t string) (bool, error) {
+			validateFunc: func(ctx context.Context, t string) (bool, error) {
 				return true, nil
 			},
 			wantPath: "/app/cv_pl.pdf",
@@ -40,7 +41,7 @@ func TestProcess_DownloadCV(t *testing.T) {
 			name:  "invalid token",
 			token: "invalid",
 			lang:  "pl",
-			validateFunc: func(t string) (bool, error) {
+			validateFunc: func(ctx context.Context, t string) (bool, error) {
 				return false, nil
 			},
 			wantPath: "",
@@ -50,7 +51,7 @@ func TestProcess_DownloadCV(t *testing.T) {
 			name:  "unsupported language",
 			token: "valid",
 			lang:  "en",
-			validateFunc: func(t string) (bool, error) {
+			validateFunc: func(ctx context.Context, t string) (bool, error) {
 				return true, nil
 			},
 			wantPath: "",
@@ -60,7 +61,7 @@ func TestProcess_DownloadCV(t *testing.T) {
 			name:  "validator internal error",
 			token: "valid",
 			lang:  "pl",
-			validateFunc: func(t string) (bool, error) {
+			validateFunc: func(ctx context.Context, t string) (bool, error) {
 				return false, errors.New("redis error")
 			},
 			wantPath: "",
@@ -71,7 +72,7 @@ func TestProcess_DownloadCV(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			p := NewProcess(&mockTokenValidator{validateFunc: tt.validateFunc}, cvPaths)
-			path, err := p.Process(tt.token, tt.lang)
+			path, err := p.Process(context.Background(), tt.token, tt.lang)
 
 			if err != tt.wantErr {
 				t.Errorf("Process() error = %v, wantErr %v", err, tt.wantErr)

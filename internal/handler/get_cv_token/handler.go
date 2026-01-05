@@ -1,6 +1,7 @@
 package get_cv_token
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 
@@ -9,7 +10,7 @@ import (
 )
 
 type GetCVTokenProcess interface {
-	Process(password, lang string) (string, error)
+	Process(ctx context.Context, password, lang string) (string, error)
 }
 
 type Handler struct {
@@ -32,13 +33,13 @@ func NewHandler(cvProcess GetCVTokenProcess) *Handler {
 	}
 }
 
-func (c *Handler) Handle(d amqp091.Delivery) (any, error) {
+func (c *Handler) Handle(ctx context.Context, d amqp091.Delivery) (any, error) {
 	var req requestPayload
 	if err := json.Unmarshal(d.Body, &req); err != nil {
 		return nil, appErrors.ErrInvalidInput
 	}
 
-	token, err := c.getCVTokenProcess.Process(req.Password, req.Lang)
+	token, err := c.getCVTokenProcess.Process(ctx, req.Password, req.Lang)
 
 	response := responsePayload{}
 	if err != nil {

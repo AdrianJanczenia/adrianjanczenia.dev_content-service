@@ -9,8 +9,16 @@ import (
 	"github.com/go-redis/redis/v8"
 )
 
+type redisUniversalClient interface {
+	Ping(ctx context.Context) *redis.StatusCmd
+	Set(ctx context.Context, key string, value interface{}, expiration time.Duration) *redis.StatusCmd
+	Get(ctx context.Context, key string) *redis.StringCmd
+	Del(ctx context.Context, keys ...string) *redis.IntCmd
+	Close() error
+}
+
 type Client struct {
-	client *redis.Client
+	client redisUniversalClient
 }
 
 func NewClient(redisURL string) (*Client, error) {
@@ -27,12 +35,12 @@ func (c *Client) Ping(ctx context.Context) error {
 	return c.client.Ping(ctx).Err()
 }
 
-func (c *Client) SetToken(token string, value interface{}, ttl time.Duration) error {
-	return c.client.Set(context.Background(), token, value, ttl).Err()
+func (c *Client) SetToken(ctx context.Context, token string, value interface{}, ttl time.Duration) error {
+	return c.client.Set(ctx, token, value, ttl).Err()
 }
 
-func (c *Client) ValidateAndDeleteToken(token string) (bool, error) {
-	err := c.client.Get(context.Background(), token).Err()
+func (c *Client) ValidateAndDeleteToken(ctx context.Context, token string) (bool, error) {
+	err := c.client.Get(ctx, token).Err()
 	if errors.Is(err, redis.Nil) {
 		return false, nil
 	}
@@ -40,13 +48,17 @@ func (c *Client) ValidateAndDeleteToken(token string) (bool, error) {
 		return false, err
 	}
 
-	deletedCount, err := c.client.Del(context.Background(), token).Result()
+	deletedCount, err := c.client.Del(ctx, token).Result()
 	if err != nil {
 		log.Printf("WARN: failed to delete token %s after validation: %v", token, err)
 	}
 	if deletedCount == 0 {
-		return false, errors.New("token already used")
+		return false, nil
 	}
 
 	return true, nil
+}
+
+func (c *Client) Close() error {
+	return c.client.Close()
 }

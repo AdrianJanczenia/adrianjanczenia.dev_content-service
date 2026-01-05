@@ -1,13 +1,14 @@
 package download_cv
 
 import (
+	"context"
 	"net/http"
 
 	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 )
 
 type DownloadCVProcess interface {
-	Process(token, lang string) (string, error)
+	Process(ctx context.Context, token, lang string) (string, error)
 }
 
 type Handler struct {
@@ -36,7 +37,7 @@ func (h *Handler) Handle(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	filePath, err := h.downloadCVProcess.Process(token, lang)
+	filePath, err := h.downloadCVProcess.Process(r.Context(), token, lang)
 	if err != nil {
 		errors.WriteJSON(w, err)
 		return

@@ -1,9 +1,13 @@
 package download_cv
 
-import "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
+import (
+	"context"
+
+	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
+)
 
 type TokenValidator interface {
-	ValidateAndDeleteToken(token string) (bool, error)
+	ValidateAndDeleteToken(ctx context.Context, token string) (bool, error)
 }
 
 type Process struct {
@@ -18,8 +22,8 @@ func NewProcess(tv TokenValidator, cvPaths map[string]string) *Process {
 	}
 }
 
-func (p *Process) Process(token, lang string) (string, error) {
-	valid, err := p.tokenValidator.ValidateAndDeleteToken(token)
+func (p *Process) Process(ctx context.Context, token, lang string) (string, error) {
+	valid, err := p.tokenValidator.ValidateAndDeleteToken(ctx, token)
 	if err != nil {
 		return "", errors.ErrInternalServerError
 	}

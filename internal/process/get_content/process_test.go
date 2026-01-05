@@ -1,6 +1,7 @@
 package get_content
 
 import (
+	"context"
 	"os"
 	"path/filepath"
 	"testing"
@@ -72,7 +73,7 @@ func TestProcess_GetContent(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := p.Process(tt.lang)
+			got, err := p.Process(context.Background(), tt.lang)
 			if err != tt.wantErr {
 				t.Errorf("Process() error = %v, wantErr %v", err, tt.wantErr)
 			}
