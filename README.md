@@ -24,6 +24,7 @@ The service is built with high availability and reliability in mind, following s
 - **Graceful Shutdown**: Implements a sophisticated shutdown mechanism that allows MQ consumers to finish processing "in-flight" messages before the service terminates.
 - **Infrastructure Retry Strategy**: Features a robust startup loop that waits for Redis and RabbitMQ to become ready, ensuring the service doesn't fail during orchestrator cold starts.
 - **Context Propagation**: Full context.Context integration across all layers for reliable timeout management and resource cleanup.
+- **MQ Topology**: Utilizes a robust RabbitMQ topology with topic exchanges, durable queues, and Dead Letter Queues (DLQ) for failed message handling.
 
 ## Technical Specification
 
@@ -42,7 +43,7 @@ The service follows a "fail-fast" configuration approach, validating all necessa
 | APP_ENV | Runtime environment (local/production) |
 | REDIS_URL | Connection string for the Redis instance |
 | RABBITMQ_URL | Connection string for the RabbitMQ broker |
-| CV_PASSWORD | The master password required to request a CV token |
+| CV_FILE_PATH | Absolute path to the CV PDF files in the container |
 
 ## Development and Deployment
 
