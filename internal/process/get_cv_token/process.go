@@ -6,8 +6,16 @@ import (
 	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 )
 
+type VerifyCaptchaTask interface {
+	Execute(ctx context.Context, captchaID string) error
+}
+
 type ValidatePasswordTask interface {
 	Execute(password string) error
+}
+
+type DeleteCaptchaTask interface {
+	Execute(ctx context.Context, captchaID string) error
 }
 
 type CreateTokenTask interface {
@@ -15,25 +23,37 @@ type CreateTokenTask interface {
 }
 
 type Process struct {
+	verifyCaptchaTask    VerifyCaptchaTask
 	validatePasswordTask ValidatePasswordTask
+	deleteCaptchaTask    DeleteCaptchaTask
 	createTokenTask      CreateTokenTask
 	cvFilePaths          map[string]string
 }
 
-func NewProcess(vpt ValidatePasswordTask, ctt CreateTokenTask, cvPaths map[string]string) *Process {
+func NewProcess(verifyCaptchaTask VerifyCaptchaTask, validatePasswordTask ValidatePasswordTask, deleteCaptchaTask DeleteCaptchaTask, createTokenTask CreateTokenTask, cvFilePaths map[string]string) *Process {
 	return &Process{
-		validatePasswordTask: vpt,
-		createTokenTask:      ctt,
-		cvFilePaths:          cvPaths,
+		verifyCaptchaTask:    verifyCaptchaTask,
+		validatePasswordTask: validatePasswordTask,
+		deleteCaptchaTask:    deleteCaptchaTask,
+		createTokenTask:      createTokenTask,
+		cvFilePaths:          cvFilePaths,
 	}
 }
 
-func (p *Process) Process(ctx context.Context, password, lang string) (string, error) {
+func (p *Process) Process(ctx context.Context, password, lang, captchaID string) (string, error) {
 	if _, ok := p.cvFilePaths[lang]; !ok {
 		return "", errors.ErrUnsupportedLanguage
 	}
 
+	if err := p.verifyCaptchaTask.Execute(ctx, captchaID); err != nil {
+		return "", err
+	}
+
 	if err := p.validatePasswordTask.Execute(password); err != nil {
+		return "", err
+	}
+
+	if err := p.deleteCaptchaTask.Execute(ctx, captchaID); err != nil {
 		return "", err
 	}
 

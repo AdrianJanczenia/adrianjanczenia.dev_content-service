@@ -37,6 +37,14 @@ func (c *Client) SetToken(ctx context.Context, token string, value interface{}, 
 	return c.client.Set(ctx, token, value, ttl).Err()
 }
 
+func (c *Client) GetToken(ctx context.Context, key string) (string, error) {
+	return c.client.Get(ctx, key).Result()
+}
+
+func (c *Client) DelToken(ctx context.Context, key string) error {
+	return c.client.Del(ctx, key).Err()
+}
+
 func (c *Client) ValidateAndDeleteToken(ctx context.Context, token string) (bool, error) {
 	deletedCount, err := c.client.Del(ctx, token).Result()
 	if err != nil {

@@ -3,6 +3,7 @@ package task
 import (
 	"context"
 	"errors"
+	"regexp"
 	"testing"
 	"time"
 
@@ -20,20 +21,27 @@ func (m *mockTokenService) SetToken(ctx context.Context, token string, value int
 func TestCreateTokenTask_Execute(t *testing.T) {
 	tests := []struct {
 		name         string
-		setTokenFunc func(ctx context.Context, token string, value interface{}, ttl time.Duration) error
+		setTokenFunc func(context.Context, string, interface{}, time.Duration) error
 		wantErr      error
 	}{
 		{
-			name: "successful token creation",
+			name: "success",
 			setTokenFunc: func(ctx context.Context, token string, value interface{}, ttl time.Duration) error {
+				if len(token) != 32 {
+					return errors.New("invalid length")
+				}
+				match, _ := regexp.MatchString("^[a-zA-Z0-9]+$", token)
+				if !match {
+					return errors.New("invalid charset")
+				}
 				return nil
 			},
 			wantErr: nil,
 		},
 		{
-			name: "token service error",
+			name: "redis error",
 			setTokenFunc: func(ctx context.Context, token string, value interface{}, ttl time.Duration) error {
-				return errors.New("redis down")
+				return errors.New("fail")
 			},
 			wantErr: appErrors.ErrInternalServerError,
 		},
@@ -41,16 +49,11 @@ func TestCreateTokenTask_Execute(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			mock := &mockTokenService{setTokenFunc: tt.setTokenFunc}
-			task := NewCreateTokenTask(mock, time.Minute)
-
-			token, err := task.Execute(context.Background())
-
+			m := &mockTokenService{setTokenFunc: tt.setTokenFunc}
+			task := NewCreateTokenTask(m, time.Minute)
+			_, err := task.Execute(context.Background())
 			if err != tt.wantErr {
 				t.Errorf("Execute() error = %v, wantErr %v", err, tt.wantErr)
-			}
-			if err == nil && token == "" {
-				t.Error("Execute() expected token but got empty string")
 			}
 		})
 	}

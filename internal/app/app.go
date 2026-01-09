@@ -73,9 +73,11 @@ func Build(cfg *registry.Config) (*App, error) {
 		return nil, err
 	}
 
+	verifyCaptchaTask := taskGetCvToken.NewVerifyCaptchaTask(redisClient)
 	validatePasswordTask := taskGetCvToken.NewValidatePasswordTask(cfg.Cv.Password)
+	deleteCaptchaTask := taskGetCvToken.NewDeleteCaptchaTask(redisClient)
 	createTokenTask := taskGetCvToken.NewCreateTokenTask(redisClient, cfg.Cv.TokenTTL)
-	getCvTokenProcess := processGetCvToken.NewProcess(validatePasswordTask, createTokenTask, cfg.Cv.Files)
+	getCvTokenProcess := processGetCvToken.NewProcess(verifyCaptchaTask, validatePasswordTask, deleteCaptchaTask, createTokenTask, cfg.Cv.Files)
 
 	downloadCvProcess := processDownloadCv.NewProcess(redisClient, cfg.Cv.Files)
 

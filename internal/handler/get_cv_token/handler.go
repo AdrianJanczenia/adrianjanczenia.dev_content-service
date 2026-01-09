@@ -10,7 +10,7 @@ import (
 )
 
 type GetCVTokenProcess interface {
-	Process(ctx context.Context, password, lang string) (string, error)
+	Process(ctx context.Context, password, lang, captchaID string) (string, error)
 }
 
 type Handler struct {
@@ -18,8 +18,9 @@ type Handler struct {
 }
 
 type requestPayload struct {
-	Password string `json:"password"`
-	Lang     string `json:"lang"`
+	Password  string `json:"password"`
+	Lang      string `json:"lang"`
+	CaptchaID string `json:"captchaId"`
 }
 
 type responsePayload struct {
@@ -39,7 +40,7 @@ func (c *Handler) Handle(ctx context.Context, d amqp091.Delivery) (any, error) {
 		return nil, appErrors.ErrInvalidInput
 	}
 
-	token, err := c.getCVTokenProcess.Process(ctx, req.Password, req.Lang)
+	token, err := c.getCVTokenProcess.Process(ctx, req.Password, req.Lang, req.CaptchaID)
 
 	response := responsePayload{}
 	if err != nil {

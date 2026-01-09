@@ -4,43 +4,39 @@ The **Content Service** serves as the primary data provider (Source of Truth) an
 
 ## Service Role
 
-This service is the core "worker" and data manager of the system. Its primary responsibilities include:
+This service is the core data manager of the system. Its primary responsibilities include:
 
-- **Content Delivery (gRPC)**: Serving localized text and metadata for the frontend via high-performance gRPC procedures.
+- **Content Delivery (gRPC)**: Serving localized text and metadata for the frontend.
 - **Asynchronous Processing (MQ)**: Acting as a RabbitMQ worker to handle CV download token requests using an RPC pattern.
-- **Token Management (Redis)**: Generating, storing, and validating short-lived, one-time-use tokens for secure file access.
-- **Secure File Serving**: Managing and streaming PDF files directly from the private file system with strict access control.
+- **Token Management (Redis)**: Generating and validating high-entropy, short-lived tokens for secure file access.
+- **Captcha Verification**: Checking the Captcha solution state in Redis before issuing CV tokens.
 
-## Architecture and Resilience
+## Architecture and Security
 
-The service is built with high availability and reliability in mind, following strict architectural standards.
+The service is built with a "security-first" approach regarding document issuance.
+
+### Multi-step CV Token Issuance Flow:
+1. **Captcha Verification**: Checks Redis to ensure the Captcha session for the given ID is marked as solved.
+2. **Password Validation**: Verifies the access password.
+3. **Session Invalidation**: Immediately deletes the Captcha data from Redis after successful verification (one-time use session).
+4. **Token Generation**: Creates a 32-character alphanumeric token (a-z, A-Z, 0-9) stored in Redis with a specific TTL.
 
 ### Layered Pattern: Handler -> Process -> Task
-1. Handler: Acts as the entry point for gRPC calls or RabbitMQ messages. It unmarshals data and delegates work.
-2. Process: Orchestrates the business logic, such as validating credentials before calling the token generator.
-3. Task / Service: Performs atomic infrastructure operations like interacting with Redis or the file system.
-
-### Advanced Features
-- **Graceful Shutdown**: Implements a sophisticated shutdown mechanism that allows MQ consumers to finish processing "in-flight" messages before the service terminates.
-- **Infrastructure Retry Strategy**: Features a robust startup loop that waits for Redis and RabbitMQ to become ready, ensuring the service doesn't fail during orchestrator cold starts.
-- **Context Propagation**: Full context.Context integration across all layers for reliable timeout management and resource cleanup.
-- **MQ Topology**: Utilizes a robust RabbitMQ topology with topic exchanges, durable queues, and Dead Letter Queues (DLQ) for failed message handling.
+1. Handler: Entry point for gRPC calls or RabbitMQ messages.
+2. Process: Orchestrates the business logic (Captcha Verify -> Password -> Session Delete -> Create Token).
+3. Task / Service: Performs atomic infrastructure operations on Redis or the file system.
 
 ## Technical Specification
 
-- Go: 1.23+ (utilizing the latest concurrency patterns).
-- Redis: Used as a high-speed, volatile storage for session and download tokens.
-- RabbitMQ: Used for decoupled, asynchronous communication and task distribution.
-- gRPC: Provides the interface for synchronous content retrieval.
-- Docker: Optimized multi-stage builds on Alpine Linux, ensuring a minimal security footprint.
+- Go: 1.23+
+- Redis: Used for volatile storage of Captcha states and download tokens.
+- RabbitMQ: Asynchronous communication for CV requests.
+- Token Format: 32-character random alphanumeric string.
 
 ## Environment Configuration
 
-The service follows a "fail-fast" configuration approach, validating all necessary infrastructure links upon startup.
-
 | Variable | Description |
 |----------|-------------|
-| APP_ENV | Runtime environment (local/production) |
 | REDIS_URL | Connection string for the Redis instance |
 | RABBITMQ_URL | Connection string for the RabbitMQ broker |
 | CV_FILE_PATH | Absolute path to the CV PDF files in the container |
@@ -52,13 +48,6 @@ docker build -t content-service .
 
 ### Execute Unit Tests
 go test -v ./...
-
-## Data Flow: CV Request
-1. Gateway Service publishes a JSON request to the 'cv_requests' queue.
-2. Content Service Consumer receives the message and triggers the Handler.
-3. The Process validates the password and language.
-4. The Task generates a UUID, saves it to Redis with a TTL, and returns it.
-5. The Broker publishes the response back to the 'reply_to' queue specified in the message.
 
 ---
 Adrian Janczenia

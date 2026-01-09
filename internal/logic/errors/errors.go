@@ -33,6 +33,8 @@ var (
 	ErrCVNotFound          = &AppError{HTTPStatus: http.StatusNotFound, Slug: "error_cv_not_found"}
 	ErrCVExpired           = &AppError{HTTPStatus: http.StatusGone, Slug: "error_cv_expired"}
 	ErrContentNotFound     = &AppError{HTTPStatus: http.StatusNotFound, Slug: "error_message"}
+	ErrCaptchaNotFound     = &AppError{HTTPStatus: http.StatusNotFound, Slug: "error_captcha_not_found"}
+	ErrCaptchaNotSolved    = &AppError{HTTPStatus: http.StatusForbidden, Slug: "error_captcha_invalid"}
 )
 
 func FromSlug(slug string) *AppError {
@@ -47,6 +49,10 @@ func FromSlug(slug string) *AppError {
 		return ErrInternalServerError
 	case "error_message":
 		return ErrServiceUnavailable
+	case "error_captcha_not_found":
+		return ErrCaptchaNotFound
+	case "error_captcha_invalid":
+		return ErrCaptchaNotSolved
 	default:
 		return ErrInternalServerError
 	}
@@ -66,6 +72,8 @@ func FromHTTPStatus(status int) *AppError {
 		return ErrMethodNotAllowed
 	case http.StatusServiceUnavailable:
 		return ErrServiceUnavailable
+	case http.StatusForbidden:
+		return ErrCaptchaNotSolved
 	default:
 		return ErrInternalServerError
 	}
