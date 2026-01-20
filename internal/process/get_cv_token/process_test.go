@@ -15,11 +15,11 @@ func (m *mockVerifyCaptchaTask) Execute(ctx context.Context, id string) error {
 }
 
 type mockValidatePasswordTask struct {
-	executeFunc func(password string) error
+	executeFunc func(ctx context.Context, password, captchaID string) error
 }
 
-func (m *mockValidatePasswordTask) Execute(password string) error {
-	return m.executeFunc(password)
+func (m *mockValidatePasswordTask) Execute(ctx context.Context, password, captchaID string) error {
+	return m.executeFunc(ctx, password, captchaID)
 }
 
 type mockDeleteCaptchaTask struct {
@@ -44,7 +44,7 @@ func TestProcess_Process(t *testing.T) {
 		name                 string
 		lang                 string
 		verifyCaptchaFunc    func(context.Context, string) error
-		validatePasswordFunc func(string) error
+		validatePasswordFunc func(context.Context, string, string) error
 		deleteCaptchaFunc    func(context.Context, string) error
 		createTokenFunc      func(context.Context) (string, error)
 		wantErr              bool
@@ -53,7 +53,7 @@ func TestProcess_Process(t *testing.T) {
 			name:                 "success",
 			lang:                 "pl",
 			verifyCaptchaFunc:    func(ctx context.Context, id string) error { return nil },
-			validatePasswordFunc: func(p string) error { return nil },
+			validatePasswordFunc: func(ctx context.Context, p, id string) error { return nil },
 			deleteCaptchaFunc:    func(ctx context.Context, id string) error { return nil },
 			createTokenFunc:      func(ctx context.Context) (string, error) { return "token", nil },
 			wantErr:              false,
@@ -73,7 +73,7 @@ func TestProcess_Process(t *testing.T) {
 			name:                 "password fail",
 			lang:                 "pl",
 			verifyCaptchaFunc:    func(ctx context.Context, id string) error { return nil },
-			validatePasswordFunc: func(p string) error { return errors.New("fail") },
+			validatePasswordFunc: func(ctx context.Context, p, id string) error { return errors.New("fail") },
 			wantErr:              true,
 		},
 	}
