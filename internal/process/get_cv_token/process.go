@@ -11,7 +11,7 @@ type VerifyCaptchaTask interface {
 }
 
 type ValidatePasswordTask interface {
-	Execute(password string) error
+	Execute(ctx context.Context, password, captchaID string) error
 }
 
 type DeleteCaptchaTask interface {
@@ -49,7 +49,7 @@ func (p *Process) Process(ctx context.Context, password, lang, captchaID string)
 		return "", err
 	}
 
-	if err := p.validatePasswordTask.Execute(password); err != nil {
+	if err := p.validatePasswordTask.Execute(ctx, password, captchaID); err != nil {
 		return "", err
 	}
 

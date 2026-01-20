@@ -44,3 +44,6 @@ cv:
   files:
     pl: "/app/private/pl_cv.pdf"
     en: "/app/private/en_cv.pdf"
+
+captcha:
+  ttlMinutes: 3

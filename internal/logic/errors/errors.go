@@ -35,6 +35,7 @@ var (
 	ErrContentNotFound     = &AppError{HTTPStatus: http.StatusNotFound, Slug: "error_message"}
 	ErrCaptchaNotFound     = &AppError{HTTPStatus: http.StatusNotFound, Slug: "error_captcha_not_found"}
 	ErrCaptchaNotSolved    = &AppError{HTTPStatus: http.StatusForbidden, Slug: "error_captcha_invalid"}
+	ErrNoTriesLeft         = &AppError{HTTPStatus: http.StatusForbidden, Slug: "error_captcha_expired"}
 )
 
 func FromSlug(slug string) *AppError {

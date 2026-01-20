@@ -63,6 +63,9 @@ type Config struct {
 		TokenTTL time.Duration
 		Files    map[string]string `yaml:"files"`
 	}
+	Captcha struct {
+		TtlMinutes int `yaml:"ttlMinutes"`
+	}
 }
 
 var Cfg *Config
@@ -98,6 +101,9 @@ func LoadConfig() (*Config, error) {
 			TokenTTL int               `yaml:"tokenTTLSeconds"`
 			Files    map[string]string `yaml:"files"`
 		} `yaml:"cv"`
+		Captcha struct {
+			TtlMinutes int `yaml:"ttlMinutes"`
+		} `yaml:"captcha"`
 	}
 
 	env := os.Getenv("APP_ENV")
@@ -132,6 +138,7 @@ func LoadConfig() (*Config, error) {
 	cfg.Cv.Password = yc.Cv.Password
 	cfg.Cv.TokenTTL = time.Duration(yc.Cv.TokenTTL) * time.Second
 	cfg.Cv.Files = yc.Cv.Files
+	cfg.Captcha.TtlMinutes = yc.Captcha.TtlMinutes
 
 	overrideFromEnv("CV_PASSWORD", &cfg.Cv.Password)
 	overrideFromEnv("REDIS_URL", &cfg.Redis.URL)

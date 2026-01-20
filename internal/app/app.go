@@ -74,7 +74,7 @@ func Build(cfg *registry.Config) (*App, error) {
 	}
 
 	verifyCaptchaTask := taskGetCvToken.NewVerifyCaptchaTask(redisClient)
-	validatePasswordTask := taskGetCvToken.NewValidatePasswordTask(cfg.Cv.Password)
+	validatePasswordTask := taskGetCvToken.NewValidatePasswordTask(cfg.Cv.Password, redisClient, cfg.Captcha.TtlMinutes)
 	deleteCaptchaTask := taskGetCvToken.NewDeleteCaptchaTask(redisClient)
 	createTokenTask := taskGetCvToken.NewCreateTokenTask(redisClient, cfg.Cv.TokenTTL)
 	getCvTokenProcess := processGetCvToken.NewProcess(verifyCaptchaTask, validatePasswordTask, deleteCaptchaTask, createTokenTask, cfg.Cv.Files)
