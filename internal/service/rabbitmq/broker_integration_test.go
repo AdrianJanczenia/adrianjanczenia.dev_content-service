@@ -11,6 +11,7 @@ import (
 
 	handlerGetCVToken "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/handler/get_cv_token"
 	processGetCVToken "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/get_cv_token"
+	taskGetCVToken "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/process/get_cv_token/task"
 	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/registry"
 	serviceRedis "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/service/redis"
 	"github.com/go-redis/redis/v8"
@@ -99,7 +100,11 @@ func TestCVTokenRPCWithRabbitMQAndRedis(t *testing.T) {
 		t.Fatal(err)
 	}
 
-	process := processGetCVToken.NewProcess(tokenStore, "test-only-password", 30*time.Second, map[string]string{"pl": "unused"})
+	process := processGetCVToken.NewProcess(
+		taskGetCVToken.NewValidateRequestTask(map[string]string{"pl": "unused"}),
+		taskGetCVToken.NewComparePasswordTask("test-only-password"),
+		taskGetCVToken.NewIssueTokenTask(tokenStore, taskGetCVToken.NewCreateTokenTask(), 30*time.Second),
+	)
 	broker.RegisterConsumer(queueName, 1, handlerGetCVToken.NewHandler(process).Handle)
 	workerCtx, cancelWorker := context.WithCancel(ctx)
 	workerDone := make(chan error, 1)
