@@ -4,93 +4,71 @@ import (
 	"context"
 	"errors"
 	"testing"
+
+	appErrors "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 )
 
-type mockVerifyCaptchaTask struct {
-	executeFunc func(ctx context.Context, id string) error
+type fakeValidateRequest struct {
+	err   error
+	calls int
 }
 
-func (m *mockVerifyCaptchaTask) Execute(ctx context.Context, id string) error {
-	return m.executeFunc(ctx, id)
-}
-
-type mockValidatePasswordTask struct {
-	executeFunc func(ctx context.Context, password, captchaID string) error
-}
-
-func (m *mockValidatePasswordTask) Execute(ctx context.Context, password, captchaID string) error {
-	return m.executeFunc(ctx, password, captchaID)
-}
-
-type mockDeleteCaptchaTask struct {
-	executeFunc func(ctx context.Context, id string) error
-}
-
-func (m *mockDeleteCaptchaTask) Execute(ctx context.Context, id string) error {
-	return m.executeFunc(ctx, id)
-}
-
-type mockCreateTokenTask struct {
-	executeFunc func(ctx context.Context) (string, error)
-}
-
-func (m *mockCreateTokenTask) Execute(ctx context.Context) (string, error) {
-	return m.executeFunc(ctx)
-}
-
-func TestProcess_Process(t *testing.T) {
-	paths := map[string]string{"pl": "path"}
-	tests := []struct {
-		name                 string
-		lang                 string
-		verifyCaptchaFunc    func(context.Context, string) error
-		validatePasswordFunc func(context.Context, string, string) error
-		deleteCaptchaFunc    func(context.Context, string) error
-		createTokenFunc      func(context.Context) (string, error)
-		wantErr              bool
-	}{
-		{
-			name:                 "success",
-			lang:                 "pl",
-			verifyCaptchaFunc:    func(ctx context.Context, id string) error { return nil },
-			validatePasswordFunc: func(ctx context.Context, p, id string) error { return nil },
-			deleteCaptchaFunc:    func(ctx context.Context, id string) error { return nil },
-			createTokenFunc:      func(ctx context.Context) (string, error) { return "token", nil },
-			wantErr:              false,
-		},
-		{
-			name:    "unsupported lang",
-			lang:    "en",
-			wantErr: true,
-		},
-		{
-			name:              "captcha fail",
-			lang:              "pl",
-			verifyCaptchaFunc: func(ctx context.Context, id string) error { return errors.New("fail") },
-			wantErr:           true,
-		},
-		{
-			name:                 "password fail",
-			lang:                 "pl",
-			verifyCaptchaFunc:    func(ctx context.Context, id string) error { return nil },
-			validatePasswordFunc: func(ctx context.Context, p, id string) error { return errors.New("fail") },
-			wantErr:              true,
-		},
+func (f *fakeValidateRequest) Execute(lang, captchaID string) error {
+	f.calls++
+	if lang != "pl" || captchaID != "captcha-id" {
+		return appErrors.ErrInvalidInput
 	}
+	return f.err
+}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			p := NewProcess(
-				&mockVerifyCaptchaTask{executeFunc: tt.verifyCaptchaFunc},
-				&mockValidatePasswordTask{executeFunc: tt.validatePasswordFunc},
-				&mockDeleteCaptchaTask{executeFunc: tt.deleteCaptchaFunc},
-				&mockCreateTokenTask{executeFunc: tt.createTokenFunc},
-				paths,
-			)
-			_, err := p.Process(context.Background(), "pass", tt.lang, "id")
-			if (err != nil) != tt.wantErr {
-				t.Errorf("Process() error = %v, wantErr %v", err, tt.wantErr)
-			}
-		})
+type fakeComparePassword struct {
+	calls int
+}
+
+func (f *fakeComparePassword) Execute(password string) bool {
+	f.calls++
+	return password == "correct"
+}
+
+type fakeIssueToken struct {
+	err             error
+	calls           int
+	passwordCorrect bool
+}
+
+func (f *fakeIssueToken) Execute(_ context.Context, captchaID, lang string, passwordCorrect bool) (string, error) {
+	f.calls++
+	f.passwordCorrect = passwordCorrect
+	if captchaID != "captcha-id" || lang != "pl" {
+		return "", appErrors.ErrInvalidInput
+	}
+	return "token", f.err
+}
+
+func TestProcessValidatesBeforeIssuing(t *testing.T) {
+	validator := &fakeValidateRequest{err: appErrors.ErrUnsupportedLanguage}
+	comparison := &fakeComparePassword{}
+	issuer := &fakeIssueToken{}
+	_, err := NewProcess(validator, comparison, issuer).Process(context.Background(), "correct", "pl", "captcha-id")
+	if !errors.Is(err, appErrors.ErrUnsupportedLanguage) || validator.calls != 1 || comparison.calls != 0 || issuer.calls != 0 {
+		t.Fatalf("validation should stop before password comparison and token issue: err=%v, calls=%d/%d/%d", err, validator.calls, comparison.calls, issuer.calls)
+	}
+}
+
+func TestProcessPassesPasswordResultToIssuer(t *testing.T) {
+	for _, tc := range []struct {
+		password string
+		correct  bool
+	}{
+		{password: "correct", correct: true},
+		{password: "wrong", correct: false},
+	} {
+		validator := &fakeValidateRequest{}
+		comparison := &fakeComparePassword{}
+		issuer := &fakeIssueToken{}
+		token, err := NewProcess(validator, comparison, issuer).Process(context.Background(), tc.password, "pl", "captcha-id")
+		if err != nil || token != "token" || issuer.passwordCorrect != tc.correct || validator.calls != 1 || comparison.calls != 1 || issuer.calls != 1 {
+			t.Fatalf("password %q: token=%q err=%v correct=%t calls=%d/%d/%d", tc.password, token, err, issuer.passwordCorrect, validator.calls, comparison.calls, issuer.calls)
+		}
 	}
 }

@@ -19,39 +19,49 @@ func main() {
 	if err != nil {
 		log.Fatalf("FATAL: could not load configuration: %v", err)
 	}
-	registry.Cfg = cfg
-
-	application, err := app.Build(registry.Cfg)
+	application, err := app.Build(cfg)
 	if err != nil {
 		log.Fatalf("FATAL: could not build application: %v", err)
 	}
 
+	serverErrors := make(chan error, 3)
+	consumerCtx, cancelConsumers := context.WithCancel(context.Background())
 	go func() {
 		if err := application.RunGRPC(); err != nil {
-			log.Printf("ERROR: gRPC server failed: %v", err)
+			serverErrors <- err
 		}
 	}()
 
 	go func() {
 		if err := application.RunHTTP(); !errors.Is(err, http.ErrServerClosed) {
-			log.Printf("ERROR: HTTP server failed: %v", err)
+			serverErrors <- err
 		}
 	}()
 
 	go func() {
-		if err := application.RunRabbitMQConsumers(); err != nil {
-			log.Printf("ERROR: RabbitMQ consumer group failed: %v", err)
+		if err := application.RunRabbitMQConsumers(consumerCtx); err != nil {
+			serverErrors <- err
 		}
 	}()
 
 	shutdownChannel := make(chan os.Signal, 1)
 	signal.Notify(shutdownChannel, syscall.SIGINT, syscall.SIGTERM)
-	sig := <-shutdownChannel
-	log.Printf("INFO: received signal %s. Shutting down...", sig)
+	failed := false
+	select {
+	case sig := <-shutdownChannel:
+		log.Printf("INFO: received signal %s. Shutting down...", sig)
+	case err := <-serverErrors:
+		log.Printf("ERROR: service failed: %v", err)
+		failed = true
+	}
+	cancelConsumers()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	application.Shutdown(ctx)
 	log.Println("INFO: application shutdown complete.")
+	if failed {
+		os.Exit(1)
+	}
 }

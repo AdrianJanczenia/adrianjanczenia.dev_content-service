@@ -10,7 +10,13 @@ import (
 func TestNewProcess(t *testing.T) {
 	tmpDir := t.TempDir()
 	plPath := filepath.Join(tmpDir, "pl.json")
-	os.WriteFile(plPath, []byte(`{"hello": "cześć"}`), 0644)
+	invalidPath := filepath.Join(tmpDir, "invalid.json")
+	if err := os.WriteFile(plPath, []byte(`{"hello": "cześć"}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(invalidPath, []byte("invalid"), 0600); err != nil {
+		t.Fatal(err)
+	}
 
 	tests := []struct {
 		name         string
@@ -30,6 +36,18 @@ func TestNewProcess(t *testing.T) {
 			defaultLang:  "en",
 			wantErr:      true,
 		},
+		{
+			name:         "missing default language",
+			contentFiles: map[string]string{"pl": plPath},
+			defaultLang:  "en",
+			wantErr:      true,
+		},
+		{
+			name:         "invalid JSON",
+			contentFiles: map[string]string{"pl": invalidPath},
+			defaultLang:  "pl",
+			wantErr:      true,
+		},
 	}
 
 	for _, tt := range tests {
@@ -46,10 +64,17 @@ func TestProcess_GetContent(t *testing.T) {
 	tmpDir := t.TempDir()
 	plPath := filepath.Join(tmpDir, "pl.json")
 	enPath := filepath.Join(tmpDir, "en.json")
-	os.WriteFile(plPath, []byte("pl content"), 0644)
-	os.WriteFile(enPath, []byte("en content"), 0644)
+	if err := os.WriteFile(plPath, []byte(`{"content":"pl"}`), 0600); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(enPath, []byte(`{"content":"en"}`), 0600); err != nil {
+		t.Fatal(err)
+	}
 
-	p, _ := NewProcess(map[string]string{"pl": plPath, "en": enPath}, "en")
+	p, err := NewProcess(map[string]string{"pl": plPath, "en": enPath}, "en")
+	if err != nil {
+		t.Fatal(err)
+	}
 
 	tests := []struct {
 		name    string
@@ -60,13 +85,13 @@ func TestProcess_GetContent(t *testing.T) {
 		{
 			name:    "get existing language",
 			lang:    "pl",
-			want:    "pl content",
+			want:    `{"content":"pl"}`,
 			wantErr: nil,
 		},
 		{
 			name:    "fallback to default language",
 			lang:    "de",
-			want:    "en content",
+			want:    `{"content":"en"}`,
 			wantErr: nil,
 		},
 	}

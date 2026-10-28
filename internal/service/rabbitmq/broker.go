@@ -12,13 +12,8 @@ import (
 	"github.com/rabbitmq/amqp091-go"
 )
 
-type AmqpChannel interface {
-	PublishWithContext(ctx context.Context, exchange, key string, mandatory, immediate bool, msg amqp091.Publishing) error
-	Consume(queue, consumer string, autoAck, exclusive, noLocal, noWait bool, args amqp091.Table) (<-chan amqp091.Delivery, error)
-	QueueDeclare(name string, durable, autoDelete, exclusive, noWait bool, args amqp091.Table) (amqp091.Queue, error)
-	QueueBind(name, key, exchange string, noWait bool, args amqp091.Table) error
-	ExchangeDeclare(name, kind string, durable, autoDelete, internal, noWait bool, args amqp091.Table) error
-	Close() error
+type replyPublisher interface {
+	PublishWithDeferredConfirmWithContext(ctx context.Context, exchange, key string, mandatory, immediate bool, msg amqp091.Publishing) (*amqp091.DeferredConfirmation, error)
 }
 
 type MessageHandler func(ctx context.Context, d amqp091.Delivery) (replyPayload any, err error)
@@ -35,7 +30,7 @@ type Broker struct {
 }
 
 func NewBroker(amqpURL string) (*Broker, error) {
-	conn, err := amqp091.Dial(amqpURL)
+	conn, err := amqp091.DialConfig(amqpURL, amqp091.Config{Dial: amqp091.DefaultDial(3 * time.Second)})
 	if err != nil {
 		return nil, err
 	}
@@ -94,20 +89,35 @@ func (b *Broker) RegisterConsumer(queueName string, count int, handler MessageHa
 
 func (b *Broker) Start(ctx context.Context) error {
 	var wg sync.WaitGroup
+
+	ctx, cancel := context.WithCancel(ctx)
+	defer cancel()
+
+	errCh := make(chan error, 1)
+
 	for _, consumer := range b.consumers {
 		for i := 0; i < consumer.ConsumerCount; i++ {
 			wg.Add(1)
 			go func(cfg ConsumerConfig) {
 				defer wg.Done()
 				if err := b.startConsumer(ctx, cfg.QueueName, cfg.Handler); err != nil {
-					log.Printf("ERROR: RabbitMQ consumer for queue %s stopped: %v", cfg.QueueName, err)
+					select {
+					case errCh <- fmt.Errorf("RabbitMQ consumer %s: %w", cfg.QueueName, err):
+					default:
+					}
+					cancel()
 				}
 			}(consumer)
 		}
 	}
 	wg.Wait()
 
-	return nil
+	select {
+	case err := <-errCh:
+		return err
+	default:
+		return nil
+	}
 }
 
 func (b *Broker) Shutdown() error {
@@ -125,6 +135,20 @@ func (b *Broker) startConsumer(ctx context.Context, queueName string, handler Me
 	}
 	defer ch.Close()
 
+	if err := ch.Qos(1, 0, false); err != nil {
+		return err
+	}
+	if err := ch.Confirm(false); err != nil {
+		return err
+	}
+
+	returns := ch.NotifyReturn(make(chan amqp091.Return, 1))
+	go func() {
+		for returned := range returns {
+			log.Printf("WARN: RabbitMQ reply was unroutable (code %d)", returned.ReplyCode)
+		}
+	}()
+
 	msgs, err := ch.Consume(queueName, "", false, false, false, false, nil)
 	if err != nil {
 		return err
@@ -137,41 +161,63 @@ func (b *Broker) startConsumer(ctx context.Context, queueName string, handler Me
 			return nil
 		case d, ok := <-msgs:
 			if !ok {
-				return nil
+				if ctx.Err() != nil {
+					return nil
+				}
+				return fmt.Errorf("delivery channel closed")
 			}
 
-			hCtx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+			hCtx, cancel := context.WithTimeout(ctx, 8*time.Second)
 			replyPayload, err := handler(hCtx, d)
 			if err != nil {
 				cancel()
-				_ = d.Nack(false, false)
+				if nackErr := d.Nack(false, false); nackErr != nil {
+					return nackErr
+				}
 				continue
 			}
 
 			if d.ReplyTo != "" {
-				err = b.reply(hCtx, ch, d, replyPayload)
+				err = b.replyConfirmed(hCtx, ch, d, replyPayload)
 				if err != nil {
 					log.Printf("ERROR: failed to send reply: %v", err)
 					cancel()
-					_ = d.Nack(false, false)
+					if ackErr := d.Ack(false); ackErr != nil {
+						return ackErr
+					}
 					continue
 				}
 			}
 			cancel()
-			_ = d.Ack(false)
+			if err := d.Ack(false); err != nil {
+				return err
+			}
 		}
 	}
 }
 
-func (b *Broker) reply(ctx context.Context, ch AmqpChannel, d amqp091.Delivery, payload any) error {
+func (b *Broker) replyConfirmed(ctx context.Context, ch replyPublisher, d amqp091.Delivery, payload any) error {
 	responseBytes, err := json.Marshal(payload)
 	if err != nil {
 		return err
 	}
 
-	return ch.PublishWithContext(ctx, "", d.ReplyTo, false, false, amqp091.Publishing{
+	confirmation, err := ch.PublishWithDeferredConfirmWithContext(ctx, "", d.ReplyTo, true, false, amqp091.Publishing{
 		ContentType:   "application/json",
 		CorrelationId: d.CorrelationId,
 		Body:          responseBytes,
 	})
+	if err != nil {
+		return err
+	}
+
+	acked, err := confirmation.WaitContext(ctx)
+	if err != nil {
+		return err
+	}
+	if !acked {
+		return fmt.Errorf("RabbitMQ rejected reply")
+	}
+
+	return nil
 }

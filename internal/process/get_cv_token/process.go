@@ -1,66 +1,39 @@
 package get_cv_token
 
-import (
-	"context"
+import "context"
 
-	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
-)
-
-type VerifyCaptchaTask interface {
-	Execute(ctx context.Context, captchaID string) error
+type ValidateRequestTask interface {
+	Execute(lang, captchaID string) error
 }
 
-type ValidatePasswordTask interface {
-	Execute(ctx context.Context, password, captchaID string) error
+type ComparePasswordTask interface {
+	Execute(password string) bool
 }
 
-type DeleteCaptchaTask interface {
-	Execute(ctx context.Context, captchaID string) error
-}
-
-type CreateTokenTask interface {
-	Execute(ctx context.Context) (string, error)
+type IssueTokenTask interface {
+	Execute(ctx context.Context, captchaID, lang string, passwordCorrect bool) (string, error)
 }
 
 type Process struct {
-	verifyCaptchaTask    VerifyCaptchaTask
-	validatePasswordTask ValidatePasswordTask
-	deleteCaptchaTask    DeleteCaptchaTask
-	createTokenTask      CreateTokenTask
-	cvFilePaths          map[string]string
+	validateRequestTask ValidateRequestTask
+	comparePasswordTask ComparePasswordTask
+	issueTokenTask      IssueTokenTask
 }
 
-func NewProcess(verifyCaptchaTask VerifyCaptchaTask, validatePasswordTask ValidatePasswordTask, deleteCaptchaTask DeleteCaptchaTask, createTokenTask CreateTokenTask, cvFilePaths map[string]string) *Process {
+func NewProcess(validateRequestTask ValidateRequestTask, comparePasswordTask ComparePasswordTask, issueTokenTask IssueTokenTask) *Process {
 	return &Process{
-		verifyCaptchaTask:    verifyCaptchaTask,
-		validatePasswordTask: validatePasswordTask,
-		deleteCaptchaTask:    deleteCaptchaTask,
-		createTokenTask:      createTokenTask,
-		cvFilePaths:          cvFilePaths,
+		validateRequestTask: validateRequestTask,
+		comparePasswordTask: comparePasswordTask,
+		issueTokenTask:      issueTokenTask,
 	}
 }
 
 func (p *Process) Process(ctx context.Context, password, lang, captchaID string) (string, error) {
-	if _, ok := p.cvFilePaths[lang]; !ok {
-		return "", errors.ErrUnsupportedLanguage
-	}
-
-	if err := p.verifyCaptchaTask.Execute(ctx, captchaID); err != nil {
+	if err := p.validateRequestTask.Execute(lang, captchaID); err != nil {
 		return "", err
 	}
 
-	if err := p.validatePasswordTask.Execute(ctx, password, captchaID); err != nil {
-		return "", err
-	}
+	passwordCorrect := p.comparePasswordTask.Execute(password)
 
-	if err := p.deleteCaptchaTask.Execute(ctx, captchaID); err != nil {
-		return "", err
-	}
-
-	token, err := p.createTokenTask.Execute(ctx)
-	if err != nil {
-		return "", err
-	}
-
-	return token, nil
+	return p.issueTokenTask.Execute(ctx, captchaID, lang, passwordCorrect)
 }

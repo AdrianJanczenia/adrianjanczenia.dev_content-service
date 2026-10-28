@@ -1,53 +1,47 @@
-# Adrian Janczenia - Content Service
+# Content service
 
-The **Content Service** serves as the primary data provider (Source of Truth) and secure document distributor within the portfolio microservices ecosystem. It handles localized content delivery, CV access authorization, and secure file streaming.
+This Go service supplies Polish and English portfolio content over gRPC, handles CV token requests from RabbitMQ, and streams CV files over HTTP. Redis holds the short-lived CAPTCHA and token state shared with the CAPTCHA service.
 
-## Service Role
+## Interfaces
 
-This service is the core data manager of the system. Its primary responsibilities include:
+| Interface | Purpose |
+| --- | --- |
+| gRPC `ContentService.Handle` | Read localized content from `content/pl.json` or `content/en.json`. |
+| RabbitMQ CV request queue | Validate the language, solved CAPTCHA state, and password; reply with a short-lived download token or an error slug. |
+| `GET /download/cv?token=...&lang=...` | Redeem a token and stream the configured PDF. |
 
-- **Content Delivery (gRPC)**: Serving localized text and metadata for the frontend.
-- **Asynchronous Processing (MQ)**: Acting as a RabbitMQ worker to handle CV download token requests using an RPC pattern.
-- **Token Management (Redis)**: Generating and validating high-entropy, short-lived tokens for secure file access.
-- **Captcha Verification**: Checking the Captcha solution state in Redis before issuing CV tokens.
+The gRPC contract is in `api/proto/v1/content.proto`. File paths, server ports, token lifetime, and RabbitMQ topology are configured in `config/<environment>/config.yml`. Keep the localized JSON files aligned when editing site content.
 
-## Architecture and Security
+HTTP and RabbitMQ error replies carry distinct, machine-readable slugs for invalid input, unsupported language, CAPTCHA state, and CV failures. The front end translates these slugs from the paired Polish and English content files.
 
-The service is built with a "security-first" approach regarding document issuance.
+## CV authorization
 
-### Multi-step CV Token Issuance Flow:
-1. **Captcha Verification**: Checks Redis to ensure the Captcha session for the given ID is marked as solved.
-2. **Password Validation**: Verifies the access password.
-3. **Session Invalidation**: Immediately deletes the Captcha data from Redis after successful verification (one-time use session).
-4. **Token Generation**: Creates a 32-character alphanumeric token (a-z, A-Z, 0-9) stored in Redis with a specific TTL.
+The token process delegates request validation, constant-time password comparison, token generation, and issuing to focused tasks. The token is 32 characters generated with `crypto/rand`. A Redis Lua script checks the solved CAPTCHA, decrements attempts for a wrong password without extending the challenge TTL, and atomically records a successful issue. The original CAPTCHA state is removed after issue. A result mapping lets a successful retry for the same CAPTCHA ID and language receive the same still-valid token; a different language is rejected.
 
-### Layered Pattern: Handler -> Process -> Task
-1. Handler: Entry point for gRPC calls or RabbitMQ messages.
-2. Process: Orchestrates the business logic (Captcha Verify -> Password -> Session Delete -> Create Token).
-3. Task / Service: Performs atomic infrastructure operations on Redis or the file system.
+The download process opens and checks the selected regular file before redeeming the token; these steps have separate tasks. A second Lua script validates the token's language and deletes both token and result mapping atomically. A token can be redeemed only once, so an interrupted transfer cannot be resumed with that token. PDF responses carry `Cache-Control: no-store` and `Referrer-Policy: no-referrer`.
 
-## Technical Specification
+The RabbitMQ worker uses manual acknowledgements and a prefetch of one message per consumer. It publishes replies in confirm mode. If publishing a reply fails, it logs the failure and acknowledges the original request; a client can retry the same CAPTCHA ID while the result mapping is valid. Publisher confirms do not guarantee that a client received the reply.
 
-- Go: 1.23+
-- Redis: Used for volatile storage of Captcha states and download tokens.
-- RabbitMQ: Asynchronous communication for CV requests.
-- Token Format: 32-character random alphanumeric string.
+Redis scripts live in `internal/service/redis/scripts/` and are embedded in the Go binary. They receive all accessed keys explicitly. The adapter uses a single Redis endpoint (`redis.NewClient`); the current multi-key layout is not designed for Redis Cluster hash-slot constraints.
 
-## Environment Configuration
+## Configuration
 
-| Variable | Description |
-|----------|-------------|
-| REDIS_URL | Connection string for the Redis instance |
-| RABBITMQ_URL | Connection string for the RabbitMQ broker |
-| CV_FILE_PATH | Absolute path to the CV PDF files in the container |
+The module requires Go 1.25.1 (see `go.mod`). `APP_ENV=production` selects `config/production/config.yml`; otherwise the local file is used. Supply `CV_PASSWORD`, `REDIS_URL`, and `RABBITMQ_URL` through environment variables; their YAML fields are intentionally empty. Startup validates required settings, checks Redis with a bounded ping, declares RabbitMQ topology, and starts the HTTP, gRPC, and RabbitMQ consumers.
 
-## Development and Deployment
+CV files belong in `private/` and are selected by language through the configured paths. The directory is excluded from the Docker build context; Compose mounts it at runtime. Do not include real CVs or credentials in tests or documentation.
 
-### Build Optimized Docker Image
-docker build -t content-service .
+From the repository root, start Redis and RabbitMQ, provide the required configuration and CV files, and run `go run .`. The `Dockerfile` is available for container builds.
 
-### Execute Unit Tests
-go test -v ./...
+## Verification
 
----
-Adrian Janczenia
+```sh
+go test -race ./...
+```
+
+Opt-in integration tests use real Redis and RabbitMQ to check token transitions, concurrent issuance, and request/reply delivery:
+
+```sh
+go test -race -tags=integration ./internal/service/redis ./internal/service/rabbitmq
+```
+
+Set `REDIS_TEST_URL` and, for the RabbitMQ test, `RABBIT_TEST_URL` to isolated test services. Tests whose variables are unset skip; enabled tests create temporary keys and broker topology.

@@ -1,24 +1,53 @@
 name: Go Tests
 
 on:
+  push:
+    branches: [main, master]
   pull_request:
-    branches:
-      - main
-      - master
-  release:
-    types: [published]
+    branches: [main, master]
+  workflow_call:
+
+permissions:
+  contents: read
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 3s
+          --health-retries 10
+      rabbitmq:
+        image: rabbitmq:3-management-alpine
+        env:
+          RABBITMQ_DEFAULT_USER: integration
+          RABBITMQ_DEFAULT_PASS: integration-only
+        ports:
+          - 5672:5672
+        options: >-
+          --health-cmd "rabbitmq-diagnostics -q check_running"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      REDIS_TEST_URL: redis://127.0.0.1:6379/15
+      RABBIT_TEST_URL: amqp://integration:integration-only@127.0.0.1:5672/
     steps:
-      - name: Checkout code
+      - name: Check out source
         uses: actions/checkout@v4
-
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: '1.25.1'
-
-      - name: Run tests
-        run: go test -v ./...
+          go-version-file: go.mod
+      - name: Verify dependencies
+        run: go mod verify
+      - name: Run unit and integration tests with race detector
+        run: go test -race -count=1 -tags=integration ./...
+      - name: Run go vet
+        run: go vet -tags=integration ./...

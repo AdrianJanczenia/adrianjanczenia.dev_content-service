@@ -1,49 +1,29 @@
 package task
 
 import (
-	"context"
 	"crypto/rand"
 	"math/big"
-	"time"
-
-	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 )
 
-type TokenService interface {
-	SetToken(ctx context.Context, token string, value interface{}, ttl time.Duration) error
+type CreateTokenTask struct{}
+
+func NewCreateTokenTask() *CreateTokenTask {
+	return &CreateTokenTask{}
 }
 
-type CreateTokenTask struct {
-	tokenService TokenService
-	tokenTTL     time.Duration
-}
+func (t *CreateTokenTask) Execute() (string, error) {
+	const alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
 
-func NewCreateTokenTask(ts TokenService, ttl time.Duration) *CreateTokenTask {
-	return &CreateTokenTask{
-		tokenService: ts,
-		tokenTTL:     ttl,
-	}
-}
+	result := make([]byte, 32)
 
-func (t *CreateTokenTask) Execute(ctx context.Context) (string, error) {
-	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-
-	b := make([]byte, 32)
-	for i := range b {
-		num, err := rand.Int(rand.Reader, big.NewInt(int64(len(charset))))
+	for i := range result {
+		index, err := rand.Int(rand.Reader, big.NewInt(int64(len(alphabet))))
 		if err != nil {
-			return "", errors.ErrInternalServerError
+			return "", err
 		}
 
-		b[i] = charset[num.Int64()]
+		result[i] = alphabet[index.Int64()]
 	}
 
-	token := string(b)
-
-	err := t.tokenService.SetToken(ctx, token, "valid", t.tokenTTL)
-	if err != nil {
-		return "", errors.ErrInternalServerError
-	}
-
-	return token, nil
+	return string(result), nil
 }

@@ -1,0 +1,8 @@
+.git
+.github
+.idea
+.env
+.env.*
+private/
+**/*_test.go
+README.md

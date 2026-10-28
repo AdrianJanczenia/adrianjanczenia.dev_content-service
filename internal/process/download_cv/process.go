@@ -2,39 +2,36 @@ package download_cv
 
 import (
 	"context"
-
-	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
+	"io"
 )
 
-type TokenValidator interface {
-	ValidateAndDeleteToken(ctx context.Context, token string) (bool, error)
+type OpenFileTask interface {
+	Execute(lang string) (io.ReadCloser, int64, error)
+}
+
+type RedeemTokenTask interface {
+	Execute(ctx context.Context, token, lang string) error
 }
 
 type Process struct {
-	tokenValidator TokenValidator
-	cvFilePaths    map[string]string
+	openFileTask    OpenFileTask
+	redeemTokenTask RedeemTokenTask
 }
 
-func NewProcess(tv TokenValidator, cvPaths map[string]string) *Process {
-	return &Process{
-		tokenValidator: tv,
-		cvFilePaths:    cvPaths,
-	}
+func NewProcess(openFileTask OpenFileTask, redeemTokenTask RedeemTokenTask) *Process {
+	return &Process{openFileTask: openFileTask, redeemTokenTask: redeemTokenTask}
 }
 
-func (p *Process) Process(ctx context.Context, token, lang string) (string, error) {
-	valid, err := p.tokenValidator.ValidateAndDeleteToken(ctx, token)
+func (p *Process) Process(ctx context.Context, token, lang string) (io.ReadCloser, int64, error) {
+	file, size, err := p.openFileTask.Execute(lang)
 	if err != nil {
-		return "", errors.ErrInternalServerError
-	}
-	if !valid {
-		return "", errors.ErrCVExpired
+		return nil, 0, err
 	}
 
-	filePath, ok := p.cvFilePaths[lang]
-	if !ok {
-		return "", errors.ErrUnsupportedLanguage
+	if err := p.redeemTokenTask.Execute(ctx, token, lang); err != nil {
+		_ = file.Close()
+		return nil, 0, err
 	}
 
-	return filePath, nil
+	return file, size, nil
 }

@@ -43,7 +43,7 @@ func TestHandler_Handle(t *testing.T) {
 		{
 			name:      "unmarshal error",
 			body:      `invalid`,
-			wantError: "",
+			wantError: appErrors.ErrInvalidInput.Slug,
 		},
 	}
 
@@ -55,11 +55,8 @@ func TestHandler_Handle(t *testing.T) {
 			d := amqp091.Delivery{Body: []byte(tt.body)}
 			res, err := h.Handle(context.Background(), d)
 
-			if tt.body == "invalid" {
-				if err != appErrors.ErrInvalidInput {
-					t.Errorf("Handle() expected error_message")
-				}
-				return
+			if err != nil {
+				t.Fatalf("Handle() error = %v", err)
 			}
 
 			payload := res.(responsePayload)

@@ -3,83 +3,70 @@ package download_cv
 import (
 	"context"
 	"errors"
+	"io"
 	"testing"
 
 	appErrors "github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 )
 
-type mockTokenValidator struct {
-	validateFunc func(ctx context.Context, token string) (bool, error)
+type trackedFile struct {
+	closed bool
 }
 
-func (m *mockTokenValidator) ValidateAndDeleteToken(ctx context.Context, token string) (bool, error) {
-	return m.validateFunc(ctx, token)
+func (f *trackedFile) Read([]byte) (int, error) { return 0, io.EOF }
+func (f *trackedFile) Close() error             { f.closed = true; return nil }
+
+type fakeOpenFile struct {
+	file  *trackedFile
+	err   error
+	calls int
 }
 
-func TestProcess_DownloadCV(t *testing.T) {
-	cvPaths := map[string]string{"pl": "/app/cv_pl.pdf"}
-
-	tests := []struct {
-		name         string
-		token        string
-		lang         string
-		validateFunc func(context.Context, string) (bool, error)
-		wantPath     string
-		wantErr      error
-	}{
-		{
-			name:  "successful download",
-			token: "valid",
-			lang:  "pl",
-			validateFunc: func(ctx context.Context, t string) (bool, error) {
-				return true, nil
-			},
-			wantPath: "/app/cv_pl.pdf",
-			wantErr:  nil,
-		},
-		{
-			name:  "invalid token",
-			token: "invalid",
-			lang:  "pl",
-			validateFunc: func(ctx context.Context, t string) (bool, error) {
-				return false, nil
-			},
-			wantPath: "",
-			wantErr:  appErrors.ErrCVExpired,
-		},
-		{
-			name:  "unsupported language",
-			token: "valid",
-			lang:  "en",
-			validateFunc: func(ctx context.Context, t string) (bool, error) {
-				return true, nil
-			},
-			wantPath: "",
-			wantErr:  appErrors.ErrUnsupportedLanguage,
-		},
-		{
-			name:  "validator internal error",
-			token: "valid",
-			lang:  "pl",
-			validateFunc: func(ctx context.Context, t string) (bool, error) {
-				return false, errors.New("redis error")
-			},
-			wantPath: "",
-			wantErr:  appErrors.ErrInternalServerError,
-		},
+func (f *fakeOpenFile) Execute(lang string) (io.ReadCloser, int64, error) {
+	f.calls++
+	if lang != "pl" {
+		return nil, 0, appErrors.ErrUnsupportedLanguage
 	}
+	return f.file, 4, f.err
+}
 
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			p := NewProcess(&mockTokenValidator{validateFunc: tt.validateFunc}, cvPaths)
-			path, err := p.Process(context.Background(), tt.token, tt.lang)
+type fakeRedeemToken struct {
+	err   error
+	calls int
+}
 
-			if err != tt.wantErr {
-				t.Errorf("Process() error = %v, wantErr %v", err, tt.wantErr)
-			}
-			if path != tt.wantPath {
-				t.Errorf("Process() path = %v, wantPath %v", path, tt.wantPath)
-			}
-		})
+func (f *fakeRedeemToken) Execute(_ context.Context, token, lang string) error {
+	f.calls++
+	if token != "token" || lang != "pl" {
+		return appErrors.ErrInvalidInput
+	}
+	return f.err
+}
+
+func TestProcessKeepsFileOpenAfterRedemption(t *testing.T) {
+	file := &trackedFile{}
+	opener := &fakeOpenFile{file: file}
+	redeemer := &fakeRedeemToken{}
+	got, size, err := NewProcess(opener, redeemer).Process(context.Background(), "token", "pl")
+	if err != nil || got != file || size != 4 || file.closed || opener.calls != 1 || redeemer.calls != 1 {
+		t.Fatalf("unexpected result: file=%v size=%d err=%v closed=%t calls=%d/%d", got, size, err, file.closed, opener.calls, redeemer.calls)
+	}
+	_ = got.Close()
+}
+
+func TestProcessClosesFileWhenRedemptionFails(t *testing.T) {
+	file := &trackedFile{}
+	redeemer := &fakeRedeemToken{err: appErrors.ErrCVExpired}
+	got, size, err := NewProcess(&fakeOpenFile{file: file}, redeemer).Process(context.Background(), "token", "pl")
+	if !errors.Is(err, appErrors.ErrCVExpired) || got != nil || size != 0 || !file.closed || redeemer.calls != 1 {
+		t.Fatalf("unexpected result: file=%v size=%d err=%v closed=%t calls=%d", got, size, err, file.closed, redeemer.calls)
+	}
+}
+
+func TestProcessDoesNotRedeemWhenFileCannotOpen(t *testing.T) {
+	redeemer := &fakeRedeemToken{}
+	_, _, err := NewProcess(&fakeOpenFile{err: appErrors.ErrInternalServerError}, redeemer).Process(context.Background(), "token", "pl")
+	if !errors.Is(err, appErrors.ErrInternalServerError) || redeemer.calls != 0 {
+		t.Fatalf("file error consumed token: err=%v calls=%d", err, redeemer.calls)
 	}
 }

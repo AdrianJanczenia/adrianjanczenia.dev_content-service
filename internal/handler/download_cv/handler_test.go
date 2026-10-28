@@ -2,18 +2,20 @@ package download_cv
 
 import (
 	"context"
+	"io"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/AdrianJanczenia/adrianjanczenia.dev_content-service/internal/logic/errors"
 )
 
 type mockDownloadCVProcess struct {
-	processFunc func(ctx context.Context, token, lang string) (string, error)
+	processFunc func(ctx context.Context, token, lang string) (io.ReadCloser, int64, error)
 }
 
-func (m *mockDownloadCVProcess) Process(ctx context.Context, token, lang string) (string, error) {
+func (m *mockDownloadCVProcess) Process(ctx context.Context, token, lang string) (io.ReadCloser, int64, error) {
 	return m.processFunc(ctx, token, lang)
 }
 
@@ -22,7 +24,7 @@ func TestHandler_DownloadCV(t *testing.T) {
 		name        string
 		method      string
 		url         string
-		processFunc func(context.Context, string, string) (string, error)
+		processFunc func(context.Context, string, string) (io.ReadCloser, int64, error)
 		wantStatus  int
 	}{
 		{
@@ -47,10 +49,19 @@ func TestHandler_DownloadCV(t *testing.T) {
 			name:   "process error",
 			method: http.MethodGet,
 			url:    "/download/cv?token=abc&lang=pl",
-			processFunc: func(ctx context.Context, t, l string) (string, error) {
-				return "", errors.ErrCVExpired
+			processFunc: func(ctx context.Context, t, l string) (io.ReadCloser, int64, error) {
+				return nil, 0, errors.ErrCVExpired
 			},
 			wantStatus: http.StatusGone,
+		},
+		{
+			name:   "successful PDF stream",
+			method: http.MethodGet,
+			url:    "/download/cv?token=abc&lang=pl",
+			processFunc: func(context.Context, string, string) (io.ReadCloser, int64, error) {
+				return io.NopCloser(strings.NewReader("%PDF")), 4, nil
+			},
+			wantStatus: http.StatusOK,
 		},
 	}
 
@@ -64,6 +75,12 @@ func TestHandler_DownloadCV(t *testing.T) {
 
 			if w.Code != tt.wantStatus {
 				t.Errorf("Handle() status = %v, wantStatus %v", w.Code, tt.wantStatus)
+			}
+			if tt.wantStatus == http.StatusMethodNotAllowed && w.Header().Get("Allow") != http.MethodGet {
+				t.Errorf("Allow = %q, want GET", w.Header().Get("Allow"))
+			}
+			if tt.name == "successful PDF stream" && (w.Body.String() != "%PDF" || w.Header().Get("Content-Length") != "4" || w.Header().Get("Cache-Control") != "no-store") {
+				t.Fatalf("unexpected PDF response: body=%q, headers=%v", w.Body.String(), w.Header())
 			}
 		})
 	}

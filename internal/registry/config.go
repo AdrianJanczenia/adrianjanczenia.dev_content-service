@@ -68,8 +68,6 @@ type Config struct {
 	}
 }
 
-var Cfg *Config
-
 func LoadConfig() (*Config, error) {
 	type yamlConfig struct {
 		Server struct {

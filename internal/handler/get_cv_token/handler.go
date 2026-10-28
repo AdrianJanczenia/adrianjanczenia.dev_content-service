@@ -37,7 +37,7 @@ func NewHandler(cvProcess GetCVTokenProcess) *Handler {
 func (c *Handler) Handle(ctx context.Context, d amqp091.Delivery) (any, error) {
 	var req requestPayload
 	if err := json.Unmarshal(d.Body, &req); err != nil {
-		return nil, appErrors.ErrInvalidInput
+		return responsePayload{Error: appErrors.ErrInvalidInput.Slug}, nil
 	}
 
 	token, err := c.getCVTokenProcess.Process(ctx, req.Password, req.Lang, req.CaptchaID)
