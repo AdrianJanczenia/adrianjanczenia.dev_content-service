@@ -2,7 +2,6 @@ package get_content
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"os"
 
@@ -19,14 +18,29 @@ func NewProcess(contentFiles map[string]string, defaultLang string) (*Process, e
 		return nil, fmt.Errorf("default content language is not configured")
 	}
 	content := make(map[string][]byte)
+	var reference map[string]any
 
 	for lang, filePath := range contentFiles {
 		file, err := os.ReadFile(filePath)
 		if err != nil {
 			return nil, fmt.Errorf("could not read content file for lang %s: %w", lang, err)
 		}
-		if !json.Valid(file) {
-			return nil, fmt.Errorf("content file for lang %s is not valid JSON", lang)
+
+		doc, err := decodeDocument(file)
+		if err != nil {
+			return nil, fmt.Errorf("content file for lang %s: %w", lang, err)
+		}
+
+		meta := doc["meta"].(map[string]any)
+
+		if meta["locale"] != lang {
+			return nil, fmt.Errorf("content file for lang %s has mismatched meta.locale", lang)
+		}
+
+		if reference == nil {
+			reference = doc
+		} else if err := compareStructure(reference, doc, "content"); err != nil {
+			return nil, fmt.Errorf("content language parity: %w", err)
 		}
 
 		content[lang] = file

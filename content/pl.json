@@ -1,343 +1,752 @@
 {
+  "schema_version": 2,
   "meta": {
-    "title": "Adrian P. Janczenia - Backend Developer"
+    "locale": "pl",
+    "title": "Adrian P. Janczenia - Backend Developer",
+    "description": "Adriana P. Janczenia - portfolio. Backend, mikroserwisy i interaktywny przegląd architektury strony"
   },
-  "profile": {
-    "name": "Adrian P. Janczenia",
-    "headline": "Backend Developer",
-    "about": "Jestem inżynierem oprogramowania z kilkuletnim doświadczeniem w rozwoju backendu, posiadającym solidne zaplecze testerskie. Specjalizuję się w pracy z systemami rozproszonymi i mikroserwisami tworzonymi w Golangu oraz PHP. W pracy stawiam na wysoką jakość tworzonych rozwiązań oraz czytelność i utrzymywalność kodu. Pracuję zgodnie z dobrymi praktykami inżynierskimi i przykładam dużą wagę do efektywnej, jasnej komunikacji w zespole. W wolnym czasie jeżdżę na motocyklu, uwielbiam spacery nad morzem, śledzę rozwój branży IT, a także interesuję się muzyką, filmami oraz serialami.",
-    "tags": [
-      "Golang",
-      "PHP",
-      "Mikroserwisy",
-      "Systemy Rozproszone",
-      "REST API"
-    ]
+  "shared": {
+    "navigation": {
+      "about": "O mnie",
+      "experience": "Doświadczenie",
+      "how_it_works": "Jak działa ta strona",
+      "contact": "Kontakt",
+      "cv": "Pobierz CV",
+      "menu": "Menu"
+    },
+    "footer": {
+      "privacy": "Polityka prywatności"
+    },
+    "contact_links": {
+      "email": "contact@adrianjanczenia.dev",
+      "github": "https://github.com/AdrianJanczenia",
+      "linkedin": "https://linkedin.com/in/adrian-janczenia"
+    }
   },
-  "languages": [
-    {
-      "language": "Angielski",
-      "proficiency": "Pełna biegłość zawodowa"
-    },
-    {
-      "language": "Polski",
-      "proficiency": "Ojczysty"
-    }
-  ],
-  "skills": [
-    {
-      "key": "języki_programowania",
-      "values": [
-        "Golang (Zaawansowany)",
-        "PHP (Zaawansowany)",
-        "C++ (Podstawowy)",
-        "Python (Podstawowy)",
-        "JavaScript (Podstawowy)"
-      ]
-    },
-    {
-      "key": "web_development",
-      "values": [
-        "HTML",
-        "CSS",
-        "React"
-      ]
-    },
-    {
-      "key": "architektura",
-      "values": [
-        "Mikroserwisy",
-        "Systemy Rozproszone"
-      ]
-    },
-    {
-      "key": "paradygmaty_programowania",
-      "values": [
-        "OOP",
-        "TDD"
-      ]
-    },
-    {
-      "key": "system_kolejkowania_wiadomości",
-      "values": [
-        "RabbitMQ (AMQP)"
-      ]
-    },
-    {
-      "key": "bazy_danych",
-      "values": [
-        "PostgreSQL",
-        "MSSQL",
-        "Redis"
-      ]
-    },
-    {
-      "key": "wyszukiwanie_i_indeksowanie_danych",
-      "values": [
-        "Solr",
-        "Elasticsearch"
-      ]
-    },
-    {
-      "key": "praca_z_api",
-      "values": [
-        "REST API"
-      ]
-    },
-    {
-      "key": "testowanie",
-      "values": [
-        "Codeception",
-        "Behave",
-        "Gherkin",
-        "Selenium",
-        "testy jednostkowe / integracyjne / E2E"
-      ]
-    },
-    {
-      "key": "automatyzacja_środowisk",
-      "values": [
-        "Docker",
-        "Docker Swarm",
-        "Ansible",
-        "TeamCity",
-        "GitHub Actions"
-      ]
-    },
-    {
-      "key": "narzędzia_developerskie",
-      "values": [
-        "Git",
-        "GitHub",
-        "Linux",
-        "Windows",
-        "macOS"
-      ]
-    },
-    {
-      "key": "narzędzia_do_zarządzania_projektami",
-      "values": [
-        "Jira",
-        "Confluence",
-        "Monday"
-      ]
-    },
-    {
-      "key": "znajomość_agile",
-      "values": [
-        "Scrum",
-        "Kanban"
-      ]
-    },
-    {
-      "key": "umiejętności_miękkie",
-      "values": [
-        "Umiejętność analitycznego myślenia",
-        "Zdolność rozwiązywania problemów",
-        "Dobra komunikacja i współpraca zespołowa",
-        "Sprawne zarządzanie priorytetami",
-        "Odporność na stres"
-      ]
-    }
-  ],
-  "experience": [
-    {
-      "role": "Back End Developer",
-      "company": "Miinto",
-      "period": "2022 - Obecnie",
-      "location": "Warszawa, Mazowieckie, Polska",
-      "type": "Zdalnie",
-      "summary": "Rozwój i utrzymanie platformy e-commerce",
-      "responsibilities": [
-        "Tworzenie skalowalnych mikroserwisów w Go (Golang) oraz utrzymywanie systemów legacy w PHP",
-        "Udział w migracji monolitycznego systemu na architekture mikrousług w Go",
-        "Budowa systemów rozproszonych z wykorzystaniem RabbitMQ, PostgreSQL, Redis i REST API",
-        "Przepisanie i optymalizacja starych mikroserwisów w celu poprawy wydajności i łatwości utrzymania",
-        "Utrzymywanie wysokiej jakości kodu poprzez testy jednostkowe/funkcjonalne oraz regularne code review",
-        "Automatyzacja pipelinów CI/CD (TeamCity, GitHub Actions) i zarządzanie infrastrukturą za pomocą Docker oraz Ansible",
-        "Praca w środowisku Agile (Kanban) z naciskiem na czysty kod i najlepsze praktyki jego wytwarzania"
-      ],
-      "skills_used": [
-        "Go",
+  "pages": {
+    "about": {
+      "name": "Adrian P. Janczenia",
+      "role": "Backend Developer",
+      "tags": [
+        "Golang",
         "PHP",
         "Mikroserwisy",
         "Systemy Rozproszone",
-        "RabbitMQ",
-        "PostgreSQL",
-        "Redis",
         "REST API"
-      ]
-    },
-    {
-      "role": "QA Engineer",
-      "company": "Miinto",
-      "period": "2018 - 2022",
-      "location": "Warszawa, Mazowieckie, Polska",
-      "type": "Hybrydowo",
-      "summary": "Inżynier QA skoncentrowany na automatyzacji testów i walidacji logiki biznesowej oraz przepływu danych",
-      "responsibilities": [
-        "Tworzenie testów automatycznych przy użyciu Python (Behave, Selenium) i PHP (Codeception)",
-        "Walidacja integralności danych i logiki biznesowej w RabbitMQ, PostgreSQL, MSSQL i Redis",
-        "Przeprowadzanie kompleksowych testów API i debugowanie systemów przy użyciu Postman",
-        "Analiza wymagań i utrzymywanie dokumentacji testowej w środowisku Agile/Scrum",
-        "Wykonywanie testów manualnych dla złożonych aplikacji webowych i raportowanie błędów"
       ],
-      "skills_used": [
-        "Automatyzacja testów",
-        "PHP",
-        "Python",
-        "Selenium",
-        "Testowanie API",
-        "SQL",
-        "Postman",
-        "Certyfikat ISTQB"
+      "hero": {
+        "eyebrow": "BACKEND / MKIROSERWISY",
+        "title": "Projektuję, rozwijam i utrzymuję backend.",
+        "body": "Jestem inżynierem oprogramowania z kilkuletnim doświadczeniem w rozwoju backendu, posiadającym solidne zaplecze testerskie. Specjalizuję się w pracy z systemami rozproszonymi i mikroserwisami tworzonymi w Golangu oraz PHP. W pracy stawiam na wysoką jakość tworzonych rozwiązań oraz czytelność i utrzymywalność kodu. Pracuję zgodnie z dobrymi praktykami inżynierskimi i przykładam dużą wagę do efektywnej, jasnej komunikacji w zespole.",
+        "action": "Zobacz doświadczenie"
+      },
+      "career_snapshot": {
+        "eyebrow": "MOJA DROGA",
+        "title": "Od testera do backend developera",
+        "body": "Od 2018 roku pracowałem testując oraz automatyzując testy, a od 2022 roku rozwijam backend. To doświadczenie pomaga mi myśleć o kontraktach, danych i niezawodności całego przepływu.",
+        "action": "Przejdź do doświadczenia"
+      },
+      "site_teaser": {
+        "eyebrow": "TA STRONA TO PROJEKT",
+        "title": "Zobacz, jak działa pod spodem",
+        "body": "To portfolio działa na usługach Go. Interaktywna mapa pokazuje drogę żądań przez różne mikroserwisy oraz prezentując użyte technologie.",
+        "action": "Jak działa ta strona"
+      },
+      "identity_detail": "Golang · PHP · mikroserwisy"
+    },
+    "experience": {
+      "intro": {
+        "eyebrow": "DOŚWIADCZENIE",
+        "title": "Praca, która ukształtowała moje podejście",
+        "body": "Od testów i ich automatyzacji do rozwijania usług backendowych. Poniższa scieżka zawodowa opisuje mój zakres pracy oraz zakres obowiązków.",
+        "action": ""
+      },
+      "roles": {
+        "order": [
+          "backend",
+          "qa"
+        ],
+        "items": {
+          "backend": {
+            "title": "Backend Developer",
+            "period": "2022 - Obecnie",
+            "summary": "Rozwój i utrzymanie platformy e-commerce",
+            "tasks": [
+              "Tworzenie skalowalnych mikroserwisów w Go (Golang) oraz utrzymywanie systemów legacy w PHP",
+              "Udział w migracji monolitycznego systemu na architekture mikrousług w Go",
+              "Budowa systemów rozproszonych z wykorzystaniem RabbitMQ, PostgreSQL, Redis i REST API",
+              "Przepisanie i optymalizacja starych mikroserwisów w celu poprawy wydajności i łatwości utrzymania",
+              "Utrzymywanie wysokiej jakości kodu poprzez testy jednostkowe/funkcjonalne oraz regularne code review",
+              "Automatyzacja pipelinów CI/CD (TeamCity, GitHub Actions) i zarządzanie infrastrukturą za pomocą Docker oraz Ansible",
+              "Praca w środowisku Agile (Kanban) z naciskiem na czysty kod i najlepsze praktyki jego wytwarzania"
+            ]
+          },
+          "qa": {
+            "title": "QA Engineer",
+            "period": "2018 - 2022",
+            "summary": "Inżynier QA skoncentrowany na automatyzacji testów i walidacji logiki biznesowej oraz przepływu danych",
+            "tasks": [
+              "Tworzenie testów automatycznych przy użyciu Python (Behave, Selenium) i PHP (Codeception)",
+              "Walidacja integralności danych i logiki biznesowej w RabbitMQ, PostgreSQL, MSSQL i Redis",
+              "Przeprowadzanie kompleksowych testów API i debugowanie systemów przy użyciu Postman",
+              "Analiza wymagań i utrzymywanie dokumentacji testowej w środowisku Agile/Scrum",
+              "Wykonywanie testów manualnych dla złożonych aplikacji webowych i raportowanie błędów"
+            ]
+          }
+        }
+      },
+      "cases": {
+        "order": [
+          "migration",
+          "checkout",
+          "reservation"
+        ],
+        "items": {
+          "migration": {
+            "category": "Migracja",
+            "title": "Od monolitu do mikroserwisów",
+            "summary": "Udział w migracji dużej platformy e-commerce do usług w Go",
+            "problem": "Rozwijany przez lata monolit wymagał stopniowego podziału na mniejsze, łatwiejsze do zarządzania mikroserwisy.",
+            "contribution": [
+              "Tworzyłem i rozwijałem mikroserwisy w Go",
+              "Utrzymywałem współpracę nowych usług ze starym kodem PHP",
+              "Pracowałem z PostgreSQL, Redis, REST API, a także RabbitMQ oraz testami i code review"
+            ],
+            "result": "Stopniowe wydzielanie poszczególnych funkcji do mikro usług, które można rozwijać i utrzymywać niezależnie.",
+            "takeaway": "Najważniejsza była niezawodność, zgodność kontraktów i bezpieczne wdrażanie zmian.",
+            "tech_context": [
+              "Go",
+              "PHP",
+              "REST API",
+              "RabbitMQ",
+              "PostgreSQL",
+              "Redis"
+            ]
+          },
+          "checkout": {
+            "category": "Proces zakupowy",
+            "title": "Proces zamówień i płatności",
+            "summary": "Praca nad backendowym przepływem zamówienia, integracjami i płatnościami",
+            "problem": "Złożony proces zakupowy łączył wiele usług, a także komunikację asynchroniczną i zewnętrzne API.",
+            "contribution": [
+              "Rozwijałem usługi backendowe całego procesu zamówienia",
+              "Uczestniczyłem w projektowaniu interfejsów i integracji z zewnętrznym API",
+              "Pracowałem z wieloma mikroserwisami używając do tego RabbitMQ, PostgreSQL, Redis, a także pisałem testy i robiłem code review"
+            ],
+            "result": "Przepływ zamówienia rozwijany jako współpraca usług z uwzględnieniem obsługi błędów.",
+            "takeaway": "W składaniu zamówienia liczy się cały proces: od kontraktu po odpowiedź użytkownikowi. Proces ten musi być niezawodny",
+            "tech_context": [
+              "Go",
+              "REST API",
+              "RabbitMQ",
+              "PostgreSQL",
+              "Redis",
+              "Solr",
+              "Elasticsearch"
+            ]
+          },
+          "reservation": {
+            "category": "Rezerwacje produtków",
+            "title": "Lista rezerwacyjna produktów",
+            "summary": "Implementacja mechanizmu listy rezerwacyjnej na platformie e-commerce",
+            "problem": "Ograniczona dostępność produktu wymaga jasnych reguł dla zagwarantowania produktu dla klienta",
+            "contribution": [
+              "Implementowałem logikę listy rezerwacyjnej",
+              "Włączyłem funkcję do istniejącego backendu",
+              "Pracowałem z testami i gwarantowałem niezawodność kodu przy code review."
+            ],
+            "result": "Nowa funkcja stała się częścią istniejących mikreserwisów.",
+            "takeaway": "Niewielka zmiana w interfejsie może znacząco wpływać na istniejącą logikę po stronie usług.",
+            "tech_context": [
+              "Go",
+              "mikroserwisy",
+              "Redis",
+              "testy jednostkowe"
+            ]
+          }
+        }
+      },
+      "technology_groups": {
+        "order": [
+          "backend",
+          "data",
+          "quality",
+          "delivery"
+        ],
+        "items": {
+          "backend": {
+            "title": "Backend i architektura",
+            "items": [
+              {"id": "go", "label": "Golang"},
+              {"id": "php", "label": "PHP"},
+              {"id": "react", "label": "React"},
+              {"id": "microservices", "label": "Mikroserwisy"},
+              {"id": "distributed", "label": "Systemy rozproszone"},
+              {"id": "rest", "label": "REST API"},
+              {"id": "rabbitmq", "label": "AMQP (RabbitMQ)"}
+            ]
+          },
+          "data": {
+            "title": "Bazy danych i technologie wyszukiwania i indexowania danych",
+            "items": [
+              {"id": "postgresql", "label": "PostgreSQL"},
+              {"id": "mssql", "label": "MSSQL"},
+              {"id": "redis", "label": "Redis"},
+              {"id": "solr", "label": "Solr"},
+              {"id": "elasticsearch", "label": "Elasticsearch"}
+            ]
+          },
+          "quality": {
+            "title": "Jakość i testy",
+            "items": [
+              {"id": "unit-tests", "label": "Testy jednostkowe"},
+              {"id": "integration-tests", "label": "Testy integracyjne"},
+              {"id": "e2e", "label": "Testy E2E"},
+              {"id": "codeception", "label": "Codeception"},
+              {"id": "behave", "label": "Behave"},
+              {"id": "selenium", "label": "Selenium"},
+              {"id": "gherkin", "label": "Gherkin"}
+            ]
+          },
+          "delivery": {
+            "title": "CI/CD i ogólne narzędzia pracy",
+            "items": [
+              {"id": "docker", "label": "Docker"},
+              {"id": "docker-swarm", "label": "Docker Swarm"},
+              {"id": "ansible", "label": "Ansible"},
+              {"id": "teamcity", "label": "TeamCity"},
+              {"id": "git", "label": "Git"},
+              {"id": "github-actions", "label": "GitHub Actions"},
+              {"id": "grafana", "label": "Grafana"}
+            ]
+          }
+        }
+      },
+      "roles_label": "Ścieżka zawodowa",
+      "cases_label": "Wybrane projekty",
+      "technology_label": "Technologie w kontekście pracy",
+      "read_case": "Czytaj o projekcie",
+      "back": "Wróć do doświadczenia",
+      "problem_label": "Kontekst i problem",
+      "contribution_label": "Mój wkład",
+      "result_label": "Efekt i wnioski"
+    },
+    "how_it_works": {
+      "eyebrow": "EKSPLORATOR ŻĄDAŃ HTTP",
+      "title": "Zobacz jak działa ta strona",
+      "body": "Zacznij od mapy całej strony. Kliknij komponent, aby poznać jego rolę albo wybierz proces i prześledź drogę żądania oraz odpowiedzi.",
+      "ui_copy": {
+        "viewLabel": "CO CHCESZ ZOBACZYĆ?",
+        "topology": "TOPOLOGIA",
+        "nodeBrowserTitle": "Przeglądarka",
+        "nodeBrowserDetail": "HTML / SKRYPTY JS",
+        "nodeCaddyTitle": "Caddy",
+        "nodeCaddyDetail": "SERWER POŚREDNICZĄCY",
+        "nodeFrontTitle": "Front end",
+        "nodeFrontDetail": "GO / RENDEROWANIE HTML",
+        "nodeGatewayTitle": "Brama API",
+        "nodeGatewayDetail": "PRZEKAZYWANIE ŻĄDAŃ",
+        "nodeRabbitTitle": "RabbitMQ",
+        "nodeRabbitDetail": "KOMUNIKATY / RPC",
+        "nodeContentTitle": "Usługa treści",
+        "nodeContentDetail": "TREŚĆ / CV",
+        "nodeCacheTitle": "Zawartość strony w pamięci",
+        "nodeCacheDetail": "JSON / PAMIĘĆ",
+        "nodeCaptchaTitle": "Usługa CAPTCHA",
+        "nodeCaptchaDetail": "OCHRONA ANTYBOTOWA",
+        "nodeRedisTitle": "Redis",
+        "nodeRedisDetail": "STAN / CZAS WAŻNOŚCI",
+        "requestPath": "ŚCIEŻKA ŻĄDANIA",
+        "now": "TERAZ",
+        "result": "WYNIK ETAPU",
+        "state": "ZMIANA STANU",
+        "decision": "DECYZJA",
+        "pause": "Pauza",
+        "resume": "Wznów",
+        "reset": "Od początku",
+        "all": "Cała strona",
+        "allSubtitle": "Mapa systemu",
+        "mapDescription": "Wszystkie elementy tej strony i ich połączenia. Wybierz poszczególny komponent, aby dowiedzieć się więcej na jego temat.",
+        "components": "KOMPONENTÓW",
+        "ready": "Wybierz pierwszy krok. Każdy następny odblokuje się po wykonanej akcji.",
+        "moving": "Pakiet przemierza połączenia między usługami…",
+        "done": "Przebieg zakończony. Możesz zacząć od początku.",
+        "step": "KROK",
+        "clickHint": "Kliknij komponent",
+        "component": "KOMPONENT",
+        "discover": "ODKRYJ MAPĘ",
+        "discoverTitle": "Wybierz kafelek na mapie",
+        "discoverText": "Krótki opis pokaże, za co odpowiada wybrany komponent i gdzie znajduje się na ścieżce wywołania.",
+        "mainHeading": "Główny proces · happy path",
+        "mainCaption": "Oczekiwana odpowiedź dla tego żądania.",
+        "extraHeading": "Dodatkowe ścieżki procesu",
+        "extraCaption": "Błędy i nietypowe warunki do sprawdzenia reakcji systemu. To nie jest standardowy przebieg.",
+        "mainKind": "GŁÓWNY PRZEBIEG · HAPPY PATH",
+        "extraKind": "ŚCIEŻKA DODATKOWA · TEST WARUNKU",
+        "routeHeading": "Prawidłowa obsługa błędu",
+        "routeKind": "OBSŁUGA NIEZNANEJ TRASY",
+        "nextStep": "Następny krok",
+        "working": "Trwa żądanie…"
+      },
+      "scenario_copy": {
+        "common": {
+          "request_reaches_frontend": "Żądanie dociera do front endu.",
+          "no_state_change": "Bez zmiany stanu"
+        },
+        "content": {
+          "page_content_and_ssr": "Treść strony i renderowanie HTML",
+          "rendering_overview": "Aby wyświetlić stronę, front end pobiera treść przez bramę API z usługi treści. Usługa korzysta z danych wczytanych do pamięci przy starcie.",
+          "polish": "Polski",
+          "english": "Angielski",
+          "unknown_language": "Nieznany język",
+          "gateway_unavailable": "Brama API jest niedostępna",
+          "open_the_page": "Otwórz stronę",
+          "unknown_language_uses_polish": "Gdy język w adresie jest nieznany, front end wybiera polską wersję.",
+          "the_front_end_starts_ssr": "Front end zaczyna przygotowywać stronę HTML na serwerze (SSR).",
+          "fetch_content": "Pobierz treść strony",
+          "gateway_forwards_the_request": "Brama API przekazuje żądanie do usługi treści.",
+          "request_content_from_gateway": "Front end prosi bramę API o treść w wybranym języku.",
+          "return_service_error": "Zwróć błąd niedostępnej usługi",
+          "render_service_error_page": "Front end wyświetla stronę błędu z użyciem wspólnego szablonu.",
+          "gateway_failure_stops_rendering": "Brak połączenia z bramą API lub przekroczenie czasu oczekiwania uniemożliwia przygotowanie strony.",
+          "read_cached_content": "Odczytaj treść z pamięci usługi",
+          "json_loaded_on_startup_no_file_read": "Pliki JSON zostały wczytane przy starcie usługi; nie są odczytywane przy każdym żądaniu.",
+          "polish_fallback_forwarded": "Front end poprosił już o polską treść zamiast nieznanej wersji językowej.",
+          "content_service_chooses_a_language": "Usługa treści wybiera odpowiednią wersję językową.",
+          "localized_content_response": "Usługa odsyła treść przygotowaną dla wybranego języka.",
+          "return_rendered_page": "Wyślij gotową stronę",
+          "render_html_from_content": "Front end łączy pobraną treść z szablonem i tworzy gotowy HTML.",
+          "rendered_html_response_path": "Gotowy HTML wraca z front endu przez serwer pośredniczący do przeglądarki."
+        },
+        "pow": {
+          "signed_pow_challenge": "Podpisane zadanie antybotowe (PoW)",
+          "challenge_request_overview": "To osobne żądanie. Serwer odsyła dane zadania (seed), a przeglądarka szuka liczby próbnej (nonce) na Twoim urządzeniu, zanim poprosi o obraz CAPTCHA.",
+          "fetch_challenge": "Pobierz zadanie antybotowe",
+          "request_a_challenge": "Poproś o dane zadania",
+          "captcha_service_signs_seed": "Usługa CAPTCHA przygotowuje dane zadania i zabezpiecza je podpisem.",
+          "browser_requests_challenge": "Przeglądarka prosi o zadanie obliczeniowe chroniące przed botami.",
+          "receive_seed": "Odbierz dane zadania",
+          "hmac_secret_remains_private": "Podpis pozwala sprawdzić pochodzenie zadania bez ujawniania tajnego klucza HMAC.",
+          "seed_response_precedes_nonce_search": "Dane zadania wracają do przeglądarki. Dopiero wtedy rozpoczyna ona szukanie nonce."
+        },
+        "captcha": {
+          "pow_and_captcha_image": "Od zadania antybotowego do obrazu CAPTCHA",
+          "prior_challenge_context": "Przeglądarka ma już dane zadania pobrane przez GET /api/pow. Tutaj możesz wybrać poprawne rozwiązanie albo jeden z powodów odrzucenia tego samego żądania POST.",
+          "valid_pow": "Poprawne rozwiązanie zadania",
+          "bad_signature": "Nieprawidłowy podpis",
+          "expired_seed": "Zadanie straciło ważność",
+          "weak_hash": "Za słaby wynik obliczeń",
+          "reused_seed": "Zadanie użyte ponownie",
+          "calculate_nonce_locally": "Znajdź liczbę próbną (nonce)",
+          "nonce_calculated_in_browser": "Przeglądarka wykonuje obliczenia lokalnie, bez wysyłania kolejnych żądań do serwera.",
+          "nonce_search_visualization": "Przeglądarka sprawdza kolejne wartości nonce, aż wynik SHA-256 spełni wymagany poziom trudności.",
+          "submit_solution": "Wyślij rozwiązanie",
+          "validate_pow_signature_time_hash": "Sprawdź podpis, czas ważności i wynik SHA-256",
+          "captcha_service_receives_request": "Żądanie dociera do usługi CAPTCHA.",
+          "signature_mismatch_no_redis_write": "Podpis jest nieprawidłowy. Nic nie zostaje zapisane w Redis.",
+          "challenge_expired_no_redis_write": "Zadanie straciło ważność. Nic nie zostaje zapisane w Redis.",
+          "weak_hash_no_redis_write": "Wynik obliczeń jest za słaby. Nic nie zostaje zapisane w Redis.",
+          "reject_captcha_creation": "Odmów utworzenia obrazu CAPTCHA",
+          "invalid_solution_not_stored": "Weryfikacja kończy żądanie, zanim zadanie zostanie oznaczone jako wykorzystane.",
+          "mark_seed_in_redis": "Oznacz zadanie jako wykorzystane",
+          "key_already_exists": "W Redis istnieje już oznaczenie wykorzystania tego zadania.",
+          "pow_demo_seed_used_ttl": "pow:demo-seed = wykorzystany · TTL",
+          "atomic_seed_reuse_check": "Redis zapisuje oznaczenie tylko wtedy, gdy klucz jeszcze nie istnieje. Ta operacja jest atomowa (SETNX).",
+          "redis_rejects_reuse": "Redis wykrywa, że zadanie zostało już użyte.",
+          "the_seed_can_be_used_once": "Te same dane zadania można wykorzystać tylko raz.",
+          "return_409": "Zwróć błąd 409: zadanie użyte ponownie",
+          "return_captcha_image": "Zwróć obraz CAPTCHA",
+          "captcha_demo_id_session_ttl": "captcha:demo-id = sesja · TTL",
+          "a_reused_seed_creates_no_new_image": "Ponowne użycie zadania nie tworzy kolejnego obrazu CAPTCHA.",
+          "captcha_receives_a_short_ttl": "Sesja CAPTCHA otrzymuje krótki czas ważności.",
+          "the_rejection_returns_to_the_client": "Informacja o odrzuceniu wraca do przeglądarki.",
+          "the_image_returns_to_the_browser": "Obraz CAPTCHA wraca do przeglądarki."
+        },
+        "verify": {
+          "captcha_answer_verification": "Sprawdzenie odpowiedzi na CAPTCHA",
+          "verification_overview": "Usługa porównuje odpowiedź ze stanem sesji w Redis. Po poprawnej odpowiedzi oznacza sesję jako rozwiązaną; można wtedy poprosić o dostęp do CV.",
+          "correct_answer": "Poprawna odpowiedź",
+          "wrong_answer": "Błędna odpowiedź",
+          "expired_session": "Sesja straciła ważność",
+          "submit_captcha_answer": "Wyślij odpowiedź na CAPTCHA",
+          "captcha_session_lookup": "Usługa CAPTCHA szuka sesji powiązanej z obrazem.",
+          "captcha_answer_arrives": "Odpowiedź dociera do usługi CAPTCHA.",
+          "check_session_in_redis": "Sprawdź sesję w Redis",
+          "captcha_demo_id_solved_true": "captcha:demo-id.solved = true",
+          "captcha_demo_id_triesleft_1": "captcha:demo-id.triesLeft − 1",
+          "key_expired": "Klucz sesji stracił ważność",
+          "solved_session_ready_for_cv": "Rozwiązana sesja może posłużyć do uzyskania dostępu do CV.",
+          "captcha_remains_unsolved": "CAPTCHA nadal nie jest rozwiązana.",
+          "atomic_captcha_state_update": "Skrypt w Redis zmienia stan sesji w jednej, atomowej operacji.",
+          "receive_verification_result": "Odbierz wynik sprawdzenia",
+          "the_client_may_request_a_cv_token": "Przeglądarka może teraz poprosić o token do pobrania CV.",
+          "verification_error_returned": "Przeglądarka otrzymuje informację o błędnej odpowiedzi.",
+          "verification_result_to_form": "Wynik wraca do formularza pobierania CV."
+        },
+        "cvtoken": {
+          "single_use_cv_token": "Jednorazowy token do pobrania CV",
+          "cv_token_request_overview": "Brama API kieruje publiczne żądanie /api/cv-token do wewnętrznej ścieżki /api/v1/cv-request. Żądanie trafia następnie do usługi treści przez RabbitMQ.",
+          "valid_input": "Poprawny kod i rozwiązana CAPTCHA",
+          "wrong_access_code": "Błędny kod dostępu",
+          "wrong_captcha": "CAPTCHA nie została rozwiązana",
+          "expired_captcha": "Sesja CAPTCHA straciła ważność",
+          "request_a_token": "Poproś o token do pobrania CV",
+          "gateway_sends_token_rpc": "Brama API przekazuje żądanie /api/v1/cv-request przez RabbitMQ.",
+          "cv_form_submits_access_code": "Formularz wysyła kod dostępu i identyfikator rozwiązanej CAPTCHA.",
+          "dispatch_through_rabbitmq": "Przekaż żądanie przez RabbitMQ",
+          "token_request_reaches_content": "Żądanie dociera do usługi treści.",
+          "token_request_delivered_by_rpc": "RabbitMQ dostarcza żądanie i umożliwia odesłanie odpowiedzi (RPC).",
+          "validate_and_store_state": "Sprawdź dane i zapisz token",
+          "issued_token_redis_state": "captcha:demo-id → usunięty; cv:token:tok_demo → pl:demo-id · TTL",
+          "no_new_cv_token": "Token nie został wydany",
+          "captcha_and_code_are_valid": "Kod dostępu jest poprawny, a CAPTCHA została rozwiązana.",
+          "validation_denies_the_token": "Dane nie spełniają warunków wydania tokenu.",
+          "a_short_lived_token_is_ready": "Jednorazowy token jest gotowy i będzie ważny przez krótki czas.",
+          "invalid_input_does_not_issue_a_token": "Przy niepoprawnych danych nowy token nie powstaje.",
+          "receive_result": "Odbierz wynik",
+          "token_response_to_dialog": "Token wraca do okna pobierania CV.",
+          "dialog_displays_generic_error": "Okno pokazuje błąd bez ujawniania szczegółów weryfikacji.",
+          "token_rpc_response_path": "Odpowiedź wraca przez RabbitMQ i bramę API do przeglądarki."
+        },
+        "download": {
+          "cv_file_download": "Pobranie pliku CV",
+          "download_order_overview": "Usługa treści najpierw otwiera właściwy plik PDF, a dopiero potem zużywa jednorazowy token w Redis. Po udanym pobraniu ponowienie tego samego żądania kończy się kodem 410.",
+          "download_and_retry": "Pobierz CV i spróbuj ponownie",
+          "token_language_mismatch": "Język nie pasuje do tokenu",
+          "expired_token": "Token stracił ważność",
+          "pdf_missing": "Brakuje pliku PDF",
+          "request_the_pdf": "Poproś o plik PDF",
+          "gateway_calls_download_service": "Brama API wywołuje usługę treści przez HTTP.",
+          "download_request_arrives": "Żądanie dociera do usługi pobierania CV.",
+          "open_the_file": "Otwórz właściwy plik",
+          "file_failure_precedes_token_use": "Błąd otwarcia pliku występuje przed próbą zużycia tokenu.",
+          "the_file_is_ready_to_stream": "Plik jest gotowy do przesłania przeglądarce.",
+          "missing_pdf_preserves_token": "Brak pliku nie powoduje utraty tokenu.",
+          "file_availability_is_checked_first": "Dostępność pliku jest sprawdzana jako pierwsza.",
+          "return_file_error": "Zwróć błąd pliku",
+          "cv_token_tok_demo_retained": "cv:token:tok_demo → nadal istnieje",
+          "no_token_consumption_was_attempted": "Nie podjęto próby zużycia tokenu.",
+          "the_error_returns_to_the_browser": "Informacja o błędzie wraca do przeglądarki.",
+          "check_token_in_redis": "Sprawdź token w Redis",
+          "cv_token_tok_demo_atomically_deleted": "cv:token:tok_demo → usunięty atomowo",
+          "key_missing": "Token nie istnieje w Redis",
+          "language_matches_token_is_consumed": "Język się zgadza, więc token zostaje zużyty.",
+          "language_mismatch_token_remains": "Język się nie zgadza, więc token pozostaje ważny.",
+          "the_token_expired_before_download": "Token stracił ważność przed pobraniem pliku.",
+          "atomic_token_validation": "Skrypt w Redis sprawdza token i podejmuje decyzję w jednej, atomowej operacji.",
+          "receive_response": "Odbierz odpowiedź",
+          "the_pdf_returns_as_a_stream": "Plik PDF jest przesyłany do przeglądarki.",
+          "no_cv_is_sent": "Plik CV nie zostaje wysłany.",
+          "download_response_path": "Odpowiedź wraca przez bramę API i front end.",
+          "repeat_the_same_get": "Ponów to samo żądanie pobrania",
+          "retry_reaches_content_service": "To samo żądanie ponownie dociera do usługi treści.",
+          "retry_reuses_token": "Druga próba używa tego samego tokenu.",
+          "open_the_pdf_again": "Ponownie otwórz plik PDF",
+          "pdf_available_token_may_be_gone": "Plik nadal jest dostępny, ale jednorazowy token mógł już zostać zużyty.",
+          "retry_checks_pdf_before_token": "Również przy ponownej próbie usługa sprawdza plik przed tokenem.",
+          "check_consumed_token": "Sprawdź wcześniej użyty token",
+          "cv_token_tok_demo_absent": "cv:token:tok_demo → brak",
+          "the_token_was_already_consumed": "Token został zużyty podczas pierwszego pobrania.",
+          "consumed_token_missing_in_redis": "Redis nie znajduje już jednorazowego tokenu.",
+          "receive_410_gone": "Odbierz kod 410: token już zużyty",
+          "a_repeat_download_is_not_possible": "Ten sam token nie pozwala pobrać CV drugi raz.",
+          "the_rejection_returns_to_the_browser": "Odmowa wraca do przeglądarki."
+        },
+        "route": {
+          "unknown_route": "Nieznany adres",
+          "unknown_route_overview": "Nieznany adres obsługuje sam front end. Nagłówek żądania Accept wskazuje, czy odpowiedzią ma być strona HTML dla przeglądarki, czy JSON dla klienta API. Pozostałe usługi nie są wywoływane.",
+          "browser_html": "Przeglądarka · strona HTML",
+          "api_client_json": "Klient API · odpowiedź JSON",
+          "open_an_unknown_route": "Otwórz nieznany adres",
+          "frontend_detects_unknown_route": "Front end rozpoznaje, że taki adres nie istnieje.",
+          "the_request_stops_at_the_front_end": "Front end obsługuje żądanie bez wywoływania kolejnych usług.",
+          "receive_error_response": "Odbierz odpowiedź z błędem",
+          "shared_error_template": "Przeglądarka otrzymuje stronę z przygotowanego szablonu błędu.",
+          "json_response_for_api": "Klient API otrzymuje opis błędu w formacie JSON.",
+          "frontend_returns_404_locally": "Front end zwraca kod HTTP 404 bez kontaktu z bramą API."
+        },
+        "views": {
+          "home_page": "Strona główna",
+          "anti_bot_challenge": "Zadanie antybotowe",
+          "create_captcha": "Utworzenie obrazu CAPTCHA",
+          "verify_captcha": "Sprawdzenie odpowiedzi na CAPTCHA",
+          "cv_access_request": "Prośba o dostęp do CV",
+          "download_cv": "Pobranie CV",
+          "unknown_url": "Nieznany adres"
+        },
+        "components": {
+          "browser": "Przeglądarka",
+          "browser_responsibilities": "Wyświetla stronę, uruchamia JavaScript, wykonuje obliczenia zadania antybotowego i wysyła żądania z formularza CV.",
+          "caddy_responsibilities": "Przyjmuje ruch do strony, przekazuje go do front endu, dodaje nagłówki bezpieczeństwa i przekierowuje adres bez „www”. W lokalnym środowisku może być pominięty.",
+          "frontend_responsibilities": "Usługa napisana w Go tworzy strony po stronie serwera, wybiera wersję polską lub angielską oraz obsługuje adresy strony, błędy i okno pobierania CV.",
+          "gateway_responsibilities": "Brama API przyjmuje żądania z front endu i kieruje je do odpowiednich usług przez gRPC, RabbitMQ lub HTTP.",
+          "rabbitmq_responsibilities": "Przenosi prośbę o token CV z bramy API do usługi treści, a następnie dostarcza odpowiedź.",
+          "content_service_responsibilities": "Dostarcza polską i angielską treść strony, wydaje jednorazowe tokeny do CV i przesyła właściwy plik PDF.",
+          "content_in_memory": "Treść w pamięci usługi",
+          "content_cache_responsibilities": "Polska i angielska treść z plików JSON są wczytywane do pamięci przy starcie usługi. Nie jest to osobny serwis; pliki nie są odczytywane ponownie przy każdym żądaniu.",
+          "captcha_service_responsibilities": "Przygotowuje zadanie antybotowe, sprawdza jego rozwiązanie, tworzy obraz CAPTCHA i weryfikuje wpisaną odpowiedź.",
+          "redis_responsibilities": "Przechowuje krótkotrwały stan zadań antybotowych, sesji CAPTCHA i tokenów CV. Atomowe operacje pilnują, aby dane jednorazowe nie zostały użyte ponownie."
+        },
+        "branches": {
+          "render_polish_page": "Wyświetlenie polskiej wersji strony.",
+          "render_english_page": "Wyświetlenie angielskiej wersji strony.",
+          "fallback_for_unknown_language": "Nieznana wartość języka w adresie powoduje przejście do wersji polskiej.",
+          "unavailable_gateway_error": "Niedostępność bramy API powoduje wyświetlenie strony błędu 503.",
+          "fetch_pow_challenge": "Przeglądarka pobiera podpisane dane zadania antybotowego.",
+          "valid_nonce_creates_captcha": "Poprawny wynik obliczeń pozwala utworzyć obraz CAPTCHA.",
+          "invalid_signature_rejected": "Nieprawidłowy podpis powoduje odrzucenie zadania.",
+          "expired_seed_rejected": "Zadanie jest odrzucane po upływie czasu ważności.",
+          "weak_pow_rejected": "Wynik SHA-256 nie osiąga wymaganego poziomu trudności.",
+          "seed_reuse_rejected": "Ponowne użycie tych samych danych zadania jest odrzucane.",
+          "correct_answer_solves_captcha": "Poprawna odpowiedź oznacza sesję CAPTCHA jako rozwiązaną.",
+          "wrong_answer_reduces_attempts": "Błędna odpowiedź zmniejsza liczbę pozostałych prób.",
+          "expired_captcha_rejected": "Odpowiedź na CAPTCHA jest odrzucana po wygaśnięciu sesji.",
+          "valid_cv_access_issues_token": "Poprawny kod dostępu i rozwiązana CAPTCHA pozwalają wydać krótkotrwały token.",
+          "wrong_access_code_rejected": "Błędny kod dostępu nie pozwala otrzymać tokenu.",
+          "unsolved_captcha_rejected": "Nierozwiązana CAPTCHA blokuje wydanie tokenu.",
+          "expired_captcha_token_rejected": "Wygasła sesja CAPTCHA blokuje wydanie tokenu.",
+          "first_download_then_retry": "Pierwsze żądanie zwraca plik PDF. Ponowienie go z tym samym tokenem zwraca kod 410.",
+          "language_mismatch_keeps_token": "Wybór języka niezgodnego z tokenem nie zużywa go.",
+          "expired_token_rejected": "Pobranie jest odrzucane po upływie czasu ważności tokenu.",
+          "missing_pdf_keeps_token": "Brak pliku PDF powoduje błąd, ale token pozostaje dostępny.",
+          "browser_html_404": "Przeglądarka otrzymuje stronę HTML z kodem 404.",
+          "api_json_404": "Klient API otrzymuje odpowiedź JSON z kodem 404."
+        }
+      }
+    },
+    "contact": {
+      "intro": {
+        "eyebrow": "KONTAKT",
+        "title": "Porozmawiajmy o backendzie",
+        "body": "Jeśli szukasz osoby do pracy z Go, PHP, mikroserwisami i stawiasz na jakość oprogramowania, napisz do mnie.",
+        "action": ""
+      },
+      "email_card": {
+        "eyebrow": "E-MAIL",
+        "title": "Napisz wiadomość",
+        "body": "Najprostsza droga do rozmowy o współpracy.",
+        "action": "Napisz e-mail"
+      },
+      "profile_card": {
+        "eyebrow": "PROFIL I KOD",
+        "title": "Zobacz moje projekty",
+        "body": "Kod źródłowy strony oraz profil zawodowy.",
+        "action": "Otwórz profil"
+      }
+    },
+    "privacy": {
+      "title": "POLITYKA PRYWATNOŚCI",
+      "sections": [
+        {
+          "header": "1. Administrator danych",
+          "items": [
+            {
+              "label": "",
+              "text": "Administratorem danych przetwarzanych w związku z korzystaniem ze strony www.adrianjanczenia.dev jest Adrian Janczenia. W sprawach dotyczących prywatności możesz napisać na adres contact@adrianjanczenia.dev."
+            }
+          ]
+        },
+        {
+          "header": "2. Korzystanie ze strony",
+          "items": [
+            {
+              "label": "",
+              "text": "Podczas odwiedzania strony przetwarzane są dane techniczne potrzebne do obsługi żądania, w szczególności adres IP, data i godzina, żądany adres strony, kod odpowiedzi serwera oraz informacje przekazywane przez przeglądarkę. Część tych danych jest zapisywana w logach dostępu. Wykorzystuję je do udostępniania strony, wykrywania nadużyć i diagnozowania błędów."
+            },
+            {
+              "label": "",
+              "text": "Pobranie CV wymaga podania kodu dostępu i rozwiązania CAPTCHA. Serwis przetwarza te dane oraz krótkotrwałe identyfikatory i tokeny wyłącznie w celu sprawdzenia uprawnienia do pobrania pliku i ochrony tej funkcji przed nadużyciami."
+            },
+            {
+              "label": "",
+              "text": "Strona nie ma formularza kontaktowego, kont użytkowników ani newslettera. Podany na niej adres e-mail można skopiować lub użyć odnośnika do aplikacji pocztowej. Dopiero gdy wyślesz wiadomość, otrzymam Twój adres e-mail, jej treść oraz ewentualne załączniki. Wykorzystam je do prowadzenia korespondencji i udzielenia odpowiedzi."
+            },
+            {
+              "label": "",
+              "text": "Podstawą przetwarzania danych z logów, obsługi pobierania CV i korespondencji jest mój prawnie uzasadniony interes polegający na prowadzeniu i zabezpieczeniu strony oraz odpowiadaniu na wiadomości — art. 6 ust. 1 lit. f RODO. Wysłanie wiadomości jest dobrowolne; bez adresu zwrotnego nie będę mógł na nią odpowiedzieć."
+            }
+          ]
+        },
+        {
+          "header": "3. Czas przechowywania",
+          "items": [
+            {
+              "label": "",
+              "text": "Logi dostępu do strony przechowuję nie dłużej niż 7 dni. Stan CAPTCHA i tokeny pobrania CV mają krótki czas ważności i wygasają automatycznie."
+            },
+            {
+              "label": "",
+              "text": "Korespondencję e-mail usuwam w ciągu 30 dni od zakończenia rozmowy, rozumianego jako ostatnia wiadomość w danej sprawie. Nie tworzę własnych kopii zapasowych logów dostępu ani korespondencji."
+            }
+          ]
+        },
+        {
+          "header": "4. Infrastruktura i odbiorcy danych",
+          "items": [
+            {
+              "label": "",
+              "text": "Strona działa w infrastrukturze, którą administruję, z wykorzystaniem serwera VPS. W obsłudze strony uczestniczy dostawca tego serwera, a w obsłudze korespondencji — dostawca poczty elektronicznej. Mogą oni przetwarzać dane w zakresie potrzebnym do świadczenia swoich usług. Nie przekazuję danych odwiedzających podmiotom reklamowym."
+            }
+          ]
+        },
+        {
+          "header": "5. Pliki cookie",
+          "items": [
+            {
+              "label": "",
+              "text": "Strona nie korzysta z plików cookie do celów analitycznych, reklamowych ani profilowania. Publiczne przeglądanie strony nie wymaga utworzenia konta ani logowania."
+            }
+          ]
+        },
+        {
+          "header": "6. Linki do innych stron",
+          "items": [
+            {
+              "label": "",
+              "text": "Na stronie znajdują się odnośniki do zewnętrznych serwisów, między innymi GitHub i LinkedIn. Samo wyświetlenie mojego portfolio nie otwiera tych serwisów. Po kliknięciu odnośnika zasady przetwarzania danych określa operator strony, na którą przechodzisz."
+            }
+          ]
+        },
+        {
+          "header": "7. Twoje prawa",
+          "items": [
+            {
+              "label": "",
+              "text": "W zakresie przewidzianym przez RODO możesz żądać dostępu do swoich danych, ich sprostowania lub usunięcia oraz ograniczenia przetwarzania. Możesz także wnieść sprzeciw wobec przetwarzania opartego na moim prawnie uzasadnionym interesie. W tym celu napisz na contact@adrianjanczenia.dev. Przysługuje Ci również prawo wniesienia skargi do Prezesa Urzędu Ochrony Danych Osobowych."
+            }
+          ]
+        }
       ]
     }
-  ],
-  "privacy_policy": {
-    "title": "POLITYKA PRYWATNOŚCI",
-    "sections": [
-      {
-        "header": "I. Administrator Danych",
-        "items": [
-          {
-            "text": "Administratorem strony internetowej jest: Adrian Janczenia,\nkontakt e-mail: contact@adrianjanczenia.dev."
-          }
-        ]
+  },
+  "ui": {
+    "cv": {
+      "title": "Pobierz CV",
+      "intro": "Kod dostępu udostępniam po uprzednim kontakcie. Po wpisaniu kodu z obrazka plik PDF zostanie pobrany.",
+      "access_code_label": "Kod dostępu",
+      "captcha_label": "Kod z obrazka",
+      "submit": "Pobierz CV",
+      "close": "Zamknij",
+      "contact_prompt": "Interesuje Cię moje CV i kontakt ze mną? Napisz do mnie:",
+      "retry": "Spróbuj ponownie"
+    },
+    "errors": {
+      "error_message": {
+        "title": "Błąd",
+        "message": "Pracuję nad rozwiązaniem problemu. Spróbuj ponownie później.",
+        "action": "Wróć na stronę główną"
       },
-      {
-        "header": "II. Zakres i cel przetwarzania danych",
-        "items": [
-          {
-            "label": "1.",
-            "text": "Strona internetowa ma charakter wyłącznie informacyjny (wizytówka online). W ramach serwisu nie są stosowane formularze kontaktowe, systemy rejestracji użytkowników ani mechanizmy subskrypcji (newsletter)."
-          },
-          {
-            "label": "2.",
-            "text": "Administrator nie gromadzi danych osobowych Użytkowników w sposób czynny."
-          }
-        ]
+      "error_service_unavailable": {
+        "title": "Błąd",
+        "message": "Serwis jest chwilowo niedostępny. Spróbuj ponownie później.",
+        "action": "Wróć na stronę główną"
       },
-      {
-        "header": "III. Logi Serwera (Dane Techniczne)",
-        "items": [
-          {
-            "label": "1.",
-            "text": "Korzystanie ze strony wiąże się z przesyłaniem zapytań do serwera, na którym przechowywana jest strona."
-          },
-          {
-            "label": "2.",
-            "text": "Każde zapytanie skierowane do serwera zapisywane jest w logach systemowych. Logi obejmują m.in.: adres IP Użytkownika, datę i czas serwera, informacje o przeglądarce internetowej i systemie operacyjnym."
-          },
-          {
-            "label": "3.",
-            "text": "Dane zapisane w logach serwera nie są kojarzone z konkretnymi osobami korzystającymi ze strony i nie są wykorzystywane przez Administratora w celu identyfikacji Użytkownika."
-          },
-          {
-            "label": "4.",
-            "text": "Podstawą prawną przetwarzania danych w logach serwera jest art. 6 ust. 1 lit. f RODO (prawnie uzasadniony interes Administratora), polegający na zapewnieniu bezpieczeństwa serwisu, diagnozowaniu ewentualnych błędów technicznych oraz administracji serwerem."
-          }
-        ]
+      "error_bad_gateway": {
+        "title": "Błąd",
+        "message": "Nie udało się uzyskać poprawnej odpowiedzi usługi. Spróbuj ponownie później.",
+        "action": "Wróć na stronę główną"
       },
-      {
-        "header": "IV. Pliki Cookies",
-        "items": [
-          {
-            "label": "1.",
-            "text": "W ramach strony internetowej nie są wykorzystywane pliki cookies (tzw. ciasteczka) o charakterze marketingowym, śledzącym, analitycznym ani profilującym."
-          },
-          {
-            "label": "2.",
-            "text": "Strona może wykorzystywać wyłącznie pliki cookies o charakterze technicznym, które są niezbędne do prawidłowego wyświetlania strony lub zapewnienia bezpieczeństwa transmisji danych."
-          },
-          {
-            "label": "3.",
-            "text": "Zgodnie z art. 173 ust. 3 ustawy Prawo telekomunikacyjne, stosowanie plików cookies niezbędnych do technicznej obsługi transmisji lub dostarczenia usługi nie wymaga uzyskania zgody Użytkownika."
-          }
-        ]
+      "error_method_not_allowed": {
+        "title": "Błąd",
+        "message": "Ta metoda żądania nie jest obsługiwana.",
+        "action": "Wróć na stronę główną"
       },
-      {
-        "header": "V. Odnośniki do serwisów zewnętrznych",
-        "items": [
-          {
-            "text": "Na stronie internetowej znajdują się odnośniki (linki) prowadzące do zewnętrznych portali społecznościowych (np. LinkedIn, Facebook, GitHub). Są to statyczne linki tekstowe lub graficzne. Administrator nie stosuje aktywnych wtyczek społecznościowych (typu \"Lubię to\"), które automatycznie przekazywałyby dane Użytkownika do administratorów tych portali. Po kliknięciu w link i opuszczeniu strony, odpowiedzialność za przetwarzanie danych osobowych przejmuje dostawca zewnętrznego serwisu."
-          }
-        ]
+      "error_invalid_input": {
+        "title": "Błąd",
+        "message": "Podane dane są nieprawidłowe.",
+        "action": "Wróć na stronę główną"
       },
-      {
-        "header": "VI. Prawa Użytkownika",
-        "items": [
-          {
-            "text": "Zgodnie z RODO, Użytkownikowi przysługuje prawo do: a) dostępu do swoich danych oraz otrzymania ich kopii, b) sprostowania (poprawiania) swoich danych, c) usunięcia danych, d) ograniczenia przetwarzania danych, e) wniesienia sprzeciwu wobec przetwarzania danych, f) wniesienia skargi do organu nadzorczego (Prezesa Urzędu Ochrony Danych Osobowych).\n\nZastrzeżenie: Z uwagi na fakt, że Administrator przetwarza jedynie dane w logach serwera i nie jest w stanie na ich podstawie zidentyfikować osoby fizycznej, realizacja praw wskazanych w pkt 1 lit. a-e może być ograniczona na podstawie art. 11 ust. 2 RODO (przetwarzanie niewymagające identyfikacji)."
-          }
-        ]
+      "error_unsupported_language": {
+        "title": "Błąd",
+        "message": "Wybrany język nie jest obsługiwany.",
+        "action": "Wróć na stronę główną"
+      },
+      "error_content_not_found": {
+        "title": "Błąd",
+        "message": "Nie znaleziono żądanej treści.",
+        "action": "Wróć na stronę główną"
+      },
+      "error_captcha_server": {
+        "title": "Błąd",
+        "message": "Wystąpił błąd serwera CAPTCHA.",
+        "action": "Wróć na stronę główną"
+      },
+      "error_cv_auth": {
+        "title": "Błąd",
+        "message": "Odmowa dostępu. Nieprawidłowy kod dostępu.",
+        "action": "Wróć na stronę główną"
+      },
+      "error_cv_expired": {
+        "title": "Błąd",
+        "message": "Link do CV wygasł lub jest nieprawidłowy",
+        "action": "Wróć na stronę główną"
+      },
+      "error_cv_server": {
+        "title": "Błąd",
+        "message": "Wystąpił błąd serwera podczas pobierania pliku",
+        "action": "Wróć na stronę główną"
+      },
+      "error_internal": {
+        "title": "Błąd",
+        "message": "Wystąpił nieoczekiwany błąd serwera.",
+        "action": "Wróć na stronę główną"
+      },
+      "error_cv_not_found": {
+        "title": "Błąd",
+        "message": "Plik CV nie został znaleziony",
+        "action": "Wróć na stronę główną"
+      },
+      "error_captcha_invalid": {
+        "title": "Błąd",
+        "message": "Nieprawidłowy kod CAPTCHA",
+        "action": "Wróć na stronę główną"
+      },
+      "error_captcha_not_solved": {
+        "title": "Błąd",
+        "message": "CAPTCHA nie została rozwiązana.",
+        "action": "Wróć na stronę główną"
+      },
+      "error_captcha_expired": {
+        "title": "Błąd",
+        "message": "Kod CAPTCHA wygasł. Pobieranie nowego...",
+        "action": "Wróć na stronę główną"
+      },
+      "error_captcha_not_found": {
+        "title": "Błąd",
+        "message": "Nie znaleziono CAPTCHA. Odświeżanie...",
+        "action": "Wróć na stronę główną"
+      },
+      "error_pow_failed": {
+        "title": "Błąd",
+        "message": "Błąd autoryzacji wstępnej. Spróbuj ponownie.",
+        "action": "Wróć na stronę główną"
+      },
+      "error_pow_signature": {
+        "title": "Błąd",
+        "message": "Nieprawidłowa sygnatura żądania",
+        "action": "Wróć na stronę główną"
+      },
+      "error_pow_work": {
+        "title": "Błąd",
+        "message": "Błędne obliczenia PoW",
+        "action": "Wróć na stronę główną"
+      },
+      "error_pow_double_spend": {
+        "title": "Błąd",
+        "message": "To żądanie zostało już wykorzystane.",
+        "action": "Wróć na stronę główną"
+      },
+      "error_pow_expired": {
+        "title": "Błąd",
+        "message": "Żądanie wygasło. Spróbuj ponownie.",
+        "action": "Wróć na stronę główną"
+      },
+      "error_route_not_found": {
+        "title": "Nie znaleziono strony",
+        "message": "Nie ma strony pod tym adresem. Sprawdź adres lub wróć do portfolio.",
+        "action": "Wróć na stronę główną"
       }
-    ]
-  },
-  "contact": {
-    "email": "contact@adrianjanczenia.dev",
-    "linkedin": "adrian-janczenia",
-    "github": "AdrianJanczenia?tab=repositories"
-  },
-  "translations": {
-    "nav_about": "o-mnie",
-    "nav_experience": "doświadczenie",
-    "nav_skills": "umiejętności",
-    "nav_languages": "języki",
-    "nav_contact": "kontakt",
-    "nav_cv": "pobierz-cv",
-    "nav_privacy_policy": "polityka prywatności",
-    "header_about": "o-mnie",
-    "header_experience": "doświadczenie",
-    "header_skills": "umiejętności",
-    "header_languages": "języki",
-    "header_contact": "kontakt",
-    "header_home": "strona-główna",
-    "header_privacy": "polityka-prywatności",
-    "path_privacy_pl": "polityka-prywatnosci",
-    "path_privacy_en": "privacy-policy",
-    "profile_key_name": "imię",
-    "profile_key_headline": "stanowisko",
-    "profile_key_about": "o_mnie",
-    "experience_key_responsibilities": "zakres_obowiązków",
-    "experience_key_stack": "stack_technologiczny",
-    "experience_key_location": "lokalizacja",
-    "contact_key_email": "email",
-    "contact_key_linkedin": "linkedIn",
-    "back_to_top_label": "Wróć na górę",
-    "error_title": "Wystąpił błąd",
-    "error_message": "Pracuję nad rozwiązaniem problemu. Spróbuj ponownie później.",
-    "error_service_unavailable": "Serwis jest chwilowo niedostępny. Spróbuj ponownie później.",
-    "error_bad_gateway": "Nie udało się uzyskać poprawnej odpowiedzi usługi. Spróbuj ponownie później.",
-    "error_method_not_allowed": "Ta metoda żądania nie jest obsługiwana.",
-    "error_invalid_input": "Podane dane są nieprawidłowe.",
-    "error_unsupported_language": "Wybrany język nie jest obsługiwany.",
-    "error_content_not_found": "Nie znaleziono żądanej treści.",
-    "error_captcha_server": "Wystąpił błąd serwera CAPTCHA.",
-    "cv_modal_title": "Dostęp autoryzowany",
-    "cv_password_placeholder": "Wprowadź hasło dostępu...",
-    "cv_captcha_placeholder": "Wprowadź kod z obrazka...",
-    "btn_get_link": "Pobierz CV",
-    "btn_processing": "Przetwarzanie...",
-    "btn_back": "Wróć na Stronę Główną",
-    "error_cv_auth": "Odmowa dostępu. Nieprawidłowe hasło.",
-    "error_cv_expired": "Link do CV wygasł lub jest nieprawidłowy",
-    "error_cv_server": "Wystąpił błąd serwera podczas pobierania pliku",
-    "error_internal": "Wystąpił nieoczekiwany błąd serwera.",
-    "error_cv_not_found": "Plik CV nie został znaleziony",
-    "error_captcha_invalid": "Nieprawidłowy kod CAPTCHA",
-    "error_captcha_not_solved": "CAPTCHA nie została rozwiązana.",
-    "error_captcha_expired": "Kod CAPTCHA wygasł. Pobieranie nowego...",
-    "error_captcha_not_found": "Nie znaleziono CAPTCHA. Odświeżanie...",
-    "error_pow_failed": "Błąd autoryzacji wstępnej. Spróbuj ponownie.",
-    "error_pow_signature": "Nieprawidłowa sygnatura żądania",
-    "error_pow_work": "Błędne obliczenia PoW",
-    "error_pow_double_spend": "To żądanie zostało już wykorzystane.",
-    "error_pow_expired": "Żądanie wygasło. Spróbuj ponownie.",
-    "error_cv_header_error": "BŁĄD",
-    "error_cv_header_msg": "CV",
-    "error_cv_status_key": "status",
-    "error_cv_status_value": "BŁĄD",
-    "error_cv_message_key": "wiadomość"
+    },
+    "email_copied": "Skopiowano adres e-mail do schowka"
   }
 }

@@ -1,344 +1,752 @@
 {
+  "schema_version": 2,
   "meta": {
-    "title": "Adrian P. Janczenia - Backend Developer"
+    "locale": "en",
+    "title": "Adrian P. Janczenia - Backend Developer",
+    "description": "Portfolio of Adrian P. Janczenia. Backend, microservices and an interactive look at the site architecture."
   },
-  "profile": {
-    "name": "Adrian P. Janczenia",
-    "headline": "Backend Developer",
-    "about": "Software Engineer with extensive experience in backend development, underpinned by a strong foundation in Quality Assurance. I specialize in developing distributed systems and microservices using Go and PHP. I am committed to delivering high-quality solutions, prioritizing clean, maintainable code and adherence to engineering best practices. I place a high value on effective, transparent communication within the team. \n\nPrivately, I am a motorcycle enthusiast who enjoys seaside walks. I actively follow emerging IT trends and share a passion for music, movies, and TV series.",
-    "tags": [
-      "Golang",
-      "PHP",
-      "Microservices",
-      "Distributed Systems",
-      "REST API"
-    ]
+  "shared": {
+    "navigation": {
+      "about": "About me",
+      "experience": "Experience",
+      "how_it_works": "How this site works",
+      "contact": "Contact",
+      "cv": "Download CV",
+      "menu": "Menu"
+    },
+    "footer": {
+      "privacy": "Privacy policy"
+    },
+    "contact_links": {
+      "email": "contact@adrianjanczenia.dev",
+      "github": "https://github.com/AdrianJanczenia",
+      "linkedin": "https://linkedin.com/in/adrian-janczenia"
+    }
   },
-  "languages": [
-    {
-      "language": "English",
-      "proficiency": "Full professional proficiency"
-    },
-    {
-      "language": "Polish",
-      "proficiency": "Native"
-    }
-  ],
-  "skills": [
-    {
-      "key": "programming_languages",
-      "values": [
-        "Golang (Advanced)",
-        "PHP (Advanced)",
-        "C++ (Basic)",
-        "Python (Basic)",
-        "JavaScript (Basic)"
-      ]
-    },
-    {
-      "key": "web_development",
-      "values": [
-        "HTML",
-        "CSS",
-        "React"
-      ]
-    },
-    {
-      "key": "architecture",
-      "values": [
-        "Microservices",
-        "Distributed Systems"
-      ]
-    },
-    {
-      "key": "programming_paradigms",
-      "values": [
-        "OOP",
-        "TDD"
-      ]
-    },
-    {
-      "key": "message_queuing_systems",
-      "values": [
-        "RabbitMQ (AMQP)"
-      ]
-    },
-    {
-      "key": "databases",
-      "values": [
-        "PostgreSQL",
-        "MSSQL",
-        "Redis"
-      ]
-    },
-    {
-      "key": "search_and_indexing_technologies",
-      "values": [
-        "Solr",
-        "Elasticsearch"
-      ]
-    },
-    {
-      "key": "working_with_api",
-      "values": [
-        "REST API"
-      ]
-    },
-    {
-      "key": "testing",
-      "values": [
-        "Codeception",
-        "Behave",
-        "Gherkin",
-        "Selenium",
-        "Unit / Integration / E2E"
-      ]
-    },
-    {
-      "key": "environment_automation",
-      "values": [
-        "Docker",
-        "Docker Swarm",
-        "Ansible",
-        "TeamCity",
-        "GitHub Actions"
-      ]
-    },
-    {
-      "key": "dev_tools",
-      "values": [
-        "Git",
-        "GitHub",
-        "Linux",
-        "Windows",
-        "macOS"
-      ]
-    },
-    {
-      "key": "project_management_tools",
-      "values": [
-        "Jira",
-        "Confluence",
-        "Monday"
-      ]
-    },
-    {
-      "key": "working_with_agile",
-      "values": [
-        "Scrum",
-        "Kanban"
-      ]
-    },
-    {
-      "key": "soft_skills",
-      "values": [
-        "Analytical thinking",
-        "Problem-solving",
-        "Good communication and teamwork",
-        "Efficient priority management",
-        "Stress resistance"
-      ]
-    }
-  ],
-  "experience": [
-    {
-      "role": "Back End Developer",
-      "company": "Miinto",
-      "period": "2022 - Present",
-      "location": "Warsaw, Mazowieckie, Poland",
-      "type": "Remote",
-      "summary": "Development and maintenance of a high-traffic e-commerce platform",
-      "responsibilities": [
-        "Developing scalable microservices in Go (Golang) and maintaining legacy PHP systems",
-        "Participating in the migration from a monolithic architecture to distributed microservices",
-        "Building distributed systems using RabbitMQ, PostgreSQL, Redis, and REST APIs",
-        "Rewriting and optimizing legacy services to improve performance and maintainability",
-        "Maintaining high code quality through unit/functional testing and regular code reviews",
-        "Automating CI/CD pipelines (TeamCity, GitHub Actions) and managing infrastructure with Docker and Ansible",
-        "Working in an Agile environment (Kanban) with a focus on clean code and best practices"
-      ],
-      "skills_used": [
-        "Go",
+  "pages": {
+    "about": {
+      "name": "Adrian P. Janczenia",
+      "role": "Backend Developer",
+      "tags": [
+        "Golang",
         "PHP",
         "Microservices",
         "Distributed Systems",
-        "RabbitMQ",
-        "PostgreSQL",
-        "Redis",
         "REST API"
-      ]
-    },
-    {
-      "role": "QA Engineer",
-      "company": "Miinto",
-      "period": "2018 - 2022",
-      "location": "Warsaw, Mazowieckie, Poland",
-      "type": "Hybrid",
-      "summary": "Quality Assurance Engineer focused on test automation and backend validation",
-      "responsibilities": [
-        "Developing automated test suites using Python (Behave, Selenium) and PHP (Codeception)",
-        "Validating data integrity and business logic across RabbitMQ, PostgreSQL, MSSQL, and Redis",
-        "Performing comprehensive API testing and debugging using Postman",
-        "Analyzing requirements and maintaining test documentation in an Agile/Scrum environment",
-        "Executing manual testing for complex web applications and reporting defects"
       ],
-      "skills_used": [
-        "Test Automation",
-        "PHP",
-        "Python",
-        "Selenium",
-        "API Testing",
-        "SQL",
-        "Quality Assurance",
-        "Postman",
-        "ISTQB certified"
+      "hero": {
+        "eyebrow": "BACKEND / MICROSERVICES",
+        "title": "I design, develop and maintain backend systems.",
+        "body": "I am a software engineer with several years of backend development experience and a solid background in testing. I specialize in distributed systems and microservices built with Go and PHP. I focus on the quality of the solutions I build, as well as code clarity and maintainability. I follow sound engineering practices and value effective, clear communication within a team.",
+        "action": "Explore my experience"
+      },
+      "career_snapshot": {
+        "eyebrow": "MY PATH",
+        "title": "From testing to backend development",
+        "body": "I worked in testing and test automation from 2018, and have developed backend systems since 2022. This experience helps me think about contracts, data and the reliability of the entire flow.",
+        "action": "See experience"
+      },
+      "site_teaser": {
+        "eyebrow": "THIS SITE IS A PROJECT",
+        "title": "See how it works behind the scenes",
+        "body": "This portfolio runs on Go services. An interactive map shows how requests travel through its microservices and highlights the technologies behind them.",
+        "action": "How this site works"
+      },
+      "identity_detail": "Go · PHP · microservices"
+    },
+    "experience": {
+      "intro": {
+        "eyebrow": "EXPERIENCE",
+        "title": "The work that shaped my approach",
+        "body": "From testing and test automation to developing backend services. The career path below describes my work and responsibilities.",
+        "action": ""
+      },
+      "roles": {
+        "order": [
+          "backend",
+          "qa"
+        ],
+        "items": {
+          "backend": {
+            "title": "Backend Developer",
+            "period": "2022 - Present",
+            "summary": "Development and maintenance of an e-commerce platform",
+            "tasks": [
+              "Building scalable microservices in Go and maintaining legacy PHP systems",
+              "Contributing to the migration of a monolithic system to Go microservices",
+              "Building distributed systems with RabbitMQ, PostgreSQL, Redis and REST APIs",
+              "Rewriting and optimizing older microservices to improve performance and maintainability",
+              "Maintaining code quality through unit and functional tests and regular code reviews",
+              "Automating CI/CD pipelines with TeamCity and GitHub Actions and managing infrastructure with Docker and Ansible",
+              "Working in an Agile (Kanban) environment with an emphasis on clean code and sound engineering practices"
+            ]
+          },
+          "qa": {
+            "title": "QA Engineer",
+            "period": "2018 - 2022",
+            "summary": "QA engineer focused on test automation, business logic and data flow validation",
+            "tasks": [
+              "Developing automated tests with Python (Behave, Selenium) and PHP (Codeception)",
+              "Validating data integrity and business logic in RabbitMQ, PostgreSQL, MSSQL and Redis",
+              "Performing comprehensive API tests and debugging systems with Postman",
+              "Analyzing requirements and maintaining test documentation in an Agile/Scrum environment",
+              "Manually testing complex web applications and reporting defects"
+            ]
+          }
+        }
+      },
+      "cases": {
+        "order": [
+          "migration",
+          "checkout",
+          "reservation"
+        ],
+        "items": {
+          "migration": {
+            "category": "Migration",
+            "title": "From monolith to microservices",
+            "summary": "Contributed to migrating a large e-commerce platform to Go services",
+            "problem": "A monolith developed over many years needed to be gradually split into smaller, more manageable microservices.",
+            "contribution": [
+              "Built and developed microservices in Go",
+              "Kept the new services working with the existing PHP code",
+              "Worked with PostgreSQL, Redis, REST APIs and RabbitMQ, as well as tests and code reviews"
+            ],
+            "result": "Individual functions were gradually extracted into microservices that can be developed and maintained independently.",
+            "takeaway": "Reliability, compatible contracts and safe deployment of changes were the priorities.",
+            "tech_context": [
+              "Go",
+              "PHP",
+              "REST API",
+              "RabbitMQ",
+              "PostgreSQL",
+              "Redis"
+            ]
+          },
+          "checkout": {
+            "category": "Checkout process",
+            "title": "Checkout and payments",
+            "summary": "Worked on the backend order flow, integrations and payments",
+            "problem": "A complex checkout process connected multiple services, asynchronous communication and external APIs.",
+            "contribution": [
+              "Developed backend services across the order flow",
+              "Contributed to the design of interfaces and integrations with external APIs",
+              "Worked with multiple microservices using RabbitMQ, PostgreSQL and Redis, and wrote tests and reviewed code"
+            ],
+            "result": "The order flow evolved through collaboration between services, with error handling taken into account.",
+            "takeaway": "Checkout depends on the entire flow, from service contracts to the response shown to the customer. That flow must be reliable.",
+            "tech_context": [
+              "Go",
+              "REST API",
+              "RabbitMQ",
+              "PostgreSQL",
+              "Redis",
+              "Solr",
+              "Elasticsearch"
+            ]
+          },
+          "reservation": {
+            "category": "Product reservations",
+            "title": "Product reservation list",
+            "summary": "Implemented a product reservation list for an e-commerce platform",
+            "problem": "Limited product availability called for clear rules to secure an item for a customer.",
+            "contribution": [
+              "Implemented the reservation list logic",
+              "Integrated the feature into the existing backend",
+              "Used tests and code reviews to support the reliability of the implementation"
+            ],
+            "result": "The new feature became part of the existing microservices.",
+            "takeaway": "A small interface change can have a significant impact on the existing logic in backend services.",
+            "tech_context": [
+              "Go",
+              "microservices",
+              "Redis",
+              "unit tests"
+            ]
+          }
+        }
+      },
+      "technology_groups": {
+        "order": [
+          "backend",
+          "data",
+          "quality",
+          "delivery"
+        ],
+        "items": {
+          "backend": {
+            "title": "Backend and architecture",
+            "items": [
+              {"id": "go", "label": "Go"},
+              {"id": "php", "label": "PHP"},
+              {"id": "react", "label": "React"},
+              {"id": "microservices", "label": "Microservices"},
+              {"id": "distributed", "label": "Distributed systems"},
+              {"id": "rest", "label": "REST API"},
+              {"id": "rabbitmq", "label": "AMQP (RabbitMQ)"}
+            ]
+          },
+          "data": {
+            "title": "Databases, search and indexing",
+            "items": [
+              {"id": "postgresql", "label": "PostgreSQL"},
+              {"id": "mssql", "label": "MSSQL"},
+              {"id": "redis", "label": "Redis"},
+              {"id": "solr", "label": "Solr"},
+              {"id": "elasticsearch", "label": "Elasticsearch"}
+            ]
+          },
+          "quality": {
+            "title": "Quality and testing",
+            "items": [
+              {"id": "unit-tests", "label": "Unit tests"},
+              {"id": "integration-tests", "label": "Integration tests"},
+              {"id": "e2e", "label": "E2E tests"},
+              {"id": "codeception", "label": "Codeception"},
+              {"id": "behave", "label": "Behave"},
+              {"id": "selenium", "label": "Selenium"},
+              {"id": "gherkin", "label": "Gherkin"}
+            ]
+          },
+          "delivery": {
+            "title": "CI/CD and development tools",
+            "items": [
+              {"id": "docker", "label": "Docker"},
+              {"id": "docker-swarm", "label": "Docker Swarm"},
+              {"id": "ansible", "label": "Ansible"},
+              {"id": "teamcity", "label": "TeamCity"},
+              {"id": "git", "label": "Git"},
+              {"id": "github-actions", "label": "GitHub Actions"},
+              {"id": "grafana", "label": "Grafana"}
+            ]
+          }
+        }
+      },
+      "roles_label": "Career path",
+      "cases_label": "Selected stories",
+      "technology_label": "Technologies in context",
+      "read_case": "Read story",
+      "back": "Back to experience",
+      "problem_label": "Context and problem",
+      "contribution_label": "My contribution",
+      "result_label": "Result and takeaways"
+    },
+    "how_it_works": {
+      "eyebrow": "HTTP REQUEST EXPLORER",
+      "title": "See how this site works",
+      "body": "Start with a map of the whole site. Select a component to learn its role, or choose a process to follow the request and response.",
+      "ui_copy": {
+        "viewLabel": "WHAT WOULD YOU LIKE TO EXPLORE?",
+        "topology": "TOPOLOGY",
+        "nodeBrowserTitle": "Browser",
+        "nodeBrowserDetail": "HTML / JAVASCRIPT",
+        "nodeCaddyTitle": "Caddy",
+        "nodeCaddyDetail": "REVERSE PROXY",
+        "nodeFrontTitle": "Front end",
+        "nodeFrontDetail": "GO / SERVER RENDERING",
+        "nodeGatewayTitle": "API gateway",
+        "nodeGatewayDetail": "REQUEST ROUTING",
+        "nodeRabbitTitle": "RabbitMQ",
+        "nodeRabbitDetail": "MESSAGING / RPC",
+        "nodeContentTitle": "Content service",
+        "nodeContentDetail": "CONTENT / CV",
+        "nodeCacheTitle": "Page content in memory",
+        "nodeCacheDetail": "JSON / MEMORY",
+        "nodeCaptchaTitle": "CAPTCHA service",
+        "nodeCaptchaDetail": "ANTI-BOT CHALLENGE",
+        "nodeRedisTitle": "Redis",
+        "nodeRedisDetail": "STATE / EXPIRY",
+        "requestPath": "REQUEST PATH",
+        "now": "NOW",
+        "result": "STEP RESULT",
+        "state": "STATE / DIFF",
+        "decision": "DECISION",
+        "pause": "Pause",
+        "resume": "Resume",
+        "reset": "Start over",
+        "all": "Whole site",
+        "allSubtitle": "System map",
+        "mapDescription": "All the components of this site and their connections. Select a component to learn more about it.",
+        "components": "COMPONENTS",
+        "ready": "Choose the first step. Each following step unlocks after the previous action is complete.",
+        "moving": "The packet is crossing service connections…",
+        "done": "Flow complete. You can start over.",
+        "step": "STEP",
+        "clickHint": "Click a component",
+        "component": "COMPONENT",
+        "discover": "EXPLORE THE MAP",
+        "discoverTitle": "Select a tile on the map",
+        "discoverText": "A short description will show what the component does and where it sits in the request path.",
+        "mainHeading": "Main flow · happy path",
+        "mainCaption": "The expected response for this request.",
+        "extraHeading": "Additional paths",
+        "extraCaption": "Errors and unusual conditions used to examine how the system responds. These are not the standard flow.",
+        "mainKind": "MAIN FLOW · HAPPY PATH",
+        "extraKind": "ADDITIONAL PATH · CONDITION TEST",
+        "routeHeading": "Correct error handling",
+        "routeKind": "UNKNOWN ROUTE HANDLING",
+        "nextStep": "Next step",
+        "working": "Request in progress…"
+      },
+      "scenario_copy": {
+        "common": {
+          "request_reaches_frontend": "The request reaches the front end.",
+          "no_state_change": "No state change"
+        },
+        "content": {
+          "page_content_and_ssr": "Page content and HTML rendering",
+          "rendering_overview": "To display a page, the front end retrieves content from the content service through the API gateway. The service uses data loaded into memory at startup.",
+          "polish": "Polish",
+          "english": "English",
+          "unknown_language": "Unknown language",
+          "gateway_unavailable": "API gateway unavailable",
+          "open_the_page": "Open the page",
+          "unknown_language_uses_polish": "When the URL contains an unknown language, the front end selects the Polish version.",
+          "the_front_end_starts_ssr": "The front end starts building the HTML page on the server (SSR).",
+          "fetch_content": "Fetch page content",
+          "gateway_forwards_the_request": "The API gateway forwards the request to the content service.",
+          "request_content_from_gateway": "The front end asks the API gateway for content in the selected language.",
+          "return_service_error": "Return a service unavailable error",
+          "render_service_error_page": "The front end displays an error page using the shared template.",
+          "gateway_failure_stops_rendering": "A connection failure or timeout at the API gateway prevents the page from being rendered.",
+          "read_cached_content": "Read content from service memory",
+          "json_loaded_on_startup_no_file_read": "JSON files are loaded when the service starts; they are not read again for every request.",
+          "polish_fallback_forwarded": "The front end has requested Polish content instead of an unknown language.",
+          "content_service_chooses_a_language": "The content service selects the appropriate language.",
+          "localized_content_response": "The service returns content prepared for the selected language.",
+          "return_rendered_page": "Send the completed page",
+          "render_html_from_content": "The front end combines the content with a template to produce HTML.",
+          "rendered_html_response_path": "The completed HTML travels from the front end through the reverse proxy to the browser."
+        },
+        "pow": {
+          "signed_pow_challenge": "Signed anti-bot task (PoW)",
+          "challenge_request_overview": "This is a separate request. The server returns task data (a seed), and the browser searches for a trial number (nonce) on your device before requesting a CAPTCHA image.",
+          "fetch_challenge": "Fetch the anti-bot task",
+          "request_a_challenge": "Request task data",
+          "captcha_service_signs_seed": "The CAPTCHA service prepares task data and protects it with a signature.",
+          "browser_requests_challenge": "The browser requests a computational task that helps block bots.",
+          "receive_seed": "Receive task data",
+          "hmac_secret_remains_private": "The signature lets the service verify where the task came from without revealing the secret HMAC key.",
+          "seed_response_precedes_nonce_search": "The task data returns to the browser. Only then does it start searching for a nonce."
+        },
+        "captcha": {
+          "pow_and_captcha_image": "From the anti-bot task to a CAPTCHA image",
+          "prior_challenge_context": "The browser has already fetched task data with GET /api/pow. Here you can choose the valid solution or one reason for rejecting the same POST request.",
+          "valid_pow": "Valid task solution",
+          "bad_signature": "Invalid signature",
+          "expired_seed": "Task expired",
+          "weak_hash": "Insufficient computational result",
+          "reused_seed": "Task reused",
+          "calculate_nonce_locally": "Find a trial number (nonce)",
+          "nonce_calculated_in_browser": "The browser performs the calculations locally without sending more requests to the server.",
+          "nonce_search_visualization": "The browser tries successive nonce values until the SHA-256 result meets the required difficulty.",
+          "submit_solution": "Submit solution",
+          "validate_pow_signature_time_hash": "Check the signature, expiry and SHA-256 result",
+          "captcha_service_receives_request": "The request reaches the CAPTCHA service.",
+          "signature_mismatch_no_redis_write": "The signature is invalid. Nothing is written to Redis.",
+          "challenge_expired_no_redis_write": "The task has expired. Nothing is written to Redis.",
+          "weak_hash_no_redis_write": "The computational result is too weak. Nothing is written to Redis.",
+          "reject_captcha_creation": "Refuse to create a CAPTCHA image",
+          "invalid_solution_not_stored": "Validation stops the request before the task is marked as used.",
+          "mark_seed_in_redis": "Mark the task as used",
+          "key_already_exists": "Redis already has a record that this task was used.",
+          "pow_demo_seed_used_ttl": "pow:demo-seed = used · TTL",
+          "atomic_seed_reuse_check": "Redis writes the record only if the key does not yet exist. This operation is atomic (SETNX).",
+          "redis_rejects_reuse": "Redis detects that the task has already been used.",
+          "the_seed_can_be_used_once": "The same task data can be used only once.",
+          "return_409": "Return 409: task already used",
+          "return_captcha_image": "Return a CAPTCHA image",
+          "captcha_demo_id_session_ttl": "captcha:demo-id = session · TTL",
+          "a_reused_seed_creates_no_new_image": "Reusing the task does not create another CAPTCHA image.",
+          "captcha_receives_a_short_ttl": "The CAPTCHA session receives a short expiry time.",
+          "the_rejection_returns_to_the_client": "The rejection returns to the browser.",
+          "the_image_returns_to_the_browser": "The CAPTCHA image returns to the browser."
+        },
+        "verify": {
+          "captcha_answer_verification": "Checking a CAPTCHA answer",
+          "verification_overview": "The service compares the answer with the session state in Redis. A correct answer marks the session as solved; the visitor can then request access to the CV.",
+          "correct_answer": "Correct answer",
+          "wrong_answer": "Wrong answer",
+          "expired_session": "Session expired",
+          "submit_captcha_answer": "Submit CAPTCHA answer",
+          "captcha_session_lookup": "The CAPTCHA service looks for the session associated with the image.",
+          "captcha_answer_arrives": "The answer reaches the CAPTCHA service.",
+          "check_session_in_redis": "Check session in Redis",
+          "captcha_demo_id_solved_true": "captcha:demo-id.solved = true",
+          "captcha_demo_id_triesleft_1": "captcha:demo-id.triesLeft − 1",
+          "key_expired": "The session key has expired",
+          "solved_session_ready_for_cv": "The solved session can be used to request CV access.",
+          "captcha_remains_unsolved": "The CAPTCHA remains unsolved.",
+          "atomic_captcha_state_update": "A Redis script changes the session state in one atomic operation.",
+          "receive_verification_result": "Receive the check result",
+          "the_client_may_request_a_cv_token": "The browser can now request a CV download token.",
+          "verification_error_returned": "The browser receives information about the incorrect answer.",
+          "verification_result_to_form": "The result returns to the CV download form."
+        },
+        "cvtoken": {
+          "single_use_cv_token": "Single-use CV download token",
+          "cv_token_request_overview": "The API gateway routes the public /api/cv-token request to the internal /api/v1/cv-request path. The request then reaches the content service through RabbitMQ.",
+          "valid_input": "Valid code and solved CAPTCHA",
+          "wrong_access_code": "Incorrect access code",
+          "wrong_captcha": "CAPTCHA not solved",
+          "expired_captcha": "CAPTCHA session expired",
+          "request_a_token": "Request a CV download token",
+          "gateway_sends_token_rpc": "The API gateway forwards /api/v1/cv-request through RabbitMQ.",
+          "cv_form_submits_access_code": "The form sends the access code and the ID of the solved CAPTCHA.",
+          "dispatch_through_rabbitmq": "Dispatch through RabbitMQ",
+          "token_request_reaches_content": "The request reaches the content service.",
+          "token_request_delivered_by_rpc": "RabbitMQ delivers the request and enables the reply (RPC).",
+          "validate_and_store_state": "Validate the data and store the token",
+          "issued_token_redis_state": "captcha:demo-id → deleted; cv:token:tok_demo → pl:demo-id · TTL",
+          "no_new_cv_token": "No token issued",
+          "captcha_and_code_are_valid": "The access code is correct and the CAPTCHA has been solved.",
+          "validation_denies_the_token": "The data does not meet the requirements for issuing a token.",
+          "a_short_lived_token_is_ready": "The single-use token is ready and will expire soon.",
+          "invalid_input_does_not_issue_a_token": "Invalid data does not create a new token.",
+          "receive_result": "Receive result",
+          "token_response_to_dialog": "The token returns to the CV download dialog.",
+          "dialog_displays_generic_error": "The dialog shows an error without disclosing verification details.",
+          "token_rpc_response_path": "The reply returns through RabbitMQ and the API gateway to the browser."
+        },
+        "download": {
+          "cv_file_download": "Downloading the CV file",
+          "download_order_overview": "The content service opens the correct PDF first, then consumes the single-use token in Redis. After a successful download, repeating the same request returns 410.",
+          "download_and_retry": "Download the CV and try again",
+          "token_language_mismatch": "Language does not match the token",
+          "expired_token": "Token expired",
+          "pdf_missing": "PDF file missing",
+          "request_the_pdf": "Request the PDF file",
+          "gateway_calls_download_service": "The API gateway calls the content service over HTTP.",
+          "download_request_arrives": "The request reaches the CV download service.",
+          "open_the_file": "Open the correct file",
+          "file_failure_precedes_token_use": "The file-open error occurs before any attempt to consume the token.",
+          "the_file_is_ready_to_stream": "The file is ready to be sent to the browser.",
+          "missing_pdf_preserves_token": "A missing file does not consume the token.",
+          "file_availability_is_checked_first": "File availability is checked first.",
+          "return_file_error": "Return file error",
+          "cv_token_tok_demo_retained": "cv:token:tok_demo → still exists",
+          "no_token_consumption_was_attempted": "No token consumption was attempted.",
+          "the_error_returns_to_the_browser": "The error returns to the browser.",
+          "check_token_in_redis": "Check token in Redis",
+          "cv_token_tok_demo_atomically_deleted": "cv:token:tok_demo → atomically deleted",
+          "key_missing": "The token does not exist in Redis",
+          "language_matches_token_is_consumed": "The language matches, so the token is consumed.",
+          "language_mismatch_token_remains": "The language does not match, so the token remains valid.",
+          "the_token_expired_before_download": "The token expired before download.",
+          "atomic_token_validation": "A Redis script checks the token and makes the decision in one atomic operation.",
+          "receive_response": "Receive response",
+          "the_pdf_returns_as_a_stream": "The PDF file is sent to the browser.",
+          "no_cv_is_sent": "No CV is sent.",
+          "download_response_path": "The response passes through the gateway and front end.",
+          "repeat_the_same_get": "Repeat the same download request",
+          "retry_reaches_content_service": "The same request reaches the content service again.",
+          "retry_reuses_token": "The second attempt uses the same token.",
+          "open_the_pdf_again": "Open the PDF file again",
+          "pdf_available_token_may_be_gone": "The file is still available, but the single-use token may already have been consumed.",
+          "retry_checks_pdf_before_token": "On the second attempt, the service again checks the file before the token.",
+          "check_consumed_token": "Check the previously used token",
+          "cv_token_tok_demo_absent": "cv:token:tok_demo → absent",
+          "the_token_was_already_consumed": "The token was consumed during the first download.",
+          "consumed_token_missing_in_redis": "Redis can no longer find the single-use token.",
+          "receive_410_gone": "Receive 410: token already used",
+          "a_repeat_download_is_not_possible": "The same token cannot download the CV twice.",
+          "the_rejection_returns_to_the_browser": "The rejection returns to the browser."
+        },
+        "route": {
+          "unknown_route": "Unknown URL",
+          "unknown_route_overview": "The front end handles an unknown URL itself. The request’s Accept header determines whether the browser receives an HTML page or an API client receives JSON. No other service is called.",
+          "browser_html": "Browser · HTML page",
+          "api_client_json": "API client · JSON response",
+          "open_an_unknown_route": "Open an unknown URL",
+          "frontend_detects_unknown_route": "The front end recognizes that this URL does not exist.",
+          "the_request_stops_at_the_front_end": "The front end handles the request without calling other services.",
+          "receive_error_response": "Receive error response",
+          "shared_error_template": "The browser receives a page built from the shared error template.",
+          "json_response_for_api": "The API client receives error details in JSON.",
+          "frontend_returns_404_locally": "The front end returns HTTP 404 without contacting the API gateway."
+        },
+        "views": {
+          "home_page": "Home page",
+          "anti_bot_challenge": "Anti-bot challenge",
+          "create_captcha": "Create CAPTCHA image",
+          "verify_captcha": "Check CAPTCHA answer",
+          "cv_access_request": "Request CV access",
+          "download_cv": "Download CV",
+          "unknown_url": "Unknown URL"
+        },
+        "components": {
+          "browser": "Browser",
+          "browser_responsibilities": "Displays the page, runs JavaScript, performs the anti-bot calculations and sends requests from the CV form.",
+          "caddy_responsibilities": "Receives site traffic, forwards it to the front end, adds security headers and redirects the address without “www”. It may be omitted in a local environment.",
+          "frontend_responsibilities": "This Go service builds pages on the server, selects the Polish or English version, and handles site URLs, errors and the CV download dialog.",
+          "gateway_responsibilities": "The API gateway receives requests from the front end and routes them to the appropriate services over gRPC, RabbitMQ or HTTP.",
+          "rabbitmq_responsibilities": "Carries the CV token request from the API gateway to the content service and delivers the reply.",
+          "content_service_responsibilities": "Provides Polish and English site content, issues single-use CV tokens and sends the appropriate PDF file.",
+          "content_in_memory": "Content in service memory",
+          "content_cache_responsibilities": "Polish and English content from JSON files is loaded into memory when the service starts. It is not a separate service, and files are not read again for each request.",
+          "captcha_service_responsibilities": "Prepares the anti-bot task, checks its solution, creates a CAPTCHA image and verifies the entered answer.",
+          "redis_responsibilities": "Stores short-lived state for anti-bot tasks, CAPTCHA sessions and CV tokens. Atomic operations prevent single-use data from being reused."
+        },
+        "branches": {
+          "render_polish_page": "Display the Polish version of the page.",
+          "render_english_page": "Display the English version of the page.",
+          "fallback_for_unknown_language": "An unknown language in the URL selects the Polish version.",
+          "unavailable_gateway_error": "An unavailable API gateway causes the 503 error page to appear.",
+          "fetch_pow_challenge": "The browser fetches signed anti-bot task data.",
+          "valid_nonce_creates_captcha": "A valid computational result allows a CAPTCHA image to be created.",
+          "invalid_signature_rejected": "An invalid signature causes the task to be rejected.",
+          "expired_seed_rejected": "The task is rejected after it expires.",
+          "weak_pow_rejected": "The SHA-256 result does not meet the required difficulty.",
+          "seed_reuse_rejected": "Reusing the same task data is rejected.",
+          "correct_answer_solves_captcha": "A correct answer marks the CAPTCHA session as solved.",
+          "wrong_answer_reduces_attempts": "An incorrect answer reduces the number of remaining attempts.",
+          "expired_captcha_rejected": "A CAPTCHA answer is rejected after the session expires.",
+          "valid_cv_access_issues_token": "A valid access code and solved CAPTCHA allow a short-lived token to be issued.",
+          "wrong_access_code_rejected": "An incorrect access code does not allow a token to be issued.",
+          "unsolved_captcha_rejected": "An unsolved CAPTCHA prevents a token from being issued.",
+          "expired_captcha_token_rejected": "An expired CAPTCHA session prevents a token from being issued.",
+          "first_download_then_retry": "The first request returns a PDF file. Repeating it with the same token returns 410.",
+          "language_mismatch_keeps_token": "Choosing a language that does not match the token does not consume it.",
+          "expired_token_rejected": "The download is rejected after the token expires.",
+          "missing_pdf_keeps_token": "A missing PDF file causes an error, but the token remains available.",
+          "browser_html_404": "The browser receives an HTML page with status 404.",
+          "api_json_404": "The API client receives a JSON response with status 404."
+        }
+      }
+    },
+    "contact": {
+      "intro": {
+        "eyebrow": "CONTACT",
+        "title": "Let’s talk about backend engineering",
+        "body": "If you are looking for someone to work with Go, PHP and microservices, and you care about software quality, get in touch.",
+        "action": ""
+      },
+      "email_card": {
+        "eyebrow": "E-MAIL",
+        "title": "Send a message",
+        "body": "The simplest way to start a conversation about working together.",
+        "action": "Send an email"
+      },
+      "profile_card": {
+        "eyebrow": "PROFILE AND CODE",
+        "title": "Explore my projects",
+        "body": "The source code for this site and my professional profile.",
+        "action": "Open profile"
+      }
+    },
+    "privacy": {
+      "title": "PRIVACY POLICY",
+      "sections": [
+        {
+          "header": "1. Data controller",
+          "items": [
+            {
+              "label": "",
+              "text": "The controller of personal data processed in connection with the use of www.adrianjanczenia.dev is Adrian Janczenia. For privacy-related matters, you can write to contact@adrianjanczenia.dev."
+            }
+          ]
+        },
+        {
+          "header": "2. Using the website",
+          "items": [
+            {
+              "label": "",
+              "text": "When you visit the website, technical data needed to handle your request are processed, in particular your IP address, the date and time, the requested page address, the server response code, and information sent by your browser. Some of these data are recorded in access logs. I use them to provide the website, detect abuse, and diagnose errors."
+            },
+            {
+              "label": "",
+              "text": "Downloading my CV requires an access code and solving a CAPTCHA. The service processes these data, as well as short-lived identifiers and download tokens, solely to verify access to the file and protect this feature against abuse."
+            },
+            {
+              "label": "",
+              "text": "The website has no contact form, user accounts, or newsletter. You can copy the email address shown on the website or use the link to your email application. Only when you send a message do I receive your email address, the message content, and any attachments. I use them to correspond with you and respond."
+            },
+            {
+              "label": "",
+              "text": "The legal basis for processing access-log data, handling CV downloads, and correspondence is my legitimate interest in operating and securing the website and responding to messages — Article 6(1)(f) of the GDPR. Sending a message is voluntary; without a return email address, I cannot reply."
+            }
+          ]
+        },
+        {
+          "header": "3. Retention periods",
+          "items": [
+            {
+              "label": "",
+              "text": "I keep website access logs for no longer than 7 days. CAPTCHA state and CV download tokens have short validity periods and expire automatically."
+            },
+            {
+              "label": "",
+              "text": "I delete email correspondence within 30 days after the conversation ends, meaning the last message on a given matter. I do not create my own backups of access logs or correspondence."
+            }
+          ]
+        },
+        {
+          "header": "4. Infrastructure and data recipients",
+          "items": [
+            {
+              "label": "",
+              "text": "The website runs on infrastructure that I administer, using a VPS. The VPS provider is involved in operating the website, and an email service provider is involved in handling correspondence. They may process data to the extent necessary to provide their services. I do not share visitor data with advertisers."
+            }
+          ]
+        },
+        {
+          "header": "5. Cookies",
+          "items": [
+            {
+              "label": "",
+              "text": "The website does not use cookies for analytics, advertising, or profiling. Browsing the public website does not require an account or login."
+            }
+          ]
+        },
+        {
+          "header": "6. Links to other websites",
+          "items": [
+            {
+              "label": "",
+              "text": "The website contains links to external services, including GitHub and LinkedIn. Merely viewing my portfolio does not open those services. After you click a link, the operator of the destination website determines how your data are processed."
+            }
+          ]
+        },
+        {
+          "header": "7. Your rights",
+          "items": [
+            {
+              "label": "",
+              "text": "To the extent provided by the GDPR, you may request access to your data, their rectification or erasure, and restriction of processing. You may also object to processing based on my legitimate interest. To do so, write to contact@adrianjanczenia.dev. You also have the right to lodge a complaint with the President of the Personal Data Protection Office in Poland."
+            }
+          ]
+        }
       ]
     }
-  ],
-  "privacy_policy": {
-    "title": "PRIVACY POLICY",
-    "sections": [
-      {
-        "header": "I. Data Controller",
-        "items": [
-          {
-            "text": "The Administrator of the website is: Adrian Janczenia,\ne-mail contact: contact@adrianjanczenia.dev."
-          }
-        ]
+  },
+  "ui": {
+    "cv": {
+      "title": "Download CV",
+      "intro": "I share the access code after you get in touch. Enter the code from the image to download the PDF.",
+      "access_code_label": "Access code",
+      "captcha_label": "Image code",
+      "submit": "Download CV",
+      "close": "Close",
+      "contact_prompt": "Interested in my CV and getting in touch? Email me:",
+      "retry": "Try again"
+    },
+    "errors": {
+      "error_message": {
+        "title": "Error",
+        "message": "I'm working on fixing the problem. Please try again later.",
+        "action": "Return home"
       },
-      {
-        "header": "II. Scope and Purpose of Data Processing",
-        "items": [
-          {
-            "label": "1.",
-            "text": "The website is strictly informational (online portfolio). The service does not use contact forms, user registration systems, or subscription mechanisms (newsletters)."
-          },
-          {
-            "label": "2.",
-            "text": "The Administrator does not actively collect personal data of Users."
-          }
-        ]
+      "error_service_unavailable": {
+        "title": "Error",
+        "message": "Service is temporarily unavailable. Please try again later.",
+        "action": "Return home"
       },
-      {
-        "header": "III. Server Logs (Technical Data)",
-        "items": [
-          {
-            "label": "1.",
-            "text": "Using the website involves sending requests to the server where the website is hosted."
-          },
-          {
-            "label": "2.",
-            "text": "Each query sent to the server is recorded in system logs. The logs include, among others: the User's IP address, server date and time, information about the web browser, and operating system."
-          },
-          {
-            "label": "3.",
-            "text": "Data stored in server logs are not associated with specific persons using the website and are not used by the Administrator for the purpose of User identification."
-          },
-          {
-            "label": "4.",
-            "text": "The legal basis for processing data in server logs is Art. 6(1)(f) of the GDPR (Legitimate Interest of the Controller), which consists of ensuring the security of the service, diagnosing potential technical errors, and server administration."
-          }
-        ]
+      "error_bad_gateway": {
+        "title": "Error",
+        "message": "The service returned an invalid response. Please try again later.",
+        "action": "Return home"
       },
-      {
-        "header": "IV. Cookies",
-        "items": [
-          {
-            "label": "1.",
-            "text": "The website does not use cookies for marketing, tracking, analytical, or profiling purposes."
-          },
-          {
-            "label": "2.",
-            "text": "The website may use only technical cookies that are strictly necessary for the proper display of the website or ensuring data transmission security."
-          },
-          {
-            "label": "3.",
-            "text": "In accordance with applicable telecommunications laws (implementing the ePrivacy Directive), the use of cookies strictly necessary for the technical handling of transmission or delivery of the service does not require User consent."
-          }
-        ]
+      "error_method_not_allowed": {
+        "title": "Error",
+        "message": "This request method is not supported.",
+        "action": "Return home"
       },
-      {
-        "header": "V. Links to External Sites",
-        "items": [
-          {
-            "text": "The website contains links leading to external social media portals (e.g., LinkedIn, Facebook, GitHub). These are static text or graphic links. The Administrator does not use active social media plugins (such as \"Like\" buttons) that would automatically transfer User data to the administrators of these portals. After clicking a link and leaving the website, responsibility for personal data processing is assumed by the provider of the external service."
-          }
-        ]
+      "error_invalid_input": {
+        "title": "Error",
+        "message": "The supplied data is invalid.",
+        "action": "Return home"
       },
-      {
-        "header": "VI. User Rights",
-        "items": [
-          {
-            "text": "Under the GDPR, the User has the right to: a) access their data and receive a copy of it, b) rectify (correct) their data, c) erase data (\"right to be forgotten\"), d) restrict data processing, e) object to data processing, f) lodge a complaint with a supervisory authority.\n\nDisclaimer: Due to the fact that the Administrator processes data only in server logs and is unable to identify a natural person on this basis, the exercise of the rights indicated in point 1(a-e) may be limited pursuant to Art. 11(2) of the GDPR (processing which does not require identification)."
-          }
-        ]
+      "error_unsupported_language": {
+        "title": "Error",
+        "message": "The selected language is not supported.",
+        "action": "Return home"
+      },
+      "error_content_not_found": {
+        "title": "Error",
+        "message": "The requested content was not found.",
+        "action": "Return home"
+      },
+      "error_captcha_server": {
+        "title": "Error",
+        "message": "A CAPTCHA server error occurred.",
+        "action": "Return home"
+      },
+      "error_cv_auth": {
+        "title": "Error",
+        "message": "Access denied. Invalid access code.",
+        "action": "Return home"
+      },
+      "error_cv_expired": {
+        "title": "Error",
+        "message": "CV link has expired or is invalid",
+        "action": "Return home"
+      },
+      "error_cv_server": {
+        "title": "Error",
+        "message": "A server error occurred while downloading the file",
+        "action": "Return home"
+      },
+      "error_internal": {
+        "title": "Error",
+        "message": "An unexpected server error occurred.",
+        "action": "Return home"
+      },
+      "error_cv_not_found": {
+        "title": "Error",
+        "message": "CV file was not found",
+        "action": "Return home"
+      },
+      "error_captcha_invalid": {
+        "title": "Error",
+        "message": "Invalid CAPTCHA code",
+        "action": "Return home"
+      },
+      "error_captcha_not_solved": {
+        "title": "Error",
+        "message": "The CAPTCHA has not been solved.",
+        "action": "Return home"
+      },
+      "error_captcha_expired": {
+        "title": "Error",
+        "message": "CAPTCHA expired. Fetching new one...",
+        "action": "Return home"
+      },
+      "error_captcha_not_found": {
+        "title": "Error",
+        "message": "CAPTCHA not found. Refreshing...",
+        "action": "Return home"
+      },
+      "error_pow_failed": {
+        "title": "Error",
+        "message": "Initial verification failed. Please try again.",
+        "action": "Return home"
+      },
+      "error_pow_signature": {
+        "title": "Error",
+        "message": "Invalid request signature",
+        "action": "Return home"
+      },
+      "error_pow_work": {
+        "title": "Error",
+        "message": "Incorrect PoW calculation",
+        "action": "Return home"
+      },
+      "error_pow_double_spend": {
+        "title": "Error",
+        "message": "This request has already been used.",
+        "action": "Return home"
+      },
+      "error_pow_expired": {
+        "title": "Error",
+        "message": "The request expired. Please try again.",
+        "action": "Return home"
+      },
+      "error_route_not_found": {
+        "title": "Page not found",
+        "message": "There is no page at this address. Check the URL or return to the portfolio.",
+        "action": "Return to home page"
       }
-    ]
-  },
-  "contact": {
-    "email": "contact@adrianjanczenia.dev",
-    "linkedin": "adrian-janczenia",
-    "github": "AdrianJanczenia?tab=repositories"
-  },
-  "translations": {
-    "nav_about": "about",
-    "nav_experience": "experience",
-    "nav_skills": "skills",
-    "nav_languages": "languages",
-    "nav_contact": "contact",
-    "nav_cv": "download-cv",
-    "nav_privacy_policy": "privacy policy",
-    "header_about": "about",
-    "header_experience": "experience",
-    "header_skills": "skills",
-    "header_languages": "languages",
-    "header_contact": "contact",
-    "header_home": "home-page",
-    "header_privacy": "privacy-policy",
-    "path_privacy_pl": "polityka-prywatnosci",
-    "path_privacy_en": "privacy-policy",
-    "profile_key_name": "name",
-    "profile_key_headline": "role",
-    "profile_key_about": "bio",
-    "experience_key_responsibilities": "responsibilities",
-    "experience_key_stack": "stack",
-    "experience_key_location": "location",
-    "contact_key_email": "email",
-    "contact_key_linkedin": "linkedIn",
-    "back_to_top_label": "Back to top",
-    "error_title": "An error occurred",
-    "error_message": "I'm working on fixing the problem. Please try again later.",
-    "error_service_unavailable": "Service is temporarily unavailable. Please try again later.",
-    "error_bad_gateway": "The service returned an invalid response. Please try again later.",
-    "error_method_not_allowed": "This request method is not supported.",
-    "error_invalid_input": "The supplied data is invalid.",
-    "error_unsupported_language": "The selected language is not supported.",
-    "error_content_not_found": "The requested content was not found.",
-    "error_captcha_server": "A CAPTCHA server error occurred.",
-    "cv_modal_title": "Authorized access only",
-    "cv_password_placeholder": "Enter access password...",
-    "cv_captcha_placeholder": "Enter code from image...",
-    "btn_get_link": "Download CV",
-    "btn_processing": "Processing...",
-    "btn_back": "Back to Home Page",
-    "error_cv_auth": "Access denied. Invalid password.",
-    "error_cv_expired": "CV link has expired or is invalid",
-    "error_cv_server": "A server error occurred while downloading the file",
-    "error_internal": "An unexpected server error occurred.",
-    "error_cv_not_found": "CV file was not found",
-    "error_captcha_invalid": "Invalid CAPTCHA code",
-    "error_captcha_not_solved": "The CAPTCHA has not been solved.",
-    "error_captcha_expired": "CAPTCHA expired. Fetching new one...",
-    "error_captcha_not_found": "CAPTCHA not found. Refreshing...",
-    "error_pow_failed": "Authorization error. Please try again",
-    "error_pow_signature": "Invalid request signature",
-    "error_pow_work": "Incorrect PoW calculation",
-    "error_pow_double_spend": "This request has already been used.",
-    "error_pow_expired": "The request expired. Please try again.",
-    "error_cv_header_error": "ERROR",
-    "error_cv_header_msg": "CV",
-    "error_cv_status_key": "status",
-    "error_cv_status_value": "FAILED",
-    "error_cv_message_key": "message"
+    },
+    "email_copied": "Email address copied to clipboard"
   }
 }

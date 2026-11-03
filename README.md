@@ -10,9 +10,9 @@ This Go service supplies Polish and English portfolio content over gRPC, handles
 | RabbitMQ CV request queue | Validate the language, solved CAPTCHA state, and password; reply with a short-lived download token or an error slug. |
 | `GET /download/cv?token=...&lang=...` | Redeem a token and stream the configured PDF. |
 
-The gRPC contract is in `api/proto/v1/content.proto`. File paths, server ports, token lifetime, and RabbitMQ topology are configured in `config/<environment>/config.yml`. Keep the localized JSON files aligned when editing site content.
+The gRPC contract is in `api/proto/v1/content.proto`. File paths, server ports, token lifetime, and RabbitMQ topology are configured in `config/<environment>/config.yml`. The localized documents use schema v2. Both language files are loaded into memory at startup; startup checks their structure and Polish/English parity before serving content. Restart the service after editing them.
 
-HTTP and RabbitMQ error replies carry distinct, machine-readable slugs for invalid input, unsupported language, CAPTCHA state, and CV failures. The front end translates these slugs from the paired Polish and English content files.
+HTTP and RabbitMQ error replies carry distinct, machine-readable slugs for invalid input, unsupported language, CAPTCHA state, and CV failures. The front end translates these slugs from `ui.errors` in the paired Polish and English content files.
 
 ## CV authorization
 
@@ -30,7 +30,13 @@ The module requires Go 1.25.1 (see `go.mod`). `APP_ENV=production` selects `conf
 
 CV files belong in `private/` and are selected by language through the configured paths. The directory is excluded from the Docker build context; Compose mounts it at runtime. Do not include real CVs or credentials in tests or documentation.
 
-From the repository root, start Redis and RabbitMQ, provide the required configuration and CV files, and run `go run .`. The `Dockerfile` is available for container builds.
+## Run locally and edit content
+
+1. Start Redis and RabbitMQ. Set `REDIS_URL`, `RABBITMQ_URL`, and `CV_PASSWORD` in the environment; the local YAML leaves them empty. The CAPTCHA service must use the same Redis instance for CV access to work.
+2. Run `go run .` from this repository root. With `config/local/config.yml`, gRPC listens on port 50051 and HTTP on port 8081. The service also consumes CV token requests from RabbitMQ.
+3. For actual CV downloads outside the container, set `cv.files.pl` and `cv.files.en` in your **local configuration** to paths for local PDF files. The supplied paths point under `/app/private/`, as expected in a container. Keep CV files and private configuration out of the repository.
+
+To change page text, edit the corresponding field in `content/pl.json` or `content/en.json`. Keep object keys, page IDs, the `order` arrays of IDs, and the schema version aligned between languages. Lists of descriptive text or technologies may have different lengths. Run `go test ./internal/process/get_content` to check the documents and restart the service to load the new text. The `Dockerfile` copies the content files into the image, but not the private PDFs; mount the latter at runtime.
 
 ## Verification
 
