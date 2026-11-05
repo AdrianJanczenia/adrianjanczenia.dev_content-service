@@ -73,7 +73,7 @@
             "summary": "Rozwój i utrzymanie platformy e-commerce",
             "tasks": [
               "Tworzenie skalowalnych mikroserwisów w Go (Golang) oraz utrzymywanie systemów legacy w PHP",
-              "Udział w migracji monolitycznego systemu na architekture mikrousług w Go",
+              "Udział w migracji monolitycznego systemu na architekturę mikrousług w Go",
               "Budowa systemów rozproszonych z wykorzystaniem RabbitMQ, PostgreSQL, Redis i REST API",
               "Przepisanie i optymalizacja starych mikroserwisów w celu poprawy wydajności i łatwości utrzymania",
               "Utrzymywanie wysokiej jakości kodu poprzez testy jednostkowe/funkcjonalne oraz regularne code review",
